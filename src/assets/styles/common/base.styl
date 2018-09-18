@@ -1,0 +1,298 @@
+/*
+* float
+*/
+.pull-left
+  float left !important
+
+.pull-right
+  float right !important
+
+.clearbt
+  clear both
+
+// .clearfix:after
+//   content "."
+//   display block
+//   height 0
+//   clear both
+//   visibility hidden
+
+// 清除浮动
+@mixin clearfix
+  &:before,
+  &:after
+    content " "
+    display table
+
+  &:after
+    clear both
+
+  *zoom 1
+
+/*
+* z-index
+*/
+for $i in -10..1001
+  .z{$i}
+    z-index $i
+
+/**
+ * position
+ */
+.p-rl
+  position relative
+
+.p-as
+  position absolute
+
+.p-fx
+  position fixed
+
+/*
+* display
+*/
+.d-b
+  display block
+
+.d-ib
+  display inline-block
+
+.d-n
+  display none
+
+.d-f
+  display flex
+  display -webkit-flex
+
+.d-if
+  display inline-flex
+  display -webkit-inline-flex
+
+
+/**
+ * width & height
+ */
+.wh-full
+  width 100%
+  height 100%
+
+.wa
+  width auto
+
+.wfull
+  width 100%
+
+
+/**
+ * width
+ * 以px为单位
+ */
+// .w5, .w10, ..., w1000
+for $i in 1..200
+  .w{$i*5}
+    width 5px * $i
+
+/**
+ * width
+ * 以百分比为单位
+ */
+// .w5p, .w10p, ..., w95p
+for $i in 1..19
+  .w{$i*5}p
+    width 5% * $i
+
+/**
+ * height
+ * 以px为单位
+ */
+// .h5, .h10, ..., h1000
+for $i in 1..200
+  .h{$i*5}
+    height 5px * $i
+
+/**
+ * height
+ * 以百分比为单位
+ */
+.hfull
+  height 100%
+
+/**
+ * min-height以px为单位
+ */
+// .min-h10, .min-h20, ..., min-h100
+for $i in 1..10
+  .min-h{$i*10}
+    min-height 10px * $i
+
+/**
+ * min-width
+ */
+for $i in 10..50
+  .min-w{$i*10}
+    min-width 10px * $i
+
+/**
+ * max-width
+ */
+// .mw100, .mw110, ..., mw500
+for $i in 10..50
+  .max-w{$i*10}
+    max-width 10px * $i
+
+/**
+ * padding
+ */
+// .p0, .p5, ..., p100
+for $i in 0..20
+  .p{$i*5}
+    padding 5px * $i
+
+// .padding-tb0, .padding-tb10, ..., .padding-tb100
+for $i in 0..10
+  .padding-tb{$i*10}
+    padding 10px * $i 0 10px * $i 0
+
+/**
+ * padding-left
+ */
+// .pl0, .pl5, ..., .pl200
+for $i in 0..40
+  .pl{$i*5}
+    padding-left 5px * $i
+
+/**
+ * padding-top
+ */
+// .pt0, .pt5, ..., .pt200
+for $i in 0..40
+  .pt{$i*5}
+    padding-top 5px * $i
+
+/**
+ * padding-bottom
+ */
+// .pb0, .pb5, ..., .pb200
+for $i in 0..40
+  .pb{$i*5}
+    padding-bottom 5px * $i
+
+/**
+ * padding-right
+ */
+// .pr0, .pr5, ..., .pr200
+for $i in 0..40
+  .pr{$i*5}
+    padding-right 5px * $i
+
+/**
+ * margin
+ */
+.mlr0
+  margin-left 0
+  margin-right 0
+
+.m-0a
+  margin 0 auto
+
+.mg0
+  margin 0
+
+/**
+ * margin-right
+ */
+// .mr0, .mr5, ..., .mr200
+for $i in 0..40
+  .mr{$i*5}
+    margin-right 5px * $i
+
+/**
+ * Note 尽量使用mt来分隔两个块级元素，而不要使用mb
+ * margin-top
+ */
+// .mt-20, .mt-15, ..., .mt200
+for $i in -4..40
+  .mt{$i*5}
+    margin-top 5px * $i
+
+/**
+ * margin-left
+ */
+// .mt-30, .mt-15, ..., .mt200
+for $i in -6..40
+  .ml{$i*5}
+    margin-left 5px * $i
+
+/**
+ * Note 尽量使用mt来分隔两个块级元素，而不要使用mb
+ * margin-bottom
+ */
+// .mb0, .mb5, ..., .mb200
+for $i in 0..40
+  .mb{$i*5}
+    margin-bottom: 5px * $i
+
+
+/**
+ * left
+ */
+// .l-20, .l-15, ..., l1000
+for $i in -4..200
+  .l{$i*5}
+    left 5px * $i
+
+// .l10p, l15p, ..., l100p
+for $i in 0..100
+  .l{$i*5}p
+    left 5% * $i
+
+/**
+ * right
+ */
+// .r0, .r5, ..., r1000
+for $i in 0..200
+  .r{$i*5}
+    right 5px * $i
+
+// .r10p, r15p, ..., r100p
+for $i in 0..100
+  .r{$i*5}p
+    right 5% * $i
+
+/**
+ * top
+ */
+// .t-50, .t-45, ..., t1000
+for $i in -10..200
+  .t{$i*5}
+    top 5px * $i
+
+// .t10p, t15p, ..., t100p
+for $i in 0..100
+  .t{$i*5}p
+    top 5% * $i
+
+/**
+ * bottom
+ */
+for $i in 0..200
+  .b{$i*5}
+    bottom 5px * $i
+
+// .b10p, b15p, ..., b100p
+for $i in 0..100
+  .b{$i*5}p
+    bottom 5% * $i
+
+/**
+ * border-radius
+ */
+for $i in 0..200
+  .bd-r{$i}
+    border-radius 1px * $i
+
+/**
+ * transform
+ */
+.transform-center
+  transform translateX(-50%) translateY(-50%)

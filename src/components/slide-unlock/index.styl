@@ -1,0 +1,45 @@
+.slide-unlock
+  // border 1px solid #e4e7eb
+  background-color #f7f9fa
+  border-radius 2px
+  height 40px
+
+  *
+    box-sizing border-box
+
+  .slider
+    display block
+    text-align center
+    position absolute
+    top 0
+    left 0
+    width 40px
+    height 100%
+    margin-left -20px
+    border-radius 2px
+    background-color #fff
+    box-shadow 0 0 3px rgba(0,0,0,.3)
+    cursor pointer
+    transition background .2s linear
+
+    &__icon
+      line-height 38px
+
+    &:hover,
+    &:active,
+    &.active
+      background-color $color-green1
+      color $color-white
+
+  .tips
+    height 40px
+    line-height 40px
+    text-align center
+
+    &__hover
+      float left
+      height 100%
+      margin-left -20px
+      background-color rgba(20, 205, 102, .3)
+      border 1px solid $color-green1
+      border-radius 2px

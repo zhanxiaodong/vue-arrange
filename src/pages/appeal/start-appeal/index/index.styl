@@ -1,0 +1,62 @@
+.start-appeal-index
+  .pagination
+    margin-top 20px
+    float right
+  .header
+    line-height 50px
+    background-color #f2f2f2
+    font-weight bold
+
+  .order-list
+    list-style-type none
+    
+    .order-item
+      padding-top 10px
+
+      &__top
+        background-color $color-grey5
+        line-height 50px
+
+        &__models
+          overflow hidden
+          display -webkit-inline-box
+          -webkit-line-clamp 1
+          word-break break-all
+          -webkit-box-orient vertical
+
+      &__bottom
+        .btn-list
+          list-style-type none
+
+          &__item-text
+            color #333
+            padding 0px !important
+            height 20px !important
+            line-height 20px !important
+            &:hover
+              color $color-green1 !important
+
+        .ml42
+          margin-left 42px
+  
+  .receipt-order-model
+    .model-list
+      .model-item  
+        img
+          border-radius 100px
+          border 2px solid #e690b3
+
+        .select-icon
+          display none
+          position absolute
+          transform translateX(-50%) translateY(-50%)
+          left 50%
+          top 52px
+          text-shadow 0px 1px 1px rgba(0, 0, 0, 0.5)
+
+        &.active
+          img
+            opacity .5
+        
+          .select-icon
+            display block

@@ -1,0 +1,30 @@
+.sidebar
+  background-color rgba(255, 255, 255, 0) !important
+
+  &__second-menu
+    .dit
+      width 10px
+      height 10px
+      border-radius 10px
+      margin-right 10px
+      display inline-block
+      background-color $color-grey3
+
+  .el-submenu
+    &__title
+      color $color-grey3
+      &:hover
+        background-color $color-black2
+  
+  .el-menu-item
+    color $color-grey3
+    &:hover
+      background-color $color-black2 !important
+    
+    &.is-active
+      > .dit
+        background-color $color-blue2
+      color $color-blue2
+
+  .el-menu
+    background-color rgba(255, 255, 255, 0) !important

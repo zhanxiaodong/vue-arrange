@@ -1,0 +1,56 @@
+.el-select-dropdown
+  &__item
+    &.selected
+      background-color $color-green1 !important
+      color $color-white !important
+
+.el-radio
+  &__input
+    &.is-checked
+      +.el-radio
+        &__label
+          color $color-green1 !important
+      .el-radio
+        &__inner
+          border-color $color-green1 !important
+          background none !important
+          &:after
+            width 5px !important
+            height 5px !important
+            background-color $color-green1 !important
+
+  &__inner
+    width 14px !important
+    height 14px !important
+    border 2px solid #bfcbd9 !important
+    &:hover,
+    &:focus
+      border-color $color-green1 !important
+
+.el-input,
+.el-textarea
+  &__inner
+    &:focus
+      border-color $color-green1 !important
+
+.el-checkbox
+  &__input
+    &.is-checked
+      .el-checkbox__inner
+        border-color $color-green1 !important
+        background-color $color-green1 !important
+
+.el-tabs
+  &__item.is-active,
+  &__item:hover,
+  &__item:focus
+    color $color-green1 !important
+  &__active-bar
+    background-color $color-green1 !important
+
+.el-button
+  &--text
+    &:hover,
+    &:focus
+      color $color-green1 !important
+    

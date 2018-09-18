@@ -1,0 +1,46 @@
+.all-baby
+  .imgcenter
+    display flex
+    align-items center
+    justify-content center
+    margin-top 10px
+    padding-left 20px
+  .pagination
+    margin-top 20px
+    float right
+  .header
+    line-height 50px
+    background-color #f2f2f2
+    font-weight bold
+
+  .baby-list
+    list-style-type none
+    
+    .baby-item
+      padding-top 10px
+
+      &__top
+        background-color $color-grey5
+        line-height 50px
+
+        &__models
+          overflow hidden
+          display -webkit-inline-box
+          -webkit-line-clamp 1
+          word-break break-all
+          -webkit-box-orient vertical
+
+      &__bottom
+        .btn-list
+          list-style-type none
+
+          &__item-text
+            color #333
+            padding 0px !important
+            height 20px !important
+            line-height 20px !important
+            &:hover
+              color $color-green1 !important
+
+        .ml42
+          margin-left 42px
