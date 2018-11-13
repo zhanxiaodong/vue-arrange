@@ -118,6 +118,7 @@ export default {
       editIn: false,
       modifyIn: false,
       total: 0,
+      realTotal: 0,
       goodsTableShow: false,
       goodsList: [],
       dbGoods: [],
@@ -320,10 +321,13 @@ export default {
       return index + 1
     },
     look () {
+      let data = this.form
+      data.total = this.total
+      data.realTotal = this.realTotal
       this.$router.push({
         name: 'new-task-details',
         params: {
-          dataobj: this.form
+          dataobj: data
         }
       })
     },
@@ -376,6 +380,7 @@ export default {
     updateBrandList (goodsList) {
       var tempBrandList = []
       var total = 0
+      var realTotal = 0
       var tempStrArr = this.tempStrArr
       if (goodsList.length > 0) {
         for (var i = 0; i < goodsList.length; i++) {
@@ -387,10 +392,12 @@ export default {
             tempStrArr.push(goodsList[i].brand)
           }
           total = total + goodsList[i].initAmount
+          realTotal = realTotal + goodsList[i].realAmount
         }
       }
       this.tempStrArr = []
       this.total = total
+      this.realTotal = realTotal
       this.form.brandList = tempBrandList
     },
     /**
@@ -440,10 +447,13 @@ export default {
             var goodsList = res.data.goodsList
             if (goodsList) {
               var total = 0
+              var realTotal = 0
               for (var i = 0; i < goodsList.length; i++) {
                 total = total + goodsList[i].initAmount
+                realTotal = realTotal + goodsList[i].realAmount
               }
               this.total = total
+              this.realTotal = realTotal
             }
           }
         } else {

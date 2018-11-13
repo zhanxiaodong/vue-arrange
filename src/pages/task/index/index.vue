@@ -5,11 +5,13 @@
       span 订单编号
     el-col(:span="2")
       span 用户名称
+    el-col(:span="2")
+      span 搭配师
     el-col(:span="4")
       span 发起时间
-    el-col(:span="3")
+    el-col(:span="2")
       span 会员类型
-    el-col(:span="3")
+    el-col(:span="2")
       span 配送日期
     el-col(:span="2")
       span 沟通次数

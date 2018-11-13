@@ -19,29 +19,52 @@
 
       el-row.row-th
         el-row.row-sec.text-center.ft-bd
-          el-col.bor.pt50.pb50(:span="5")
+          el-col.bor.pt50.pb50(:span="4")
             el-col
               span.ft42 ITEM NO.
             el-col.ft36 商品编号
-          el-col.bor.pt50.pb50(:span="14")
+          el-col.bor.pt50.pb50(:span="12")
             el-col 
               span.ft-bd.ft42 DESCRIPTION
             el-col.ft36 服饰名称
-          el-col.pt50.pb15(:span="5")
+          el-col.pt50.pb15(:span="4")
             el-col 
               span.ft-bd.ft42 BRAND PRICE
             el-col.ft36 品牌零售价
-            el-col.ft20 打开迷你王国查看特惠价哦
+          el-col.pt50.pb15(:span="4")
+            el-col 
+              span.ft-bd.ft42 MINIONES PRICE
+            el-col.ft36 迷你王国零售价
         el-row.brandcs
           el-row.goodstable.text-center(v-for="(item, index) in form.goodsList" v-bind:key="index" v-if="index < 8")
-            el-col(v-if="index < 7")
-              el-col.bor.pt10(:span="5")
+            el-col(v-if="index < 6")
+              el-col.bor.pt10(:span="4")
                 span.ft42.ft-bd & 0{{index + 1}}
-              el-col.bor.pt10(:span="14")
+              el-col.bor.pt10(:span="12")
                 span.ft36 {{item.brand}} {{item.color}}{{item.name}}
-              el-col.pt10(:span="5")
+              el-col.pt10(:span="4")
                 span.ft36 ¥{{item.initAmount}}
-            el-col(v-if="index == 7")
+              el-col.pt10(:span="4")
+                span.ft36 ¥{{item.realAmount}}
+            el-col(v-if="form.goodsList.length-1 < 6  && index == form.goodsList.length-1")
+              el-col.bor.pt10(:span="4")
+                span.ft42.ft-bd 总价
+              el-col.bor.pt10(:span="12")
+                span.ft36 共{{form.goodsList.length}}件商品
+              el-col.pt10(:span="4")
+                span.ft36 ¥{{form.total|numFilter}}
+              el-col.pt10(:span="4")
+                span.ft36 ¥{{form.realTotal|numFilter}}
+            el-col(v-if="form.goodsList.length-1 >= 6 && index == 5")
+              el-col.bor.pt10(:span="4")
+                span.ft42.ft-bd 总价
+              el-col.bor.pt10(:span="12")
+                span.ft36 共{{form.goodsList.length}}件商品
+              el-col.pt10(:span="4")
+                span.ft36 ¥{{form.total|numFilter}}
+              el-col.pt10(:span="4")
+                span.ft36 ¥{{form.realTotal|numFilter}}
+            el-col(v-if="index == 6")
               span.ft36 更多清单请打开迷你王国小程序查看~~
         el-row.tablecs
           el-col(:span="14")
@@ -68,7 +91,7 @@
             el-col.h250(:span="20")
               el-col.ti 特殊优惠
               el-col.ftc 除了会员优惠外，我们还向您提供额外的折扣内容：
-              el-col.ftc.ft-bd -3件及以上：9.5折；-整盒留下：8.5折
+              el-col.ftc.ft-bd -3件及以上：8折；-整盒留下：6折
               el-col.ftc 在迷你王国结算时，系统将自动进行折扣计算。
             el-col.text-center.pt20(:span="4")
               el-col.tu.ml40 s
