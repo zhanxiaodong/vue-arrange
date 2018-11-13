@@ -42,7 +42,7 @@
           el-col(:span="8")
             el-button.btn-list__item-text(type="text" disabled) 提醒
           el-col(:span="8")
-            el-button.btn-list__item-text(type="text" @click="createBox (item)") 预创建
+            el-button.btn-list__item-text(type="text" @click="createBox (item)") 创建盒子
           el-col(:span="8")
             el-button.btn-list__item-text(type="text" @click="showDetails(item)") 用户详情
   el-pagination.pagination(
@@ -147,11 +147,22 @@ export default {
       })
     },
     createBox (item) {
-      this.$router.push({
-        name: 'new-task',
-        params: {
-          dataobj: item
+      this.$axios.post(this.$apis.task.sysSendBox, {
+        // 当前页数
+        babyId: item.id
+      }).then((res) => {
+        if (res.code === '1') {
+          this.$router.push({
+            name: 'new-task',
+            params: {
+              dataobj: item
+            }
+          })
+        } else {
+          this.$message.error(res.message)
         }
+      }).catch((errRes) => {
+        this.$message.error(errRes.message)
       })
     },
     /**

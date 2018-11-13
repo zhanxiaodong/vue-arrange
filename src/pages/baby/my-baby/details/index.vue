@@ -37,21 +37,15 @@
         el-col(:span="3") 体重: {{baby.weight}} kg
         el-col(:span="3") 鞋码: {{baby.size}} size
         el-col(:span="3") 肤色: {{baby.skinColor}}
-        el-col(:span="3") 体型: {{baby.shape}}
-        el-col(:span="3") 特征: {{baby.feature}}
-      el-col
-        span 才艺: {{baby.study | listToStr}}
     el-row.pt30.lh30
       el-col.titlecs 用户偏好
       el-col
         el-col
           span 风格: {{baby.style | listToStr}}
         el-col
-          span 颜色: {{baby.color | listToStr}}
-        el-col
-          span 避免: -
-        el-col 消费: {{baby.consume | listToStr}}
-        el-col 品牌: {{baby.brandHis | listToStr}}
+          span 颜色: {{baby.colorType}}
+        el-col 注重: {{baby.attitude | listToStr}}
+        el-col 意愿: {{baby.consume | listToStr}}
     el-row.pt30.lh30
       el-col.titlecs 家长属性
       el-col

@@ -131,6 +131,7 @@ export default {
         size: null,
         color: '',
         num: null,
+        name: null,
         dialogVisible: false
       },
       form: {
@@ -519,6 +520,9 @@ export default {
         if (prov === val.prov) {
           if (!tempCh) {
             tempCh = val.label
+          }
+          if (prov === '下装' && this.form.gender === '男童' && (val.label === '裙子' || val.label === '连衣裙')) {
+            continue
           }
           tempCity.push({ name: val.label, text: val.label })
         }

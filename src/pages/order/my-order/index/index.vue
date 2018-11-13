@@ -10,7 +10,9 @@
       span 发起时间
     el-col(:span="2")
       span 会员名称
-    el-col(:span="4")
+    el-col(:span="2")
+      span 搭配师
+    el-col(:span="2")
       span 配送日期
     el-col(:span="3")
       span 订单状态
@@ -27,7 +29,9 @@
           span {{item.box.createTime,'YYYY-MM-DD HH:mm' | timeFormat}}
         el-col(:span="2")
           span {{item.baby ? item.baby.call : '-'}}
-        el-col(:span="4")
+        el-col(:span="2")
+          span {{item.stylist}}
+        el-col(:span="2")
           span {{item.box.orderTime}}
         el-col(:span="3")
           span {{item.box.status | boxStatus}}

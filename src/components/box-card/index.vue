@@ -5,11 +5,12 @@ el-card.box-card(v-bind:body-style="{display: [open ? 'block' : 'none']}")
       el-col.text-center(:span="4")
         span {{item.box.orderNo}}
       el-col.text-center(:span="2") {{item.baby.call}} 
+      el-col.text-center(:span="2") {{item.stylist}} 
       el-col.text-center(:span="4")
         span {{item.box.createTime,'YYYY-MM-DD HH:mm' | timeFormat}}
-      el-col.text-center(:span="3")
+      el-col.text-center(:span="2")
         span {{item.user.level ? item.user.level : '--' | viplev}}
-      el-col.text-center(:span="3")
+      el-col.text-center(:span="2")
         span {{item.box.orderTime}}
       el-col.text-center(:span="2")
         el-popover(trigger="hover" )

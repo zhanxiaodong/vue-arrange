@@ -304,5 +304,12 @@ export default {
     } else if (status === 'COMPLETE') {
       return '完成'
     }
+  },
+  /**
+   * 截取当前数据到小数点后两位
+   */
+  numFilter (value) {
+    let realVal = Number(value).toFixed(2)
+    return Number(realVal)
   }
 }

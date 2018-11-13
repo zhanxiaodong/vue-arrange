@@ -50,17 +50,14 @@
           span.color-orange2 {{boxDetail.babyModify.consume ? boxDetail.babyModify.consume : '默认'}}
       el-col(:span="8")
         el-col
-          span 场合需求: 
-          span.color-orange2 {{boxDetail.babyModify.occasions | listToStr}}
+          span 需求原因: 
+          span.color-orange2 {{boxDetail.box.season | listToStr}}
         el-col
-          span 上装需求: 
-          span.color-orange2 {{boxDetail.babyModify.jackets | listToStr}}
+          span 场景: 
+          span.color-orange2 {{boxDetail.box.occasions | listToStr}}
         el-col
-          span 下装需求: 
-          span.color-orange2 {{boxDetail.babyModify.down | listToStr}}
-        el-col
-          span 配件需求: 
-          span.color-orange2 {{boxDetail.babyModify.parts | listToStr}}
+          span 风格偏好: 
+          span.color-orange2 {{boxDetail.box.consumList | listToStr}}
       el-col(:span="2")
         el-col
           el-button.w100(v-if="boxDetail.box.status === 'LINK_UP'" type="success" @click="newBox") 配货
@@ -76,6 +73,11 @@
         span 补充信息
       el-col.lh30
         span.color-orange2 {{boxDetail.babyModify.desc}}
+    el-row.rowcs
+      el-col.titlecs
+        span 留言
+      el-col.lh30
+        span.color-orange2 {{boxDetail.box.remarks}}
     el-row.rowcs
       el-col(:span="21")
         el-col.titlecs.lh30 盒子信息
