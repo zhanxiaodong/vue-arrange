@@ -22,7 +22,11 @@ export default {
     // 孩子列表
     getBabyList: `${api.java}/merchant/baby/findBabyPages`,
     // 获取孩子详情页
-    findBabyDetailById: `${api.java}/merchant/baby/findBabyDetailById`
+    findBabyDetailById: `${api.java}/merchant/baby/findBabyDetailById`,
+    // 更新孩子信息
+    modifyBaby: `${api.java}/merchant/baby/updateBaby`,
+    // 更新用户信息
+    modifyUser: `${api.java}/merchant/user/updateUser`
   },
   // 账号
   account: {

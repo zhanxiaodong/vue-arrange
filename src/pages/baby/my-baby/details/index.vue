@@ -26,31 +26,33 @@
     el-row.pt30.lh30
       <div class="titlecs el-col el-col-24">宝贝信息 <span @click="dialogFormVisible = true" style="color: #04B8A0; padding-left: 5px;">修改</span></div>
     <el-dialog title="宝贝信息" :visible.sync="dialogFormVisible" style="margin-top: -10vh;">
-     <el-form :model="form">
+     <el-form>
       <el-form-item label="姓名" :label-width="formLabelWidth">
-        <el-input  style="width:50%" v-model="form.call" placeholder="请选择姓名(name)" autocomplete="off"></el-input>
+        <el-input  style="width:50%" v-model="baby.call" placeholder="请选择姓名(name)" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="性别" :label-width="formLabelWidth">
-        <el-radio-group v-model="form.gender">
-           <el-radio :label="3">男</el-radio>
-           <el-radio :label="6">女</el-radio>
+        <el-radio-group v-model="baby.gender">
+           <el-radio label="男孩">男孩</el-radio>
+           <el-radio label="女孩">女孩</el-radio>
         </el-radio-group>
       </el-form-item>
+      
       <el-form-item label="生日" :label-width="formLabelWidth">
-        <el-date-picker v-model="form.birth" type="date" placeholder="选择日期">
+        <el-date-picker v-model="birth" type="date" value-format='yyyy-MM-dd' placeholder="选择日期">
         </el-date-picker>
       </el-form-item>
       <el-form-item label="身高" :label-width="formLabelWidth">
-        <el-input style="width:50%" v-model="form.height" placeholder="请选择身高(cm)" autocomplete="off"></el-input>
+        <el-input style="width:50%" v-model="baby.height" placeholder="请选择身高(cm)" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="体重" :label-width="formLabelWidth">
-        <el-input style="width:50%" v-model="form.weight" placeholder="请选择体重(kg)" autocomplete="off"></el-input>
+        <el-input style="width:50%" v-model="baby.weight" placeholder="请选择体重(kg)" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="鞋码" :label-width="formLabelWidth">
-        <el-input style="width:50%" v-model="form.size" placeholder="请选择鞋码(size)" autocomplete="off"></el-input>
+        <el-input style="width:50%" v-model="baby.size" placeholder="请选择鞋码(size)" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="肤色" :label-width="formLabelWidth">
-        <el-radio-group v-model="form.skinColor" size="medium">
+        <el-radio-group v-model="baby.skinColor" size="medium">
+        <el-radio-button label="不确定"></el-radio-button>
         <el-radio-button label="白皙"></el-radio-button>
         <el-radio-button label="正常"></el-radio-button>
         <el-radio-button label="偏黑"></el-radio-button>
@@ -59,7 +61,7 @@
      </el-form> 
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        <el-button type="primary" @click="modifyBaby">确 定</el-button>
       </div>
     </el-dialog>
       el-col
@@ -77,31 +79,31 @@
     el-row.pt30.lh30
       <div class="titlecs el-col el-col-24">用户偏好<span @click="dialogFormVisible2 = true" style="color: #04B8A0; padding-left: 5px;">修改</span></div>
     <el-dialog title="用户偏好" :visible.sync="dialogFormVisible2">
-     <el-form :model="form">
+     <el-form>
       <el-form-item label="风格" :label-width="formLabelWidth">
-       <el-checkbox-group v-model="form.style" size="medium">
+       <el-checkbox-group v-model="baby.style" size="medium">
         <el-checkbox-button v-for="style in styles" :label="style" :key="style">{{style}}</el-checkbox-button>
        </el-checkbox-group>
       </el-form-item>
       <el-form-item label="颜色" :label-width="formLabelWidth">
-        <el-radio-group v-model="form.colorType" size="medium">
+        <el-radio-group v-model="baby.colorType" size="medium">
         <el-radio-button v-for="colorType in colorTypes" :label="colorType" :key="colorType">{{colorType}}</el-radio-button>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="注重" :label-width="formLabelWidth">
-       <el-checkbox-group v-model="form.attitude" size="medium">
+       <el-checkbox-group v-model="baby.attitude" size="medium" :max=2>
         <el-checkbox-button v-for="attitude in attitudes" :label="attitude" :key="attitude">{{attitude}}</el-checkbox-button>
        </el-checkbox-group>
       </el-form-item>
       <el-form-item label="意愿" :label-width="formLabelWidth">
-        <el-radio-group v-model="form.consume" size="medium">
+        <el-radio-group v-model="baby.consume" size="medium">
         <el-radio-button v-for="consume in consumes" :label="consume" :key="consume" >{{consume}}</el-radio-button>
         </el-radio-group>
       </el-form-item>
      </el-form> 
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible2 = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible2 = false">确 定</el-button>
+        <el-button type="primary" @click="modifyUser">确 定</el-button>
       </div>
     </el-dialog>
       el-col
@@ -147,30 +149,14 @@
 </template>
 
 <script>
-const styleOptions = ['时尚','休闲','卡通','运动','民族','优雅'];
-const colorTypeOptions = ['接受全色系','不喜欢灰暗色系','不喜欢鲜艳色系'];
-const attitudeOptions = ['安全','品牌','舒适','个性','实惠','好看'];
-const consumeOptions = ['节制','正常','小资','轻奢'];
 export default {
   data () {
     return {
-      form: {
-          call: '',
-          gender: '',
-          birth: '',
-          height: '',
-          weight: '',
-          size: '',
-          skinColor: '',
-          style: ['时尚'],
-          colorType: ['接受全色系'],
-          attitude: ['安全'],
-          consume: ['节制']
-        },
-      styles: styleOptions,
-      colorTypes: colorTypeOptions,
-      attitudes: attitudeOptions,
-      consumes: consumeOptions,
+    	birth:'2018-11-12',
+      styles: ['时尚','休闲','卡通','运动','民族','优雅'],
+      colorTypes:  ['接受全色系','不喜欢灰暗色系','不喜欢鲜艳色系'],
+      attitudes: ['安全','品牌','舒适','个性','实惠','好看'],
+      consumes: ['节制 50-100/套','正常 100-300/套','小资 300-500/套','轻奢 500+/套'],
       formLabelWidth: '120px',
       dialogFormVisible2: false,
       dialogFormVisible: false,
@@ -224,9 +210,54 @@ export default {
         }
       }).then((res) => {
         if (res.code === '1') {
+        	this.birth = res.data.baby.birth
           this.baby = res.data.baby
           this.boxRecord = res.data.boxRecord
           this.userAccount = res.data.userAccount
+        } else {
+          this.$message.error(res.message)
+        }
+      }).catch((errRes) => {
+        this.$message.error(errRes.message)
+      })
+    },
+    modifyBaby () {
+      this.dialogFormVisible = false
+      var baby = {}
+      baby.id = this.baby.id
+      baby.call = this.baby.call
+      baby.gender = this.baby.gender
+      baby.birth = this.birth
+      baby.height = this.baby.height
+      baby.weight = this.baby.weight
+      baby.size = this.baby.size
+      baby.skinColor = this.baby.skinColor
+      console.log(baby)
+      this.$axios.post(this.$apis.baby.modifyBaby, baby).then((res) => {
+        if (res.code === '1') {
+        	this.$message.success("更新成功")
+        	this.getBabyDetail(this.$route.query.id)
+        } else {
+          this.$message.error(res.message)
+        }
+      }).catch((errRes) => {
+        this.$message.error(errRes.message)
+      })
+    },
+    modifyUser () {
+      this.dialogFormVisible2 = false
+      var user = {}
+      user.wechatOpenId = this.baby.openId
+      user.style = this.baby.style
+      user.colorType = this.baby.colorType
+      user.attitude = this.baby.attitude
+      var consumDesc = {}
+      consumDesc.except = this.baby.consume
+      user.consumDesc = consumDesc
+      this.$axios.post(this.$apis.baby.modifyUser, user).then((res) => {
+        if (res.code === '1') {
+        	this.$message.success("更新成功")
+        	this.getBabyDetail(this.$route.query.id)
         } else {
           this.$message.error(res.message)
         }
