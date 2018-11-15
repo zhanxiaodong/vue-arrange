@@ -36,68 +36,77 @@
               span.ft-bd.ft42 MINIONES PRICE
             el-col.ft36 迷你王国零售价
         el-row.brandcs
-          el-row.goodstable.text-center(v-for="(item, index) in form.goodsList" v-bind:key="index" v-if="index < 8")
+          el-row.goodstable.text-center(v-for="(item, index) in form.goodsList" v-bind:key="index" v-if="index <= 6")
             el-col(v-if="index < 6")
               el-col.bor.pt10(:span="4")
                 span.ft42.ft-bd & 0{{index + 1}}
               el-col.bor.pt10(:span="12")
                 span.ft36 {{item.brand}} {{item.color}}{{item.name}}
               el-col.pt10(:span="4")
-                span.ft36 ¥{{item.initAmount}}
+                span.ft36.oprice ¥{{item.initAmount}}
               el-col.pt10(:span="4")
                 span.ft36 ¥{{item.realAmount}}
-            el-col(v-if="form.goodsList.length-1 < 6  && index == form.goodsList.length-1")
+            el-col(v-if="form.goodsList.length-1 < 7  && index == form.goodsList.length-1")
               el-col.bor.pt10(:span="4")
                 span.ft42.ft-bd 总价
               el-col.bor.pt10(:span="12")
                 span.ft36 共{{form.goodsList.length}}件商品
               el-col.pt10(:span="4")
-                span.ft36 ¥{{form.total|numFilter}}
+                span.ft36.oprice ¥{{form.total|numFilter}}
               el-col.pt10(:span="4")
                 span.ft36 ¥{{form.realTotal|numFilter}}
-            el-col(v-if="form.goodsList.length-1 >= 6 && index == 5")
+            el-col(v-if="form.goodsList.length-1 < 7  && index == form.goodsList.length-1")
+              el-col.bor.pt10(:span="4")
+                span.ft42.ft-bd 折扣价
+              el-col.bor.pt10(:span="12")
+                span.ft36 整盒全要6折
+              el-col.pt10(:span="4")
+                span.ft36.oprice ¥{{form.total|numFilter}}
+              el-col.pt10(:span="4")
+                span.ft36 ¥{{form.realTotal*0.6|numFilter}}
+            el-col(v-if="index == 6")
+              el-col.bor.pt10(:span="4")
+                span.ft42.ft-bd ......
+              el-col.bor.pt10(:span="12")
+                span.ft36 ......
+              el-col.pt10(:span="4")
+                span.ft36 ......
+              el-col.pt10(:span="4")
+                span.ft36 ......
+            el-col(v-if="form.goodsList.length-1 >= 7 && index == 6")
               el-col.bor.pt10(:span="4")
                 span.ft42.ft-bd 总价
               el-col.bor.pt10(:span="12")
                 span.ft36 共{{form.goodsList.length}}件商品
               el-col.pt10(:span="4")
-                span.ft36 ¥{{form.total|numFilter}}
+                span.ft36.oprice ¥{{form.total|numFilter}}
               el-col.pt10(:span="4")
                 span.ft36 ¥{{form.realTotal|numFilter}}
+            el-col(v-if="form.goodsList.length-1 >= 7 && index == 6")
+              el-col.bor.pt10(:span="4")
+                span.ft42.ft-bd 折扣价
+              el-col.bor.pt10(:span="12")
+                span.ft36 整盒全要6折
+              el-col.pt10(:span="4")
+                span.ft36.oprice ¥{{form.total|numFilter}}
+              el-col.pt10(:span="4")
+                span.ft36 ¥{{form.realTotal*0.6|numFilter}}
             el-col(v-if="index == 6")
               span.ft36 更多清单请打开迷你王国小程序查看~~
         el-row.tablecs
-          el-col(:span="14")
+          el-col(:span="24")
             el-row.concs
               el-col(:span="1")
                 el-col.tu B
               el-col.shi(:span="20")
                 span.pl30.ft40 您盒子礼有特别推荐的品牌哦
             el-row.concs.rowcc(v-for="(item, index) in form.brandList" v-bind:key="index" v-if="index < 3")
-              el-col.rowcc(v-if="index < 3")
+              el-col.rowcc(v-if="index < 2")
                 el-col.po
                 el-col.gu.pl30(:span="6")
                   span.ft36 {{item.name}}
                 el-col.fir.text-left(:span="18")
                   span.ft30 {{item.desc}}
-          el-col.row-fo.h479(:span="10")
-            el-col.text-center.pt35(:span="4")
-              el-col.tu.ml40 %
-            el-col.h250.pt20(:span="20")
-              el-col.ti 迷礼特权
-              el-col.ftc 迷礼会员享受多重可叠加优惠，包含不限于：新人立减、礼金券、会员抵扣券、品牌特惠等。在迷你王国结算时，可自主选择各项优惠内容。
-            el-col.text-center.pt20(:span="4")
-              el-col.tu.ml40 %
-            el-col.h250(:span="20")
-              el-col.ti 特殊优惠
-              el-col.ftc 除了会员优惠外，我们还向您提供额外的折扣内容：
-              el-col.ftc.ft-bd -3件及以上：8折；-整盒留下：6折
-              el-col.ftc 在迷你王国结算时，系统将自动进行折扣计算。
-            el-col.text-center.pt20(:span="4")
-              el-col.tu.ml40 s
-            el-col(:span="20")
-              el-col.ti 关于尺码
-              el-col.ftc.pb20 不同品牌的领标尺码会有差异，搭配师根据小朋友的信息进行专业推荐；如有尺码问题可直接垂询小姑姑哦。
       el-row.foot-print
         el-row.pt40.pb90.cencs
           img.w57.h57(v-bind:src="imgurl5")

@@ -382,6 +382,7 @@ export default {
       var total = 0
       var realTotal = 0
       var tempStrArr = this.tempStrArr
+      console.log(tempStrArr)
       if (goodsList.length > 0) {
         for (var i = 0; i < goodsList.length; i++) {
           if (tempStrArr.indexOf(goodsList[i].brand) < 0) {
