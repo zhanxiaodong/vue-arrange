@@ -24,13 +24,50 @@
       el-col
         span 订阅计划: {{baby.planDesc}} {{baby.plan  | listToStr}}
     el-row.pt30.lh30
-      el-col.titlecs 宝贝信息
+      <div class="titlecs el-col el-col-24">宝贝信息 <span @click="dialogFormVisible = true" style="color: #04B8A0; padding-left: 5px;">修改</span></div>
+    <el-dialog title="宝贝信息" :visible.sync="dialogFormVisible" style="margin-top: -10vh;">
+     <el-form :model="form">
+      <el-form-item label="姓名" :label-width="formLabelWidth">
+        <el-input  style="width:50%" v-model="form.call" placeholder="请选择姓名(name)" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="性别" :label-width="formLabelWidth">
+        <el-radio-group v-model="form.gender">
+           <el-radio :label="3">男</el-radio>
+           <el-radio :label="6">女</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="生日" :label-width="formLabelWidth">
+        <el-date-picker v-model="form.birth" type="date" placeholder="选择日期">
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="身高" :label-width="formLabelWidth">
+        <el-input style="width:50%" v-model="form.height" placeholder="请选择身高(cm)" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="体重" :label-width="formLabelWidth">
+        <el-input style="width:50%" v-model="form.weight" placeholder="请选择体重(kg)" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="鞋码" :label-width="formLabelWidth">
+        <el-input style="width:50%" v-model="form.size" placeholder="请选择鞋码(size)" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="肤色" :label-width="formLabelWidth">
+        <el-radio-group v-model="form.skinColor" size="medium">
+        <el-radio-button label="白皙"></el-radio-button>
+        <el-radio-button label="正常"></el-radio-button>
+        <el-radio-button label="偏黑"></el-radio-button>
+      </el-radio-group>
+    </el-form-item>
+     </el-form> 
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+      </div>
+    </el-dialog>
       el-col
         el-col(:span="4")
           span 姓名: {{baby.call}}
         el-col(:span="3")
           span 性别: {{baby.gender}}
-        el-col(:span="3")
+        el-col(:span="4")
           span 生日: {{baby.birth}}
       el-col
         el-col(:span="4") 身高: {{baby.height}} cm
@@ -38,7 +75,35 @@
         el-col(:span="3") 鞋码: {{baby.size}} size
         el-col(:span="3") 肤色: {{baby.skinColor}}
     el-row.pt30.lh30
-      el-col.titlecs 用户偏好
+      <div class="titlecs el-col el-col-24">用户偏好<span @click="dialogFormVisible2 = true" style="color: #04B8A0; padding-left: 5px;">修改</span></div>
+    <el-dialog title="用户偏好" :visible.sync="dialogFormVisible2">
+     <el-form :model="form">
+      <el-form-item label="风格" :label-width="formLabelWidth">
+       <el-checkbox-group v-model="form.style" size="medium">
+        <el-checkbox-button v-for="style in styles" :label="style" :key="style">{{style}}</el-checkbox-button>
+       </el-checkbox-group>
+      </el-form-item>
+      <el-form-item label="颜色" :label-width="formLabelWidth">
+        <el-radio-group v-model="form.colorType" size="medium">
+        <el-radio-button v-for="colorType in colorTypes" :label="colorType" :key="colorType">{{colorType}}</el-radio-button>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="注重" :label-width="formLabelWidth">
+       <el-checkbox-group v-model="form.attitude" size="medium">
+        <el-checkbox-button v-for="attitude in attitudes" :label="attitude" :key="attitude">{{attitude}}</el-checkbox-button>
+       </el-checkbox-group>
+      </el-form-item>
+      <el-form-item label="意愿" :label-width="formLabelWidth">
+        <el-radio-group v-model="form.consume" size="medium">
+        <el-radio-button v-for="consume in consumes" :label="consume" :key="consume" >{{consume}}</el-radio-button>
+        </el-radio-group>
+      </el-form-item>
+     </el-form> 
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible2 = false">取 消</el-button>
+        <el-button type="primary" @click="dialogFormVisible2 = false">确 定</el-button>
+      </div>
+    </el-dialog>
       el-col
         el-col
           span 风格: {{baby.style | listToStr}}
@@ -56,7 +121,8 @@
     el-row.pt30.lh30
       el-col.titlecs 宝贝照片
       el-col
-        img(:src="baby.bodyPic ? baby.bodyPic:bodyde")
+        //img(:src="baby.bodyPic ? baby.bodyPic:bodyde")
+        <img :src="baby.bodyPic ? baby.bodyPic:bodyde" style="width: 300px;height: 400px;">
     el-row.pt30.lh30
       el-col.titlecs 账户
       el-col 
@@ -81,9 +147,34 @@
 </template>
 
 <script>
+const styleOptions = ['时尚','休闲','卡通','运动','民族','优雅'];
+const colorTypeOptions = ['接受全色系','不喜欢灰暗色系','不喜欢鲜艳色系'];
+const attitudeOptions = ['安全','品牌','舒适','个性','实惠','好看'];
+const consumeOptions = ['节制','正常','小资','轻奢'];
 export default {
   data () {
     return {
+      form: {
+          call: '',
+          gender: '',
+          birth: '',
+          height: '',
+          weight: '',
+          size: '',
+          skinColor: '',
+          style: ['时尚'],
+          colorType: ['接受全色系'],
+          attitude: ['安全'],
+          consume: ['节制']
+        },
+      styles: styleOptions,
+      colorTypes: colorTypeOptions,
+      attitudes: attitudeOptions,
+      consumes: consumeOptions,
+      formLabelWidth: '120px',
+      dialogFormVisible2: false,
+      dialogFormVisible: false,
+      dialogVisible: false,
       showImg: false,
       userAccount: {
         balance: 0,
