@@ -50,47 +50,47 @@
               el-col.bor.pt10(:span="4")
                 span.ft42.ft-bd 总价
               el-col.bor.pt10(:span="12")
-                span.ft36 共{{form.goodsList.length}}件商品
+                span.ft42.ft-bd 共{{form.goodsList.length}}件商品
               el-col.pt10(:span="4")
-                span.ft36.oprice ¥{{form.total|numFilter}}
+                span.ft42.oprice.ft-bd ¥{{form.total|numFilter}}
               el-col.pt10(:span="4")
-                span.ft36 ¥{{form.realTotal|numFilter}}
+                span.ft42.ft-bd ¥{{form.realTotal|numFilter}}
             el-col(v-if="form.goodsList.length-1 < 7  && index == form.goodsList.length-1")
               el-col.bor.pt10(:span="4")
                 span.ft42.ft-bd 折扣价
               el-col.bor.pt10(:span="12")
-                span.ft36 整盒全要6折
+                span.ft42.ft-bd 整盒全要6折
               el-col.pt10(:span="4")
-                span.ft36.oprice ¥{{form.total|numFilter}}
+                span.ft42.oprice.ft-bd ¥{{form.total|numFilter}}
               el-col.pt10(:span="4")
-                span.ft36 ¥{{form.realTotal*0.6|numFilter}}
+                span.ft42.ft-bd ¥{{form.realTotal*0.6|numFilter}}
             el-col(v-if="index == 6")
               el-col.bor.pt10(:span="4")
                 span.ft42.ft-bd ......
               el-col.bor.pt10(:span="12")
-                span.ft36 ......
+                span.ft36.ft-bd ......
               el-col.pt10(:span="4")
-                span.ft36 ......
+                span.ft36.ft-bd ......
               el-col.pt10(:span="4")
-                span.ft36 ......
+                span.ft36.ft-bd ......
             el-col(v-if="form.goodsList.length-1 >= 7 && index == 6")
               el-col.bor.pt10(:span="4")
                 span.ft42.ft-bd 总价
               el-col.bor.pt10(:span="12")
-                span.ft36 共{{form.goodsList.length}}件商品
+                span.ft42.ft-bd 共{{form.goodsList.length}}件商品
               el-col.pt10(:span="4")
-                span.ft36.oprice ¥{{form.total|numFilter}}
+                span.ft42.oprice.ft-bd ¥{{form.total|numFilter}}
               el-col.pt10(:span="4")
-                span.ft36 ¥{{form.realTotal|numFilter}}
+                span.ft42.ft-bd ¥{{form.realTotal|numFilter}}
             el-col(v-if="form.goodsList.length-1 >= 7 && index == 6")
               el-col.bor.pt10(:span="4")
                 span.ft42.ft-bd 折扣价
               el-col.bor.pt10(:span="12")
-                span.ft36 整盒全要6折
+                span.ft42.ft-bd 整盒全要6折
               el-col.pt10(:span="4")
-                span.ft36.oprice ¥{{form.total|numFilter}}
+                span.ft42.oprice.ft-bd 
               el-col.pt10(:span="4")
-                span.ft36 ¥{{form.realTotal*0.6|numFilter}}
+                span.ft42.ft-bd ¥{{form.realTotal*0.6|numFilter}}
             el-col(v-if="index == 6")
               span.ft36 更多清单请打开迷你王国小程序查看~~
         el-row.tablecs
