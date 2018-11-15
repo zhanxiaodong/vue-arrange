@@ -67,7 +67,7 @@
         el-col(:span="22")
           el-col(v-for="(item, index) in userAccount.recordList" v-bind:key="index")
             el-col(:span="3") {{item.createTime,'YYYY/MM/DD' | timeFormat}}
-            el-col(:span="3") {{item.dealType == '充值'? '+':'-'}} {{item.amount}}
+            el-col(:span="3") {{item.dealType == '充值'? '+':item.dealType == '奖金'? '+':'-'}} {{item.amount}}
             el-col(:span="3") {{item.dealType}}
     el-row.pt30.lh30
       el-col.titlecs 订单信息
