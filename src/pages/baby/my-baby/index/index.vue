@@ -106,8 +106,9 @@ export default {
      * @function [search]
      * @param {String} keyword -关键词
      */
-    search (keyword) {
+    search (keyword,level) {
       this.keyword = keyword
+      this.level = level
       this.pagination.currentPage = 1
       this.getBabyList()
     },
@@ -139,12 +140,13 @@ export default {
      * @param {Strig} item -订单
      */
     showDetails (item) {
-      this.$router.push({
+      const {href} = this.$router.resolve({
         name: 'baby-details',
         query: {
           id: item.id
         }
       })
+      window.open(href, '_blank')
     },
     createBox (item) {
       this.$axios.post(this.$apis.task.sysSendBox, {
@@ -177,6 +179,7 @@ export default {
         // 当前页条数
         pageSize: this.pagination.pageSize,
         content: this.keyword,
+        level: this.level,
         tel: this.tel
       }).then((res) => {
         if (res.code === '1') {
