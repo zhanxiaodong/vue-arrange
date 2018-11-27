@@ -4,51 +4,79 @@
     el-col(:span="24")
       tabs(@search="search")
   el-row.header.text-center
-    el-col(:span="2")
-      span.ml20 款号
+    el-col(:span="1")
+      span 性别
+    el-col(:span="1")
+      span 类别
     el-col(:span="3")
-      span 品牌
+      span 款号
     el-col(:span="1")
       span 尺码
-    el-col(:span="3")
-      span 颜色
     el-col(:span="2")
-      span 库存
-    el-col(:span="3")
-      span 价格
-    el-col(:span="4")
-      span miniid
-    el-col(:span="5")
+      span 品牌
+    el-col(:span="2")
+      span 颜色
+    el-col(:span="1")
+      span 采购价
+    el-col(:span="1")
+      span 数量
+    el-col(:span="2")
+      span 可使用
+    el-col(:span="2")
+      span 运输中
+    el-col(:span="2")
+      span 退货中
+    el-col(:span="1")
+      span 销售
+    el-col(:span="1")
+      span 清算
+    el-col(:span="2")
+      span 退回次数
+    el-col(:span="2")
       span 状态
   ul.order-list
     li.order-item(
       v-for="item in orderList"
       v-bind:key="item.id")
       el-row.order-item__top.text-center
-        el-col(:span="2")
-          span {{item.code ? item.code: '-'}}
-        el-col(:span="3")
-          span {{item.brand ? item.brand: '-'}}
         el-col(:span="1")
-          span {{item.size ? item.size: '-'}}
+          span {{item.gender ? item.gender: '0'}}
+        el-col(:span="1")
+          span {{item.type ? item.type: '0'}}
         el-col(:span="3")
-          span {{item.color ? item.color: '-'}}
+          span {{item.code ? item.code: '0'}}
+        el-col(:span="1")
+          span {{item.size ? item.size: '0'}}
         el-col(:span="2")
-          span {{item.num - item.useNum}} / {{item.num}}
-        el-col(:span="3")
-          span {{item.initAmount ? item.initAmount: '-'}}
-        el-col(:span="4")
-          span {{item.id}}
-        el-col(:span="6")
-          el-col(:span="5")
+          span {{item.brand ? item.brand: '0'}}
+        el-col(:span="2")
+          span {{item.color ? item.color: '0'}}
+        el-col(:span="1")
+          span {{item.initAmount ? item.initAmount: '0'}}
+        el-col(:span="1")
+          span {{item.num ? item.num: '0'}}
+        el-col(:span="2")
+          span {{item.availableNum ? item.availableNum: '0'}}
+        el-col(:span="2")
+          span {{item.transportNum ? item.transportNum: '0'}}
+        el-col(:span="2")
+          span {{item.backNum ? item.backNum: '0'}}
+        el-col(:span="1")
+          span {{item.saleNum ? item.saleNum: '0'}}
+        el-col(:span="1")
+          span {{item.clearNum ? item.clearNum: '0'}}
+        el-col(:span="2")
+          span {{item.hisBackNum ? item.hisBackNum: '0'}}
+        el-col(:span="2")
+          el-col(:span="12")
             el-button.btn-list__item-text(type="text" v-if="item.status === 'DISABLED'" disabled) 编辑
-            el-button.btn-list__item-text(type="text" v-else @click="editCode(item)") 编辑
-          el-col(:span="5")
+            el-button.btn-list__item-text(type="text" v-else @click="editCode(item)") 详情
+          //el-col(:span="5")
             el-button.btn-list__item-text(type="text" disabled) 上/下架
-          el-col(:span="5")
+          //el-col(:span="5")
             el-button.btn-list__item-text(type="text" disabled) 清算
-          el-col(:span="5")
-            el-button.btn-list__item-text(type="text" disabled) 删除
+          el-col(:span="10")
+            el-button.btn-list__item-text(type="text" @click="del (order)") 删除
   el-pagination.pagination(
     @size-change="handleSizeChange"
     @current-change="handleCurrentChange"

@@ -13,19 +13,64 @@
     el-form-item(label="创建类型" required)
       el-radio-group(v-model="form.origin")
         el-radio(v-for="item in originType" v-bind:key="item.name" v-bind:label="item.name") {{ item.text }}
-    el-form-item(label="风格标签" required)
-      el-select(v-model="form.style")
-        el-option(v-for="item in styleType" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
     el-row
-      h3.mt20.bc-grey5.p10.ml-30.pl30.mb30 商品信息
+      h3.mt20.bc-grey5.p10.ml-30.pl30.mb30 商品基本信息
     el-form-item(label="商品性别" required)
       el-select(v-model="form.gender")
         el-option(v-for="item in genderType" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
-    el-form-item(label="商品品类" required)
+    el-form-item(label="商品类别" required)
       el-select(v-model="form.type" @change="changeType")
         el-option(v-for="item in typeList" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
       el-select.pl20(v-model="form.childType")
         el-option(v-for="item in childTypeList" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
+    el-form-item(label="品牌" required)
+      el-select(v-model="form.brand" allow-create filterable)
+        el-option(v-for="item in brandType" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
+    el-form-item(label="规格" required)
+      el-col(:span="16")
+        el-table.wfull(:data="form.standList" v-model="form.standList")
+          el-table-column(type="index" :index="indexMethod")
+          el-table-column(prop="name" label="商品名称")
+          el-table-column(prop="code" label="款号")
+          el-table-column(prop="size" label="尺码")
+          el-table-column(prop="color" label="颜色")
+          el-table-column(prop="num" label="库存")
+          el-table-column(label="操作")
+            template(slot-scope="scope")
+              el-button(type="primary" icon="el-icon-edit" size="mini" circle @click="handleEdit(scope.$index, scope.row)")
+              el-button(type="danger" icon="el-icon-delete" size="mini" circle @click="handleDelete(scope.$index, scope.row)")
+      el-col.pt15(:span="3")
+        el-button(type="warning" icon="el-icon-plus" size="mini" circle @click="handleAdd()")
+    el-row
+      h3.mt20.bc-grey5.p10.ml-30.pl30.mb30 商品价格
+    el-form-item(label="采购折扣" prop="buycount")
+      el-input.w194(type="number" v-model="form.buycount" @change="disChange")
+        template(slot="append") 折
+      el-tooltip(content="采购折扣" placement="top")
+        a.el-icon-information.color-grey2.p-as.ml10
+    el-form-item(label="吊牌价" prop="initAmount")
+      el-input.w194(type="number" v-model="form.initAmount" @change="disChange")
+        template(slot="append") 元
+      el-tooltip(content="吊牌价" placement="top")
+        a.el-icon-information.color-grey2.p-as.ml10
+    el-form-item(label="采购价" prop="interAmount")
+      el-input.w194(type="number" v-model="form.interAmount" disabled)
+        template(slot="append") 元
+      el-tooltip(content="采购价" placement="top")
+        a.el-icon-information.color-grey2.p-as.ml10
+    el-form-item(label="零售折扣" prop="discount")
+      el-input.w194(type="number" v-model="form.discount" @change="disChange")
+        template(slot="append") 折
+      el-tooltip(content="零售折扣" placement="top")
+        a.el-icon-information.color-grey2.p-as.ml10
+    el-form-item(label="零售价" prop="realAmount")
+      el-input.w194(type="number" v-model="form.realAmount" disabled)
+        template(slot="append") 元
+    el-row
+      h3.mt20.bc-grey5.p10.ml-30.pl30.mb30 商品属性
+    el-form-item(label="风格标签" required)
+      el-select(v-model="form.style")
+        el-option(v-for="item in styleType" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
     el-form-item(label="材质" required)
       el-select(v-model="form.material")
         el-option(v-for="item in meType" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
@@ -38,43 +83,8 @@
     el-form-item(label="属性" required)
       el-select.w400(v-model="form.attr" multiple)
         el-option(v-for="item in attrType" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
-    el-form-item(label="款号" prop="code" required)
+    //el-form-item(label="款号" prop="code" required)
       el-input.w194(v-model="form.code")
-    el-form-item(label="规格" required)
-      el-col(:span="16")
-        el-table.wfull(:data="form.standList" v-model="form.standList")
-          el-table-column(type="index" :index="indexMethod")
-          el-table-column(prop="name" label="商品名称")
-          el-table-column(prop="size" label="尺码")
-          el-table-column(prop="color" label="颜色")
-          el-table-column(prop="num" label="库存")
-          el-table-column(label="操作")
-            template(slot-scope="scope")
-              el-button(type="primary" icon="el-icon-edit" size="mini" circle @click="handleEdit(scope.$index, scope.row)")
-              el-button(type="danger" icon="el-icon-delete" size="mini" circle @click="handleDelete(scope.$index, scope.row)")
-      el-col.pt15(:span="3")
-        el-button(type="warning" icon="el-icon-plus" size="mini" circle @click="handleAdd()")
-    el-form-item(label="品牌" required)
-      el-select(v-model="form.brand" allow-create filterable)
-        el-option(v-for="item in brandType" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
-    el-form-item(label="吊牌价" prop="initAmount")
-      el-input.w194(type="number" v-model="form.initAmount" @change="disChange")
-        template(slot="append") 元
-      el-tooltip(content="吊牌价" placement="top")
-        a.el-icon-information.color-grey2.p-as.ml10
-    el-form-item(label="采购价" prop="interAmount")
-      el-input.w194(type="number" v-model="form.interAmount")
-        template(slot="append") 元
-      el-tooltip(content="采购价" placement="top")
-        a.el-icon-information.color-grey2.p-as.ml10
-    el-form-item(label="零售折扣" prop="discount")
-      el-input.w194(type="number" v-model="form.discount" @change="disChange")
-        template(slot="append") 折
-      el-tooltip(content="零售折扣" placement="top")
-        a.el-icon-information.color-grey2.p-as.ml10
-    el-form-item(label="实付价格" prop="realAmount")
-      el-input.w194(type="number" v-model="form.realAmount" disabled)
-        template(slot="append") 元
     el-form-item(label="图片备份")
       el-upload(:http-request="Upload" ref="upload" :multiple="true" list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" action="")
         i.el-icon-plus
@@ -106,11 +116,13 @@
             label-position="left")
             el-form-item(label="名称" prop="name")
               el-input(v-model="stand.name")
+            el-form-item(label="款号" prop="code")
+              el-input(v-model="stand.code")
             el-form-item(label="尺码" prop="size")
               el-input(v-model="stand.size" type="number")
             el-form-item(label="颜色" prop="color")
               el-input(v-model="stand.color")
-            el-form-item(label="库存" prop="num")
+            el-form-item(label="数量" prop="num")
               el-input(v-model="stand.num" type="number")
       footer(slot="footer")
         el-button(@click="stand.dialogVisible = false") 取 消
@@ -132,6 +144,7 @@ export default {
         color: '',
         num: null,
         name: null,
+        code: null,
         dialogVisible: false
       },
       form: {
@@ -157,6 +170,10 @@ export default {
         {
           name: '下装',
           text: '下装'
+        },
+        {
+          name: '裙装',
+          text: '裙装'
         },
         {
           name: '一体',
@@ -221,12 +238,15 @@ export default {
         type: [
           { required: true, message: '请选择产品类型', trigger: 'blur' }
         ],
+        buycount: [
+          { required: true, message: '请输入采购折扣', trigger: 'blur' }
+        ],
         discount: [
           { required: true, message: '请输入零售折扣', trigger: 'blur' }
         ],
-        code: [
-          { required: true, message: '请输入款号', trigger: 'blur' }
-        ],
+        //code: [
+          //{ required: true, message: '请输入款号', trigger: 'blur' }
+        //],
         initAmount: [
           { required: true, message: '请输入吊牌价', trigger: 'blur' }
         ],
@@ -240,6 +260,9 @@ export default {
       standRules: {
         name: [
           { required: true, message: '请输入名称', trigger: 'blur' }
+        ],
+        code: [
+          { required: true, message: '请输入款号', trigger: 'blur' }
         ],
         size: [
           { required: true, message: '请输入尺码', trigger: 'blur' }
@@ -313,6 +336,7 @@ export default {
     handleAdd () {
       this.stand.dialogVisible = true
       this.stand.name = null
+      this.stand.code = null
       this.stand.size = null
       this.stand.color = null
       this.stand.num = null
@@ -326,6 +350,7 @@ export default {
     handleEdit (index, row) {
       this.stand.dialogVisible = true
       this.stand.name = row.name
+      this.stand.code = row.code
       this.stand.size = row.size
       this.stand.color = row.color
       this.stand.num = row.num
@@ -361,7 +386,7 @@ export default {
       let allCity = [
         {
           prov: '上装',
-          label: 'T恤'
+          label: 'T恤/衬衫/背心'
         },
         {
           prov: '上装',
@@ -369,7 +394,7 @@ export default {
         },
         {
           prov: '上装',
-          label: '羽绒'
+          label: '羽绒服'
         },
         {
           prov: '上装',
@@ -385,27 +410,31 @@ export default {
         },
         {
           prov: '上装',
-          label: '防晒衣'
+          label: '防晒衣/风衣'
         },
         {
           prov: '上装',
-          label: '毛衣/针织衫'
+          label: '毛衣/针织开衫'
         },
         {
           prov: '下装',
-          label: '长裤'
+          label: '休闲裤'
         },
         {
           prov: '下装',
-          label: '短裤'
+          label: '牛仔裤'
         },
         {
           prov: '下装',
-          label: '裙子'
+          label: '阔腿裤'
         },
         {
           prov: '下装',
-          label: '连衣裙'
+          label: '背带裤'
+        },
+        {
+          prov: '下装',
+          label: '连衣袜'
         },
         {
           prov: '一体',
@@ -426,6 +455,22 @@ export default {
         {
           prov: '一体',
           label: '连体衣/爬装'
+        },
+        {
+          prov: '裙装',
+          label: '连衣裙'
+        },
+        {
+          prov: '裙装',
+          label: '背心裙'
+        },
+        {
+          prov: '裙装',
+          label: '短裙'
+        },
+        {
+          prov: '裙装',
+          label: '半身裙'
         },
         {
           prov: '配件',
@@ -596,6 +641,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           var temp = {
+            code: this.stand.code,
             name: this.stand.name,
             size: this.stand.size,
             color: this.stand.color,
