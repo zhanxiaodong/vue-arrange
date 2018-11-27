@@ -27,10 +27,7 @@
     padding-top: 25px;
   }
 </style>
-
-
 <template lang="pug"> 
-    
 .my-order-tabs
   <div class="mabide">
   <div class="mabide-left"> 

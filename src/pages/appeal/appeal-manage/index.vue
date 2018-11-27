@@ -81,7 +81,7 @@
       el-select(v-model="form.season")
         el-option(v-for="item in seasonType" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
     el-form-item(label="属性" required)
-      el-select.w400(v-model="form.attr" multiple)
+      el-select(v-model="form.attr" multiple)
         el-option(v-for="item in attrType" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
     //el-form-item(label="款号" prop="code" required)
       el-input.w194(v-model="form.code")
@@ -91,8 +91,8 @@
       el-dialog(:visible.sync="dialogVisible")
         img(width="100%" :src="dialogImageUrl" alt="")
     el-col(:span="24")
-      h3.mt20.bc-grey5.p10.ml-30.pl30 发布商品
-    el-row.lh50
+     // h3.mt20.bc-grey5.p10.ml-30.pl30 发布商品
+    //el-row.lh50
       el-col
         span SKU:
         span    {{form.standList.length}}
