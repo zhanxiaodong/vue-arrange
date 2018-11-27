@@ -34,11 +34,11 @@
 .my-order-tabs
   <div class="mabide">
   <div class="mabide-left"> 
-      <el-select v-model="gender" placeholder="请选择性别" style="padding: 0 10px 10px 0;">
+      <el-select v-model="goods.gender" placeholder="请选择性别" style="padding: 0 10px 10px 0;">
        <el-option v-for="item in genderType" :key="item.name" :label="item.label" :value="item.name">
        </el-option>
       </el-select>
-      <el-select v-model="type" placeholder="请选择类别" style="padding: 0 10px 10px 0;">
+      <el-select v-model="goods.type" placeholder="请选择类别" style="padding: 0 10px 10px 0;">
        <el-option v-for="item in typeList" :key="item.name" :label="item.label" :value="item.name">
        </el-option>
       </el-select>
@@ -105,53 +105,45 @@ export default {
        * 搜索关键词
        * @type {String}
        */
-      keyword: null,
+      goods: {},
       /**
        * 账户资金菜单
        * @type {Array}
        */
       tabPane: [
         {
-          name: 'ALL',
+          name: 0,
           text: '所有商品'
         },
         {
-          name: 'TEMP',
+          name: 1,
           text: '可使用'
         },
         {
-          name: 'TEMP',
+          name: 2,
           text: '运输中'
         },
         {
-          name: 'TEMP',
-          text: '退货'
+          name: 3,
+          text: '退货中'
         },
         {
-          name: 'TEMP',
-          text: '未发布'
+          name: 4,
+          text: '售罄'
         },
         {
-          name: 'RELEASE',
-          text: '已发布'
-        },
-        {
-          name: 'CLEAR',
-          text: '已清算'
-        },
-        {
-          name: 'DISABLED',
-          text: '售完'
+          name: 5,
+          text: '清算'
         }
       ],
       genderType: [{
-          name: '选项1',
-          label: '男'
+          name: '男童',
+          label: '男童'
         }, {
-          name: '选项2',
-          label: '女'
+          name: '女童',
+          label: '女童'
         }, {
-          name: '选项3',
+          name: '通用',
           label: '通用'
         }
         ],
