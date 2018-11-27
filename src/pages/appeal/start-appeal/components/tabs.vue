@@ -27,30 +27,27 @@
     padding-top: 25px;
   }
 </style>
-
-
 <template lang="pug"> 
-    
 .my-order-tabs
   <div class="mabide">
   <div class="mabide-left"> 
-      <el-select v-model="gender" placeholder="请选择性别" style="padding: 0 10px 10px 0;">
+      <el-select v-model="goods.gender" placeholder="请选择性别" style="padding: 0 10px 10px 0;">
        <el-option v-for="item in genderType" :key="item.name" :label="item.label" :value="item.name">
        </el-option>
       </el-select>
-      <el-select v-model="type" placeholder="请选择类别" style="padding: 0 10px 10px 0;">
+      <el-select v-model="goods.type" placeholder="请选择类别" style="padding: 0 10px 10px 0;">
        <el-option v-for="item in typeList" :key="item.name" :label="item.label" :value="item.name">
        </el-option>
       </el-select>
-      <el-select v-model="size" placeholder="请选择尺码" style="padding: 0 10px 10px 0;">
+      <el-select v-model="goods.size" placeholder="请选择尺码" style="padding: 0 10px 10px 0;">
        <el-option v-for="item in standList" :key="item.name" :label="item.label" :value="item.name">
        </el-option>
       </el-select>
-      <el-select v-model="brand" placeholder="请选择品牌" style="padding: 0 10px 10px 0;">
+      <el-select v-model="goods.brand" placeholder="请选择品牌" style="padding: 0 10px 10px 0;">
        <el-option v-for="item in brandType" :key="item.name" :label="item.label" :value="item.name">
        </el-option>
       </el-select>
-      <el-select v-model="realAmount" placeholder="请选择金额" style="padding: 0 10px 10px 0;">
+      <el-select v-model="goods.realAmount" placeholder="请选择金额" style="padding: 0 10px 10px 0;">
        <el-option v-for="item in realAmountList" :key="item.name" :label="item.label" :value="item.name">
        </el-option>
       </el-select>
@@ -58,14 +55,14 @@
        <el-option v-for="item in styleType" :key="item.name" :label="item.label" :value="item.name">
        </el-option>
       </el-select>
-      <el-select v-model="state" placeholder="请选择商品状态" style="padding: 0 10px 10px 0;">
+      //<el-select v-model="goods.state" placeholder="请选择商品状态" style="padding: 0 10px 10px 0;">
        <el-option v-for="item in stateList" :key="item.name" :label="item.label" :value="item.name">
        </el-option>
-      </el-select>
-      <el-select v-model="status" placeholder="请选择盈利状态" style="padding: 0 10px 10px 0;">
+       </el-select>
+      //<el-select v-model="goods.status" placeholder="请选择盈利状态" style="padding: 0 10px 10px 0;">
        <el-option v-for="item in statusList" :key="item.name" :label="item.label" :value="item.name">
        </el-option>
-      </el-select>
+       </el-select>
   </div>
   <div class="mabide-right">
     <el-button type="primary" icon="el-icon-search">搜索</el-button>

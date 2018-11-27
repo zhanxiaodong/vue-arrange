@@ -70,7 +70,7 @@
         el-col(:span="2")
           el-col(:span="12")
             el-button.btn-list__item-text(type="text" v-if="item.status === 'DISABLED'" disabled) 编辑
-            el-button.btn-list__item-text(type="text" v-else @click="editCode(item)") 详情
+            el-button.btn-list__item-text(type="text" v-else @click="editCode(item)") 编辑
           //el-col(:span="5")
             el-button.btn-list__item-text(type="text" disabled) 上/下架
           //el-col(:span="5")
@@ -94,10 +94,10 @@
         label-width="100px")
         el-form-item(label="款号" prop="code" required)
           el-input.w194(v-model="goodsForm.code" :disabled="true")
-        el-form-item(label="零售折扣" prop="discount")
-          el-input.w194(type="number" v-model="goodsForm.discount")
-            template(slot="append") 折
-          el-tooltip(content="零售折扣" placement="top")
+        el-form-item(label="数量" prop="num")
+          el-input.w194(type="number" v-model="goodsForm.num")
+            //template(slot="append") 折
+          el-tooltip(content="数量" placement="top")
             a.el-icon-information.color-grey2.p-as.ml10
         el-form-item(label="操作" prop="updateBox")
           el-checkbox(v-model="goodsForm.updateBox") 是否需要更新已配货盒子的折扣
