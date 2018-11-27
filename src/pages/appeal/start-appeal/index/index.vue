@@ -22,7 +22,7 @@
       span 数量
     el-col(:span="2")
       span 可使用
-    el-col(:span="2")
+    el-col(:span="1")
       span 运输中
     el-col(:span="2")
       span 退货中
@@ -32,8 +32,8 @@
       span 清算
     el-col(:span="2")
       span 退回次数
-    el-col(:span="2")
-      span 状态
+    el-col(:span="3")
+      span 操作
   ul.order-list
     li.order-item(
       v-for="item in orderList"
@@ -57,7 +57,7 @@
           span {{item.num ? item.num: '0'}}
         el-col(:span="2")
           span {{item.availableNum ? item.availableNum: '0'}}
-        el-col(:span="2")
+        el-col(:span="1")
           span {{item.transportNum ? item.transportNum: '0'}}
         el-col(:span="2")
           span {{item.backNum ? item.backNum: '0'}}
@@ -67,16 +67,15 @@
           span {{item.clearNum ? item.clearNum: '0'}}
         el-col(:span="2")
           span {{item.hisBackNum ? item.hisBackNum: '0'}}
-        el-col(:span="2")
-          el-col(:span="12")
-            el-button.btn-list__item-text(type="text" v-if="item.status === 'DISABLED'" disabled) 编辑
-            el-button.btn-list__item-text(type="text" v-else @click="editCode(item)") 详情
-          //el-col(:span="5")
-            el-button.btn-list__item-text(type="text" disabled) 上/下架
-          //el-col(:span="5")
-            el-button.btn-list__item-text(type="text" disabled) 清算
-          el-col(:span="10")
-            el-button.btn-list__item-text(type="text" @click="del (order)") 删除
+        el-col(:span="3")
+          el-col(:span="6")
+            el-button.btn-list__item-text(type="text" @click="editCode(item)") 详情
+          el-col(:span="6")
+            el-button.btn-list__item-text(type="text" @click="inEdit(item.id,item.code)") 补录
+          el-col(:span="6")
+            el-button.btn-list__item-text(type="text" @click="clearEdit(item.id,item.code)") 清算
+          el-col(:span="6")
+            el-button.btn-list__item-text(type="text" @click="del(item.id)") 删除
   el-pagination.pagination(
     @size-change="handleSizeChange"
     @current-change="handleCurrentChange"
@@ -106,6 +105,32 @@
     span.dialog-footer(slot="footer") 
       el-button(@click="closeVisible = false") 取 消
       el-button(type="primary" @click="updateByCode('goodsForm')") 确 定
+  el-dialog.model( v-bind:visible.sync="inCloseVisible" width="40%" title="商品补录")
+    el-row
+      el-form(label-position="left" ref="inGoodsStock"
+        v-bind:model="inGoodsStock"
+        label-width="100px")
+        el-form-item(label="款号" prop="code")
+          el-input.w194(v-model="inGoodsStock.code" :disabled="true")
+        el-form-item(label="补录数量" prop="discount")
+          el-input.w194(type="number" v-model="inGoodsStock.inNum")
+    span.dialog-footer(slot="footer") 
+      el-button(@click="inCloseVisible = false") 取 消
+      el-button(type="primary" @click="inGoods('inGoodsStock')") 确 定
+  el-dialog.model( v-bind:visible.sync="clearCloseVisible" width="40%" title="商品清算")
+    el-row
+      el-form(label-position="left" ref="clearGoodsStock"
+        v-bind:model="clearGoodsStock"
+        label-width="100px")
+        el-form-item(label="款号" prop="code")
+          el-input.w194(v-model="clearGoodsStock.code" :disabled="true")
+        el-form-item(label="清算" prop="discount")
+          el-input.w194(type="number" v-model="clearGoodsStock.clearNum")
+        el-form-item(label="清算价格" prop="discount")
+          el-input.w194(type="clearPrice" v-model="clearGoodsStock.clearPrice")
+    span.dialog-footer(slot="footer") 
+      el-button(@click="clearCloseVisible = false") 取 消
+      el-button(type="primary" @click="clearGoods('clearGoodsStock')") 确 定
 </template>
 
 <script>
@@ -118,6 +143,17 @@ export default {
   data () {
     return {
       closeVisible: false,
+      inCloseVisible: false,
+      clearCloseVisible: false,
+      inGoodsStock: {
+        goodsId: '',
+        inNum:0
+      },
+      clearGoodsStock: {
+        goodsId: '',
+        clearPrice: 0,
+        clearNum:0
+      },
       goodsForm: {
         goodsId: '',
         code: '',
@@ -170,11 +206,11 @@ export default {
             cancelButtonText: '取消',
             type: 'info'
           }).then(() => {
-            this.$axios.post(this.$apis.goods.updateByCode, this.goodsForm).then((res) => {
+            this.$axios.post(this.$apis.goods.updateByCode, this.inGoodsStock).then((res) => {
               if (res.code === '1') {
                 this.$message.success('更新成功')
-                this.updateStatus()
-                this.closeVisible = false
+                this.getTaskList()
+                this.incloseVisible = false
               } else {
                 this.$message.error(res.message)
               }
@@ -188,11 +224,65 @@ export default {
         }
       })
     },
+    inEdit (goodsId,code) {
+      this.inGoodsStock.goodsId = goodsId
+      this.inGoodsStock.code = code
+      this.inCloseVisible = true
+    },
+    clearEdit (goodsId,code) {
+      this.clearGoodsStock.goodsId = goodsId
+      this.clearGoodsStock.code = code
+      this.clearCloseVisible = true
+    },
+    inGoods () {
+      this.$axios.post(this.$apis.goods.inGoods, this.inGoodsStock).then((res) => {
+	      if (res.code === '1') {
+	        this.$message.success('入库成功')
+	        this.getTaskList()
+	        this.inCloseVisible = false
+	      } else {
+	        this.$message.error(res.message)
+	      }
+	    }).catch((errRes) => {
+	      this.$message.error(errRes.message)
+	    })	
+    },
+    clearGoods () {
+      this.$axios.post(this.$apis.goods.clearGoods, this.clearGoodsStock).then((res) => {
+	      if (res.code === '1') {
+	        this.$message.success('清算成功')
+	        this.getTaskList()
+	        this.clearCloseVisible = false
+	      } else {
+	        this.$message.error(res.message)
+	      }
+	    }).catch((errRes) => {
+	      this.$message.error(errRes.message)
+	    })	
+    },
     /**
      * 通过款号来更新折扣
      * @function [editCode]
      * @param {Object} val -val
      */
+    editCode (item) {
+      var status = item.status
+      if (status === 'TEMP') {
+        this.$router.push({
+          name: 'appeal-manage',
+          params: {
+            dataobj: item
+          }
+        })
+      } else {
+        this.goodsForm.goodsId = item.id
+        this.goodsForm.code = item.code
+        this.goodsForm.discount = item.discount * 10
+        this.goodsForm.status = status
+        this.goodsForm.useNum = item.useNum
+        this.closeVisible = true
+      }
+    },
     editCode (item) {
       var status = item.status
       if (status === 'TEMP') {
@@ -244,16 +334,27 @@ export default {
      * @function [del]
      * @param {String} order -订单信息
      */
-    del (order) {
-      this.$confirm(`将删除订单 ${order.name}。删除后您可在回收站找回，或永久删除！`, '删除订单', {
+    del (goodsId) {
+      this.$confirm(`确定删除订单`, '删除订单', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        })
+      	this.$axios.post(this.$apis.goods.deleteGoodsById, {
+        goodsId: goodsId
+	      }).then((res) => {
+	        if (res.code === '1') {
+	          this.$message({
+		          type: 'success',
+		          message: '删除成功!'
+		        })
+	          this.getTaskList()
+	        } else {
+	          this.$message.error(res.message)
+	        }
+	      }).catch((errRes) => {
+	        this.$message.error(errRes.message)
+	      })
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -270,7 +371,7 @@ export default {
       this.$router.push({
         name: 'start-appeal-details',
         query: {
-          id: item.box.id
+          id: item.id
         }
       })
     },

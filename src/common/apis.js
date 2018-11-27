@@ -151,8 +151,14 @@ export default {
   goods: {
     // 保存或发布
     saveGoodsWeb: `${api.java}/merchant/category/saveGoodsWeb`,
+    // 保存或发布
+    deleteGoodsById: `${api.java}/merchant/category/deleteGoodsById`,
     // 更新
     updateGoodsWeb: `${api.java}/merchant/category/updateGoodsWeb`,
+    // 补录
+    inGoods: `${api.java}/merchant/category/inGoods`,
+    // 清算
+    clearGoods: `${api.java}/merchant/category/clearGoods`,
     // 分页查盒子
     findGoodsPages: `${api.java}/merchant/category/findGoodsPages`,
     // 查找未发布的规格
