@@ -26,16 +26,24 @@
   .mabide-right {
     padding-top: 25px;
   }
+  .el-input {
+    width: 170px;
+    margin: 0 10px 10px 0;
+  }
+  .el-select {
+    width: 170px;
+    margin: 0 10px 10px 0;
+  }
 </style>
 <template lang="pug"> 
 .my-order-tabs
   <div class="mabide">
   <div class="mabide-left"> 
-      <el-select v-model="searchData.goods.gender" placeholder="请选择性别" style="padding: 0 10px 10px 0;">
+      <el-select v-model="searchData.goods.gender" placeholder="请选择性别">
        <el-option v-for="item in genderType" :key="item.name" :label="item.label" :value="item.name">
        </el-option>
       </el-select>
-      <el-select v-model="searchData.goods.type" placeholder="请选择类别" style="padding: 0 10px 10px 0;">
+      <el-select v-model="searchData.goods.type" placeholder="请选择类别">
        <el-option v-for="item in typeList" :key="item.name" :label="item.label" :value="item.name">
        </el-option>
       </el-select>
@@ -47,7 +55,7 @@
       </el-input>
       <el-input v-model="searchData.maxMoney" type="Number" placeholder="请输入最大金额">
       </el-input>
-      <el-select v-model="searchData.goods.style" placeholder="请选择风格" style="padding: 0 10px 10px 0;">
+      <el-select v-model="searchData.goods.style" placeholder="请选择风格">
        <el-option v-for="item in styleType" :key="item.name" :label="item.label" :value="item.name">
        </el-option>
       </el-select>
@@ -94,7 +102,7 @@ export default {
         },
         {
           name: "4",
-          text: '售罄'
+          text: '售完'
         },
         {
           name: "5",

@@ -70,9 +70,9 @@
         el-col(:span="2")
           el-col(:span="12")
             el-button.btn-list__item-text(type="text" v-if="item.status === 'DISABLED'" disabled) 编辑
-            el-button.btn-list__item-text(type="text" v-else @click="editCode(item)") 编辑
+            el-button.btn-list__item-text(type="text" v-else @click="editCode(item)") 详情
           //el-col(:span="5")
-            el-button.btn-list__item-text(type="text" disabled) 上/下架
+            el-button.btn-list__item-text(type="text" disabled) 
           //el-col(:span="5")
             el-button.btn-list__item-text(type="text" disabled) 清算
           el-col(:span="10")
