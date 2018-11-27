@@ -75,19 +75,19 @@ el-card.box-card(v-bind:body-style="{display: [open ? 'block' : 'none']}")
           el-col.ft15.ft-bd 个性信息
           el-col
             span 场合需求: 
-            span.color-orange2 {{item.babyModify.occasions | listToStr}}
+            span.color-orange2 {{item.box.occasions | listToStr}}
           el-col
-            span 上装需求: 
-            span.color-orange2 {{item.babyModify.jackets | listToStr}}
+            span 需求原因: 
+            span.color-orange2 {{item.box.season | listToStr}}
           el-col
-            span 下装需求: 
-            span.color-orange2 {{item.babyModify.down | listToStr}}
+            span 风格偏好: 
+            span.color-orange2 {{item.box.consumList }}
           el-col
-            span 配件需求: 
-            span.color-orange2 {{item.babyModify.parts | listToStr}}
+            span 接受沟通: 
+            span.color-orange2 {{item.box.accepts | listToStr}}
         el-col(:span="4")    
           el-col.ft15.ft-bd 补充信息
-          el-col.color-orange2 {{item.babyModify.desc}}
+          el-col.color-orange2 {{item.box.remarks}}
 </template>
 
 <script>

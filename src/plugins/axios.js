@@ -5,7 +5,7 @@ import store from '@/store'
 // axios.defaults.baseURL = process.env.NODE_ENV === 'production'
 //   ? serverConfig.api
 //   : ''
-axios.defaults.timeout = 5000
+axios.defaults.timeout = 30000
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.defaults.headers.common['Authorization'] = `token ${store.state.user.token}`
 

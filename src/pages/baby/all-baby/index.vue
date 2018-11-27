@@ -105,8 +105,9 @@ export default {
      * @function [search]
      * @param {String} keyword -关键词
      */
-    search (keyword) {
+    search (keyword,level) {
       this.keyword = keyword
+      this.level = level
       this.pagination.currentPage = 1
       this.getBabyList()
     },
@@ -138,12 +139,13 @@ export default {
      * @param {Strig} item -订单
      */
     showDetails (item) {
-      this.$router.push({
+      const {href} = this.$router.resolve({
         name: 'baby-details',
         query: {
           id: item.id
         }
       })
+      window.open(href, '_blank')
     },
     /**
      * 获取孩子列表
@@ -156,7 +158,8 @@ export default {
         pageNo: this.pagination.currentPage - 1,
         // 当前页条数
         pageSize: this.pagination.pageSize,
-        content: this.keyword
+        content: this.keyword,
+        level: this.level
       }).then((res) => {
         if (res.code === '1') {
           this.babyList = res.data.babyList

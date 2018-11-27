@@ -295,6 +295,7 @@ export default {
      */
     Upload (file) {
       var fileName = file.file.uid + '.' + file.file.name.split('.')[1]
+      console.log(fileName)
       client().put(fileName, file.file).then(
         result => {
           this.form.imgUrl.push(result.url)
@@ -381,8 +382,7 @@ export default {
       var tempBrandList = []
       var total = 0
       var realTotal = 0
-      var tempStrArr = this.tempStrArr
-      console.log(tempStrArr)
+      var tempStrArr = []
       if (goodsList.length > 0) {
         for (var i = 0; i < goodsList.length; i++) {
           if (tempStrArr.indexOf(goodsList[i].brand) < 0) {
@@ -444,6 +444,7 @@ export default {
       }).then((res) => {
         if (res.code === '1') {
           if (res.data) {
+          	res.data.brandList = res.data.brandList.filter(item => item.desc)
             this.form = res.data
             var goodsList = res.data.goodsList
             if (goodsList) {

@@ -31,6 +31,7 @@
 .my-order-tabs
   <div class="mabide">
   <div class="mabide-left"> 
+<<<<<<< HEAD
       <el-select v-model="goods.gender" placeholder="请选择性别" style="padding: 0 10px 10px 0;">
        <el-option v-for="item in genderType" :key="item.name" :label="item.label" :value="item.name">
        </el-option>
@@ -63,29 +64,39 @@
        <el-option v-for="item in statusList" :key="item.name" :label="item.label" :value="item.name">
        </el-option>
        </el-select>
+=======
+      <el-select v-model="searchData.goods.gender" placeholder="请选择性别" style="padding: 0 10px 10px 0;">
+       <el-option v-for="item in genderType" :key="item.name" :label="item.label" :value="item.name">
+       </el-option>
+      </el-select>
+      <el-select v-model="searchData.goods.type" placeholder="请选择类别" style="padding: 0 10px 10px 0;">
+       <el-option v-for="item in typeList" :key="item.name" :label="item.label" :value="item.name">
+       </el-option>
+      </el-select>
+      <el-input v-model="searchData.goods.size" placeholder="请输入尺码">
+      </el-input>
+      <el-input v-model="searchData.goods.brand" placeholder="请输入品牌">
+      </el-input>
+      <el-input v-model="searchData.minMoney" type="Number" placeholder="请输入最小金额">
+      </el-input>
+      <el-input v-model="searchData.maxMoney" type="Number" placeholder="请输入最大金额">
+      </el-input>
+      <el-select v-model="searchData.goods.style" placeholder="请选择风格" style="padding: 0 10px 10px 0;">
+       <el-option v-for="item in styleType" :key="item.name" :label="item.label" :value="item.name">
+       </el-option>
+      </el-select>
+>>>>>>> a3943c36de8e5999722a03e24ee19381a156e7a7
   </div>
   <div class="mabide-right">
-    <el-button type="primary" icon="el-icon-search">搜索</el-button>
+    <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
   </div>
   </div>
-  el-tabs(v-model="activeStatus" @tab-click="handleClick") 
+  el-tabs(v-model="searchData.goodsStatus" @tab-click="handleClick") 
     el-tab-pane(
       v-for="item in tabPane"
       v-bind:key="item.name"
       v-bind:label="item.text"
       v-bind:name="item.name")
-    
-  //el-input.input(
-    v-model="keyword"
-    placeholder="款号"
-    @keyup.enter.native="search(keyword)")
-    i.el-icon-search.input__icon(
-      slot="suffix"
-      @click="search(keyword)")
-  //<el-select v-model="value5" multiple placeholder="请选择">
-    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-    </el-option>
-    </el-select>
 </template>
 
 <script>
@@ -93,67 +104,76 @@ import { ORIGIN_TYPE, STYLE_TYPE, GENDER_TYPE, SEASON_TYPE, ME_TYPE, SCENE_TYPE,
 export default {
   data () {
     return {
-      /**
-       * 当前路由
-       * @type {String}
-       */
-      activeStatus: this.$route.query.status,
-      /**
-       * 搜索关键词
-       * @type {String}
-       */
-      keyword: null,
-      /**
-       * 账户资金菜单
-       * @type {Array}
-       */
+    	searchData:{
+    		goodsStatus: this.$route.query.status,
+        goods: {},
+        minMoney: null,
+        maxMoney: null,
+    	},
       tabPane: [
         {
-          name: 'ALL',
+          name: "0",
           text: '所有商品'
         },
         {
-          name: 'TEMP',
+          name: "1",
           text: '可使用'
         },
         {
-          name: 'TEMP',
+          name: "2",
           text: '运输中'
         },
         {
-          name: 'TEMP',
-          text: '退货'
+          name: "3",
+          text: '退货中'
         },
         {
-          name: 'TEMP',
-          text: '未发布'
+          name: "4",
+          text: '售罄'
         },
         {
-          name: 'RELEASE',
-          text: '已发布'
-        },
-        {
-          name: 'CLEAR',
-          text: '已清算'
-        },
-        {
-          name: 'DISABLED',
-          text: '售完'
+          name: "5",
+          text: '清算'
         }
       ],
       genderType: [{
-          name: '选项1',
-          label: '男'
+          name: '男童',
+          label: '男童'
         }, {
-          name: '选项2',
-          label: '女'
+          name: '女童',
+          label: '女童'
         }, {
-          name: '选项3',
+          name: '通用',
           label: '通用'
         }
         ],
-        
-        name: ''   
+        typeList: [
+        {
+          name: '上装',
+          text: '上装'
+        },
+        {
+          name: '下装',
+          text: '下装'
+        },
+        {
+          name: '裙装',
+          text: '裙装'
+        },
+        {
+          name: '一体',
+          text: '一体'
+        },
+        {
+          name: '配件',
+          text: '配件'
+        },
+        {
+          name: '玩具/益智',
+          text: '玩具/益智'
+        }
+      ],
+      styleType: STYLE_TYPE,
     }
   },
   methods: {
@@ -177,17 +197,14 @@ export default {
     initTabs () {
       const status = this.$route.query.status
       if (!status) {
-        this.activeStatus = 'ALL'
-        this.handleClick({name: 'ALL'})
+        this.goodsStatus = "0"
+        this.handleClick({name: "0"})
       }
     },
-    /**
-     * 搜索
-     * @function [search]
-     * @param {String} keyword -关键词
-     */
-    search (keyword) {
-      this.$emit('search', keyword)
+    search () {
+    	var searchData = this.searchData;
+    	console.log(searchData)
+      this.$emit('search', searchData)
     }
   },
   watch: {
