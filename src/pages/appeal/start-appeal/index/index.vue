@@ -134,7 +134,12 @@ export default {
        * 搜索关键词
        * @type {String}
        */
-      keyword: null,
+      searchData: {
+      	goodsStatus:"0",
+      	goods: {},
+        minMoney: null,
+        maxMoney: null,
+      },
       /**
        * 商品列表
        * @type {Array}
@@ -229,10 +234,10 @@ export default {
      * @function [search]
      * @param {String} keyword -关键词
      */
-    search (keyword) {
-      this.keyword = keyword
+    search (searchData) {
+      this.searchData = searchData
       this.pagination.currentPage = 1
-      this.updateStatus()
+      this.getTaskList()
     },
     /**
      * 删除订单
@@ -279,11 +284,10 @@ export default {
         pageNo: this.pagination.currentPage - 1,
         // 当前页条数
         pageSize: this.pagination.pageSize,
-        neStatus: neStatus,
-        // 状态内的单子
-        inStatus: inStatus,
-        // 关键字搜索
-        content: this.keyword
+        goodsStatus: this.searchData.goodsStatus,
+        minMoney: this.searchData.minMoney,
+        maxMoney: this.searchData.maxMoney,
+        goods: this.searchData.goods,
       }).then((res) => {
         if (res.code === '1') {
           this.orderList = res.data.goodsList
