@@ -67,28 +67,16 @@
           span {{item.clearNum ? item.clearNum: '0'}}
         el-col(:span="2")
           span {{item.hisBackNum ? item.hisBackNum: '0'}}
-<<<<<<< HEAD
-        el-col(:span="2")
-          el-col(:span="12")
-            el-button.btn-list__item-text(type="text" v-if="item.status === 'DISABLED'" disabled) 编辑
-            el-button.btn-list__item-text(type="text" v-else @click="editCode(item)") 详情
-          //el-col(:span="5")
-            el-button.btn-list__item-text(type="text" disabled) 
-          //el-col(:span="5")
-            el-button.btn-list__item-text(type="text" disabled) 清算
-          el-col(:span="10")
-            el-button.btn-list__item-text(type="text" @click="del (order)") 删除
-=======
+
         el-col(:span="3")
           el-col(:span="6")
-            el-button.btn-list__item-text(type="text" @click="editCode(item)") 详情
+            el-button.btn-list__item-text(type="text" @click="showDetails(item)") 详情
           el-col(:span="6")
             el-button.btn-list__item-text(type="text" @click="inEdit(item.id,item.code)") 补录
           el-col(:span="6")
             el-button.btn-list__item-text(type="text" @click="clearEdit(item.id,item.code)") 清算
           el-col(:span="6")
             el-button.btn-list__item-text(type="text" @click="del(item.id)") 删除
->>>>>>> ce7f9c8c6bfde2c69f545919c06acce9b6f6dc87
   el-pagination.pagination(
     @size-change="handleSizeChange"
     @current-change="handleCurrentChange"
@@ -206,6 +194,7 @@ export default {
     }
   },
   methods: {
+    
     /**
      * 查找货物
      * @function [updateByCode]
@@ -364,7 +353,7 @@ export default {
 	          this.getTaskList()
 	        } else {
 	          this.$message.error(res.message)
-	        }
+	      }
 	      }).catch((errRes) => {
 	        this.$message.error(errRes.message)
 	      })
@@ -382,7 +371,7 @@ export default {
      */
     showDetails (item) {
       this.$router.push({
-        name: 'start-appeal-details',
+        name: 'start-appeal-goods',
         query: {
           id: item.id
         }

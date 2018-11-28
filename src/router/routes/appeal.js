@@ -35,6 +35,16 @@ export default [
               requiredLogin: true
             },
             component: () => import('../../pages/appeal/start-appeal/details/index.vue')
+          },
+          {
+            name: 'start-appeal-goods',
+            path: 'goods',
+            alias: '/goods',
+            meta: {
+              title: '商品详情',
+              requiredLogin: true
+            },
+            component: () => import('../../pages/appeal/start-appeal/goods/index.vue')
           }
         ]
       },
