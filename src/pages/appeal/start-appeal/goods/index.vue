@@ -43,8 +43,8 @@
         el-button(type="warning" icon="el-icon-plus" size="mini" circle @click="handleAdd()")
     el-row
       h3.mt20.bc-grey5.p10.ml-30.pl30.mb30 商品价格
-    el-form-item(label="采购折扣" prop="buycount")
-      el-input.w194(type="number" v-model="form.buycount" @change="disChange")
+    el-form-item(label="采购折扣" prop="purDiscount")
+      el-input.w194(type="number" v-model="form.purDiscount" @change="disChange")
         template(slot="append") 折
       el-tooltip(content="采购折扣" placement="top")
         a.el-icon-information.color-grey2.p-as.ml10
@@ -72,7 +72,7 @@
       el-select(v-model="form.style")
         el-option(v-for="item in styleType" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
     el-form-item(label="材质" required)
-      el-select(v-model="form.material")
+      el-select(v-model="form.textureMaterial")
         el-option(v-for="item in meType" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
     el-form-item(label="场景" required)
       el-select(v-model="form.scene")
@@ -86,7 +86,7 @@
     //el-form-item(label="款号" prop="code" required)
       el-input.w194(v-model="form.code")
     el-form-item(label="图片备份")
-      el-upload(:http-request="Upload" ref="upload" :multiple="true" list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" action="")
+      el-upload(:http-request="Upload" ref="upload" :file-list="imgs" :multiple="true" list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" action="")
         i.el-icon-plus
       el-dialog(:visible.sync="dialogVisible")
         img(width="100%" :src="dialogImageUrl" alt="")
@@ -104,7 +104,7 @@
         el-button.w100(type="danger" @click="saveT('form')")   保  存 
       el-col(:span="21")
         el-form-item
-          el-button(type="danger" @click="submit('form')") 保存商品
+          el-button(type="danger" @click="submit('form')" :disabled="disableSave") 保存商品
     el-dialog.model(title="规格信息" v-bind:visible.sync="stand.dialogVisible" width="40%")
       el-row.mt20
         el-col(:span="24")
@@ -138,6 +138,8 @@ export default {
       dialogVisible: false,
       dialogImageUrl: null,
       edit: false,
+      disableSave: false,
+      imgs: [],
       stand: {
         size: null,
         color: '',
@@ -153,7 +155,7 @@ export default {
         season: null,
         scene: null,
         standList: [],
-        material: null,
+        textureMaterial: null,
         discount: null,
         brand: null,
         type: null,
@@ -276,10 +278,10 @@ export default {
       totalNum: 0
     }
   },
+  created () {
+  	this.findGoodsById()
+  },
   methods: {
-    showA () {
-      console.log(this.address)
-    },
     /**
      * 图片移除
      * @function [Upload]
@@ -293,14 +295,6 @@ export default {
       }
     },
     /**
-     * 选择地址
-     * @function [selectAddress]
-     * @param {Object} address -地址信息
-     */
-    selectAddress (address) {
-      console.log('address--' + address)
-    },
-    /**
      * 图片预览
      * @function [Upload]
      * @param {Object} file - 图片内容
@@ -312,6 +306,7 @@ export default {
     disChange (value) {
       if (this.form.initAmount) {
         this.form.realAmount = this.form.initAmount * this.form.discount / 10
+        this.form.interAmount = this.form.initAmount * this.form.purDiscount / 10
       }
     },
     /**
@@ -320,6 +315,7 @@ export default {
      * @param {Object} file - 图片内容
      */
     Upload (file) {
+      console.log(this.imgUrl)
       var fileName = file.file.uid + '.' + file.file.name.split('.')[1]
       client().put(fileName, file.file).then(
         result => {
@@ -574,15 +570,32 @@ export default {
       this.childTypeList = tempCity
       this.form.childType = tempCh
     },
-    /**
-     * 跳转路由
-     * @function [handleClick]
-     * @param {Object} tab -标签页信息
-     */
-    handleClick (tab) {
-      this.$router.push({
-        name: tab.name
-      })
+    
+    findGoodsById () {
+    	this.$axios.post(this.$apis.goods.findGoodsById, {goodsId:this.$route.query.id}).then((res) => {
+	      if (res.code === '1') {
+	        this.form = res.data
+	        var standList = [
+	          {
+	            size: res.data.size,
+              color: res.data.color,
+              num: res.data.num,
+              name: res.data.name,
+              code: res.data.code,	
+	          }
+	        ]
+	        this.form.standList = standList
+	        this.disableSave = res.data.transportNum + res.data.backNum > 0
+	        this.imgs = []
+	        for(var i=0; i<this.form.imgUrl.length; i++) {
+	          this.imgs.push({url:this.form.imgUrl[i]})
+	        }
+	      } else {
+	        this.$message.error(res.message)
+	      }
+	    }).catch((errRes) => {
+	      this.$message.error(errRes.message)
+	    })
     },
     saveT (formName) {
       this.$refs[formName].validate((valid) => {
@@ -614,12 +627,10 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.form.standList.length > 0) {
-            this.form.status = 'RELEASE'
-            this.$axios.post(this.$apis.goods.saveGoodsWeb, this.form).then((res) => {
+            this.$axios.post(this.$apis.goods.updateGoodsWeb, this.form).then((res) => {
               if (res.code === '1') {
-                this.$message.success('发布成功')
-                this.$refs[formName].resetFields()
-                this.form.standList = []
+                this.$message.success('修改成功')
+                this.findGoodsById()
               } else {
                 this.$message.error(res.message)
               }

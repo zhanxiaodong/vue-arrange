@@ -72,7 +72,7 @@
       el-select(v-model="form.style")
         el-option(v-for="item in styleType" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
     el-form-item(label="材质" required)
-      el-select(v-model="form.material")
+      el-select(v-model="form.textureMaterial")
         el-option(v-for="item in meType" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
     el-form-item(label="场景" required)
       el-select(v-model="form.scene")
@@ -154,7 +154,7 @@ export default {
         season: '春季',
         scene: '节日',
         standList: [],
-        material: '棉型织物',
+        textureMaterial: '棉型织物',
         discount: null,
         brand: '巴布豆',
         type: '上装',
@@ -591,7 +591,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.form.standList.length > 0) {
-            this.form.status = 'TEMP'
+            this.form.status = 'RELEASE'
             this.$axios.post(this.$apis.goods.saveGoodsWeb, this.form).then((res) => {
               if (res.code === '1') {
                 this.$message.success('保存成功')

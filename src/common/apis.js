@@ -157,6 +157,8 @@ export default {
     updateGoodsWeb: `${api.java}/merchant/category/updateGoodsWeb`,
     // 补录
     inGoods: `${api.java}/merchant/category/inGoods`,
+    // 商品详情
+    findGoodsById: `${api.java}/merchant/category/findGoodsById`,
     // 清算
     clearGoods: `${api.java}/merchant/category/clearGoods`,
     // 分页查盒子
