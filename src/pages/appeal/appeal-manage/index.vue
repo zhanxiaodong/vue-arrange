@@ -43,8 +43,8 @@
         el-button(type="warning" icon="el-icon-plus" size="mini" circle @click="handleAdd()")
     el-row
       h3.mt20.bc-grey5.p10.ml-30.pl30.mb30 商品价格
-    el-form-item(label="采购折扣" prop="buycount")
-      el-input.w194(type="number" v-model="form.buycount" @change="disChange")
+    el-form-item(label="采购折扣" prop="purDiscount")
+      el-input.w194(type="number" v-model="form.purDiscount" @change="disChange")
         template(slot="append") 折
       el-tooltip(content="采购折扣" placement="top")
         a.el-icon-information.color-grey2.p-as.ml10
@@ -160,7 +160,8 @@ export default {
         type: '上装',
         childType: 'T恤',
         imgUrl: [],
-        realAmount: 0.00
+        realAmount: 0.00,
+        interAmount: 0.00
       },
       typeList: [
         {
@@ -310,9 +311,10 @@ export default {
       this.dialogImageUrl = file.url
       this.dialogVisible = true
     },
-    disChange (value) {
+    disChange () {
       if (this.form.initAmount) {
         this.form.realAmount = this.form.initAmount * this.form.discount / 10
+        this.form.interAmount = this.form.initAmount * this.form.purDiscount / 10
       }
     },
     /**

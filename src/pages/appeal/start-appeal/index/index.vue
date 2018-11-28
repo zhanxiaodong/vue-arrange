@@ -67,7 +67,10 @@
           span {{item.clearNum ? item.clearNum: '0'}}
         el-col(:span="2")
           span {{item.hisBackNum ? item.hisBackNum: '0'}}
+<<<<<<< HEAD
 
+=======
+>>>>>>> f784d427b393756abfebd67a5015594807ef5e5d
         el-col(:span="3")
           el-col(:span="6")
             el-button.btn-list__item-text(type="text" @click="showDetails(item)") 详情
