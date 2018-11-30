@@ -17,7 +17,7 @@
     el-col(:span="2")
       span 颜色
     el-col(:span="1")
-      span 采购价
+      span 零售价
     el-col(:span="1")
       span 数量
     el-col(:span="2")
@@ -336,7 +336,7 @@ export default {
      * @param {String} order -订单信息
      */
     del (goodsId) {
-      this.$confirm(`确定删除订单`, '删除订单', {
+      this.$confirm(`确定删除商品`, '删除商品', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -369,12 +369,13 @@ export default {
      * @param {Strig} item -订单
      */
     showDetails (item) {
-      this.$router.push({
+    	const {href} = this.$router.resolve({
         name: 'start-appeal-goods',
         query: {
           id: item.id
         }
       })
+      window.open(href, '_blank')
     },
     /**
      * 获取任务列表

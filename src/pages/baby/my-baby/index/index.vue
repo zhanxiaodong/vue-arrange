@@ -8,12 +8,12 @@
       span 顾客名称
     el-col(:span="3")
       span 注册日期
-    el-col(:span="4")
-      span 会员编号
     el-col(:span="3")
       span 会员类型
     el-col(:span="3")
       span 订阅计划
+    el-col(:span="4")
+      span 订阅时间
     el-col(:span="2")
       span 评级
     el-col(:span="5")
@@ -30,12 +30,12 @@
             span {{item.call}}
         el-col(:span="3")
           span {{item.createTime,'YYYY-MM-DD HH:mm' | timeFormat}}
-        el-col(:span="4")
-          span {{item.id}}
         el-col(:span="3")
           span {{item.userLev}}
         el-col(:span="3")
           span {{item.planDesc}}
+        el-col(:span="4")
+          span {{item.nextBoxTime,'YYYY-MM-DD HH:mm' | timeFormat}}
         el-col(:span="2")
           span {{item.level ? item.level:'b'}}
         el-col(:span="5")
