@@ -1,3 +1,59 @@
+<style scoped>
+.content {
+  padding: 10px 0;
+}
+.babyinfo-one,.babyinfo-two,.like-one,.like-two,.parentinfo,.account-money {
+  padding: 10px 0;
+}
+
+#line-distance {
+  padding: 20px 0;
+}
+
+#distance-bottom {
+  padding-bottom: 20px;
+}
+
+#babyimg {
+  padding-bottom: 30px;
+}
+
+#account {
+  padding-bottom: 10px;
+}
+.w100 {
+    width:100px;
+    height:100px;
+}
+
+/*.el-button--success {
+    color: #fff;
+    background-color: #67c23a;
+    border-color: #67c23a;
+}
+
+.el-button {
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid #dcdfe6;
+    color: #606266;
+    -webkit-appearance: none;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: 0;
+    margin: 0;
+    -webkit-transition: .1s;
+    transition: .1s;
+    font-weight: 500;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+  }*/
+</style>
 <template lang="pug">
 .my-baby-details
   el-col.text-center(:span="4")
@@ -5,26 +61,27 @@
     el-col {{baby.call}}
     el-col {{baby.birth | monthDiff}}
   el-col(:span="20")
-    el-row.rowcsf.lh30
+    el-row#header.rowcsf.lh30
       el-col.titlecs
         span 注册档案 ( {{baby.id}} )
-      el-col
-        el-col(:span="4")
+      el-col.content
+        el-col(:span="5")
           span 注册日期: {{baby.createTime,'YYYY/MM/DD' | timeFormat}}
-        el-col(:span="3")
+        //el-col(:span="3")
           span 芝麻认证: {{baby.aliCredit}}
-        el-col(:span="4")
-          span 微信号:  {{baby.nickName}}
-        el-col(:span="4")
+        el-col(:span="5")
           span 手机号:  {{baby.tel}}
-        el-col(:span="4")
-          span 会员类型:  {{baby.userLev}}
-        el-col(:span="4")
-          span 用户评级: {{baby.level}}
+        el-col(:span="7")
+          span 微信号:  {{baby.nickName}}       
       el-col
-        span 订阅计划: {{baby.planDesc}} {{baby.plan  | listToStr}}
+        el-col(:span="5")
+          span 会员类型:  {{baby.userLev}}
+        el-col(:span="5")
+          span 用户评级: {{baby.level}}
+        el-col(:span="7")
+          span 订阅计划: {{baby.planDesc}} {{baby.plan  | listToStr}}
     el-row.pt30.lh30
-      <div class="titlecs el-col el-col-24">宝贝信息 <span @click="dialogFormVisible = true" style="color: #04B8A0; padding-left: 5px;">修改</span></div>
+      <div id="distance-bottom" class="titlecs el-col el-col-24">宝贝信息 <span @click="dialogFormVisible = true" style="color: #04B8A0; padding-left: 20px;">修改</span></div>
     <el-dialog title="宝贝信息" :visible.sync="dialogFormVisible" style="margin-top: -10vh;">
      <el-form>
       <el-form-item label="姓名" :label-width="formLabelWidth">
@@ -64,20 +121,20 @@
         <el-button type="primary" @click="modifyBaby">确 定</el-button>
       </div>
     </el-dialog>
-      el-col
-        el-col(:span="4")
+      el-col.babyinfo-one
+        el-col(:span="5")
           span 姓名: {{baby.call}}
-        el-col(:span="3")
+        el-col(:span="5")
           span 性别: {{baby.gender}}
-        el-col(:span="4")
+        el-col(:span="5")
           span 生日: {{baby.birth}}
-      el-col
-        el-col(:span="4") 身高: {{baby.height}} cm
-        el-col(:span="3") 体重: {{baby.weight}} kg
-        el-col(:span="3") 鞋码: {{baby.size}} size
-        el-col(:span="3") 肤色: {{baby.skinColor}}
+      el-col.babyinfo-two
+        el-col(:span="5") 身高: {{baby.height}} cm
+        el-col(:span="5") 体重: {{baby.weight}} kg
+        el-col(:span="5") 鞋码: {{baby.size}} size
+        el-col(:span="5") 肤色: {{baby.skinColor}}
     el-row.pt30.lh30
-      <div class="titlecs el-col el-col-24">用户偏好<span @click="dialogFormVisible2 = true" style="color: #04B8A0; padding-left: 5px;">修改</span></div>
+      <div id="line-distance" class="titlecs el-col el-col-24">用户偏好<span @click="dialogFormVisible2 = true" style="color: #04B8A0; padding-left: 20px;">修改</span></div>
     <el-dialog title="用户偏好" :visible.sync="dialogFormVisible2">
      <el-form>
       <el-form-item label="风格" :label-width="formLabelWidth">
@@ -91,7 +148,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="注重" :label-width="formLabelWidth">
-       <el-checkbox-group v-model="baby.attitude" size="medium" :max=2>
+       <el-checkbox-group v-model="baby.attitude" size="medium">
         <el-checkbox-button v-for="attitude in attitudes" :label="attitude" :key="attitude">{{attitude}}</el-checkbox-button>
        </el-checkbox-group>
       </el-form-item>
@@ -106,31 +163,30 @@
         <el-button type="primary" @click="modifyUser">确 定</el-button>
       </div>
     </el-dialog>
-      el-col
-        el-col
-          span 风格: {{baby.style | listToStr}}
-        el-col
-          span 颜色: {{baby.colorType}}
-        el-col 注重: {{baby.attitude | listToStr}}
-        el-col 意愿: {{baby.consume | listToStr}}
+      el-col.like-one
+        el-col(:span="5") 风格: {{baby.style | listToStr}}
+        el-col(:span="5") 颜色: {{baby.colorType}}
+      el-col.like-two
+        el-col(:span="5") 注重: {{baby.attitude | listToStr}}
+        el-col(:span="5") 意愿: {{baby.consume | listToStr}}
     el-row.pt30.lh30
-      el-col.titlecs 家长属性
+      el-col#line-distance.titlecs 家长属性
       el-col
-        el-col
+        el-col.parentinfo
           span 类型: {{baby.selfEval}}
         el-col
           span 社交: {{baby.netWork | listToStr}}
     el-row.pt30.lh30
-      el-col.titlecs 宝贝照片
+      el-col#babyimg.titlecs 宝贝照片
       el-col
         //img(:src="baby.bodyPic ? baby.bodyPic:bodyde")
-        <img :src="baby.bodyPic ? baby.bodyPic:bodyde" style="width: 300px;height: 400px;">
+        <img :src="baby.bodyPic ? baby.bodyPic:bodyde" style="width: 300px;height: 240px;">
     el-row.pt30.lh30
-      el-col.titlecs 账户
-      el-col 
+      el-col#account.titlecs 账户
+      el-col.account-money
         el-col(:span="2") 余额: 
         el-col(:span="22") {{userAccount.balance}}
-      el-col
+      el-col.account-history
         el-col(:span="2")  记录: 
         el-col(:span="22")
           el-col(v-for="(item, index) in userAccount.recordList" v-bind:key="index")
@@ -138,7 +194,7 @@
             el-col(:span="3") {{item.dealType == '充值'? '+':item.dealType == '奖金'? '+':'-'}} {{item.amount}}
             el-col(:span="3") {{item.dealType}}
     el-row.pt30.lh30
-      el-col.titlecs 订单信息
+      el-col#account.titlecs 订单信息
       el-col
         el-col(v-for="(item, index) in boxRecord" v-bind:key="index")
           el-col(:span="2") 
@@ -146,6 +202,72 @@
             span.pl10 -
           el-col.pl10(:span="4") 
             el-button.btn(type="text" @click="showDetails(item)") {{item.orderNo}}
+    el-row.pt30.lh30
+      el-col#account.titlecs 用户评价
+      el-col
+        el-col(v-for="(item, index) in boxRecord" v-bind:key="index")
+          el-col(:span="2") 
+            span {{item.createTime,'YYYY/MM/DD' | timeFormat}}
+            span.pl10 -
+          el-col.pl10(:span="4") 
+            span {{}}
+    el-row.rowcs
+      el-col(:span="21")
+        el-col.titlecs 修正信息
+        el-row.lh30
+          el-col 体型: {{boxDetail.babyModify.shape}}
+          el-col 审美: {{boxDetail.babyModify.taste}}
+          el-col 态度: {{boxDetail.babyModify.attitude}}
+          el-col 消费: {{boxDetail.babyModify.consume}}
+          el-col 素质: {{boxDetail.babyModify.quality}}
+          el-col 补充说明: {{boxDetail.babyModify.descs}}
+      el-col(:span="2")
+        el-button(type="success" @click="talk") 修正
+        //el-button(type="info" disabled v-else) 修正
+  el-dialog.model( v-bind:visible.sync="talkVisible" width="45%" title="修正信息")
+    el-row
+      el-form(label-position="left" ref="talkForm"
+        v-bind:model="talkForm"
+        :before-close="handleClose"
+        label-width="80px")
+        el-form-item(label="体型" prop="shape")
+          el-col(:span="16")
+            el-radio-group(v-model="talkForm.shape")
+              el-radio(v-for="item in shapeType" v-bind:key="item.name" v-bind:label="item.name") {{ item.text }}
+          el-col(:span="8")
+            el-input(placeholder="输入标签" v-model="tempInput" @blur="inputChange('shape')")
+        el-form-item(label="审美")
+          el-col(:span="16")
+            el-radio-group(v-model="talkForm.taste")
+              el-radio(v-for="item in tasteType" v-bind:key="item.name" v-bind:label="item.name") {{ item.text }}
+          el-col(:span="8")
+            el-input(placeholder="输入标签" v-model="tempInput" @blur="inputChange('taste')")
+        el-form-item(label="态度" prop="attitude")
+          el-col(:span="16")
+            el-radio-group(v-model="talkForm.attitude")
+              el-radio(v-for="item in attitudeType" v-bind:key="item.name" v-bind:label="item.name") {{ item.text }}
+          el-col(:span="8")
+            el-input(placeholder="输入标签" v-model="tempInput" @blur="inputChange('attitude')")
+        el-form-item(label="消费" prop="consume")
+          el-col(:span="16")
+            el-radio-group(v-model="talkForm.consume")
+              el-radio(v-for="item in consumeType" v-bind:key="item.name" v-bind:label="item.name") {{ item.text }}
+          el-col(:span="8")
+            el-input(placeholder="输入标签" v-model="tempInput" @blur="inputChange('consume')")
+        el-form-item(label="素质" prop="quality")
+          el-col(:span="16")
+            el-radio-group(v-model="talkForm.quality")
+              el-radio(v-for="item in qualityType" v-bind:key="item.name" v-bind:label="item.name") {{ item.text }}
+          el-col(:span="8")
+            el-input(placeholder="输入标签" v-model="tempInput" @blur="inputChange('quality')")
+        el-form-item(label="评级" prop="level")
+          el-radio-group(v-model="talkForm.level")
+            el-radio(v-for="item in levelType" v-bind:key="item.name" v-bind:label="item.name") {{ item.text }}
+        el-form-item(label="补充说明" prop="descs")
+          el-input(type="textarea" :rows="6" placeholder="补充信息" v-model="talkForm.descs")
+    span.dialog-footer(slot="footer") 
+      el-button(@click="closeTalk('talkForm')") 取 消
+      el-button(type="primary" @click="confirmTalk('talkForm')") 确 定
 </template>
 
 <script>
@@ -161,7 +283,21 @@ export default {
       dialogFormVisible2: false,
       dialogFormVisible: false,
       dialogVisible: false,
+      talkVisible: false,
       showImg: false,
+      talkForm: {
+        boxId: '',
+        babyId: '',
+        consume: '',
+        level: '',
+        descs: '',
+        quality: '',
+        attitude: '',
+        shape: ''
+      },
+      boxDetail: {
+        babyModify: {}
+      },
       userAccount: {
         balance: 0,
         recordList: []
@@ -185,6 +321,170 @@ export default {
     clickImg (e) {
       this.showImg = true
     },
+    /*修改信息*/
+    confirmTalk (formName) {
+      var item = this.talkForm
+      this.$axios.post(this.$apis.task.updateBoxModify, item).then((res) => {
+        if (res.code === '1') {
+          this.$message.success('更新成功')
+          this.talkVisible = false
+          this.boxDetail.babyModify.shape = this.talkForm.shape
+          this.boxDetail.babyModify.taste = this.talkForm.taste
+          this.boxDetail.babyModify.attitude = this.talkForm.attitude
+          this.boxDetail.babyModify.consume = this.talkForm.consume
+          this.boxDetail.babyModify.quality = this.talkForm.quality
+          this.boxDetail.babyModify.level = this.talkForm.level
+          this.boxDetail.babyModify.descs = this.talkForm.descs
+          this.boxDetail.baby.level = this.talkForm.level
+          this.$refs[formName].resetFields()
+        } else {
+          this.$message.error(res.message)
+        }
+      }).catch((errRes) => {
+        this.$message.error(errRes.message)
+      })
+    },
+    talk () {
+      this.talkForm.babyId = this.boxDetail.baby.id
+      this.talkForm.boxId = this.boxDetail.box.id
+      this.talkForm.level = this.boxDetail.baby.level ? this.boxDetail.baby.level : 'b'
+      this.talkForm.descs = this.boxDetail.babyModify.descs
+      this.talkForm.shape = this.boxDetail.babyModify.shape
+      this.updateBasic('shape', this.boxDetail.babyModify.shape)
+      this.talkForm.taste = this.boxDetail.babyModify.taste
+      this.updateBasic('taste', this.boxDetail.babyModify.taste)
+      this.talkForm.attitude = this.boxDetail.babyModify.attitude
+      this.updateBasic('attitude', this.boxDetail.babyModify.attitude)
+      this.talkForm.quality = this.boxDetail.babyModify.quality
+      this.updateBasic('quality', this.boxDetail.babyModify.quality)
+      this.talkForm.consume = this.boxDetail.babyModify.consume
+      this.updateBasic('consume', this.boxDetail.babyModify.consume)
+      this.talkVisible = true
+    },
+     updateBasic (type, value) {
+      var updateBas = false
+      var temp
+      var newO = {}
+      switch (type) {
+        case 'shape':
+          temp = SHAPE_TYPE
+          for (var a = 0; a < temp.length; a++) {
+            if (value === temp[a].name) {
+              updateBas = true
+              break
+            }
+          }
+          if (!updateBas && value) {
+            newO.text = value
+            newO.name = value
+            temp.splice(3, 1, newO)
+            this.shapeType = temp
+          }
+          this.talkForm.shape = value
+          break
+        case 'taste':
+          this.talkForm.taste = value
+          temp = TASTE_TYPE
+          for (var b = 0; b < temp.length; b++) {
+            if (value === temp[b].name) {
+              updateBas = true
+              break
+            }
+          }
+          if (!updateBas && value) {
+            newO.text = value
+            newO.name = value
+            temp.push(newO)
+            this.tasteType = temp
+          }
+          break
+        case 'attitude':
+          this.talkForm.attitude = value
+          temp = ATTI_TYPE
+          for (var c = 0; c < temp.length; c++) {
+            if (value === temp[c].name) {
+              updateBas = true
+              break
+            }
+          }
+          if (!updateBas && value) {
+            newO.text = value
+            newO.name = value
+            temp.push(newO)
+            this.attitudeType = temp
+          }
+          break
+        case 'quality':
+          this.talkForm.quality = value
+          temp = QUAL_TYPE
+          for (var d = 0; d < temp.length; d++) {
+            if (value === temp[d].name) {
+              updateBas = true
+              break
+            }
+          }
+          if (!updateBas && value) {
+            newO.text = value
+            newO.name = value
+            temp.push(newO)
+            this.qualityType = temp
+          }
+          break
+        case 'consume':
+          this.talkForm.consume = value
+          temp = CONSUME_TYPE
+          for (var i = 0; i < temp.length; i++) {
+            if (value === temp[i].name) {
+              updateBas = true
+              break
+            }
+          }
+          if (!updateBas && value) {
+            newO.text = value
+            newO.name = value
+            temp.push(newO)
+            this.consumeType = temp
+          }
+          break
+        default:
+          break
+      }
+      temp = []
+    },
+    handleClose (done) {
+      this.$refs['talkForm'].resetFields()
+    },
+    closeTalk (formName) {
+      this.$refs[formName].resetFields()
+      this.talkVisible = false
+    },
+    inputChange (type) {
+      var value = this.tempInput
+      this.updateBasic(type, value)
+      this.tempInput = ''
+    },
+    /*newBox () {
+      this.$router.push({
+        name: 'new-task',
+        query: {
+          id: this.$route.query.id
+        }
+      })
+    },
+    look () {
+      var status = this.boxDetail.box.status
+      if (status === 'LINK_UP' || status === 'CREATE' || status === 'CLOSE') {
+        return false
+      } else {
+        this.$router.push({
+          name: 'new-task',
+          params: {
+            lookobj: this.boxDetail.box.id
+          }
+        })
+      }
+    },*/
+    
     /**
      * 查看订单详情
      * @function [showDetails]
@@ -267,7 +567,11 @@ export default {
     }
   },
   mounted () {
+    let routerParams = this.$route.params.dataobj
+    if (routerParams) {
+      this.routerParams = routerParams
+    }
     this.getBabyDetail(this.$route.query.id)
-  }
+  },
 }
 </script>

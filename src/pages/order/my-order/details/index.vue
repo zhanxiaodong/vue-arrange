@@ -1,3 +1,8 @@
+<style scoped>
+ #nimeide {
+      width: 95%;
+    } 
+</style>
 <template lang="pug">
 .my-order-details
   el-col.text-center(:span="4")
@@ -118,25 +123,39 @@
             el-col(:span="5")
               span 服务评价: 
               span {{boxDetail.evalua.ser ? boxDetail.evalua.ser + '星' : '-'}}
-          el-col.bc-grey2.text-center.lh30(:span="20")
-            el-col(:span="3") 序号
-            el-col(:span="3") 点赞
-            el-col(:span="3") 尺码
-            el-col(:span="3") 款式
-            el-col(:span="3") 颜色
-            el-col(:span="3") 价格
-            el-col(:span="3") 品牌
-            el-col(:span="3") 留下
-          el-col.text-center.bc-grey4.mt10.lh30(:span="20" v-for="(item, index) in boxDetail.evalua.evaList" v-bind:key="index")
-            el-col(:span="3") # {{index + 1}}
-            el-col(:span="3") -
-            el-col(:span="3") {{item.size ? item.size:'-'}}
-            el-col(:span="3") {{item.style ? item.style:'-'}}
-            el-col(:span="3") {{item.color ? item.color:'-'}}
-            el-col(:span="3") {{item.con ? item.con:'-'}}
-            el-col(:span="3") {{item.ma ? item.ma:'-'}}
-            el-col(:span="3") {{item.pay? '留下':'-'}}
-          el-col.bc-orange2.mt10.lh30.pl10(:span="20" v-for="item in boxDetail.payList"  v-bind:key="item.time")
+            el-col(:span="5")
+              span 推荐成功率: 
+              span {{boxDetail.evalua.ser ? boxDetail.evalua.ser + '星' : '-'}}
+            el-col(:span="5")
+              span 支付率: 
+              span {{boxDetail.evalua.ser ? boxDetail.evalua.ser + '星' : '-'}}
+          el-col#nimeide.bc-grey2.text-center.lh30(:span="20")
+            el-col(:span="2") 序号
+            el-col(:span="2") 点赞
+            el-col(:span="2") 尺码
+            el-col(:span="2") 款式
+            el-col(:span="2") 颜色
+            el-col(:span="2") 价格
+            el-col(:span="2") 品牌
+            el-col(:span="2") 留下
+            el-col(:span="2") 销售价格
+            el-col(:span="2") 推广费
+            el-col(:span="2") 销售金额
+            el-col(:span="2") 利润
+          el-col#nimeide.text-center.bc-grey4.mt10.lh30(:span="20" v-for="(item, index) in boxDetail.evalua.evaList" v-bind:key="index")
+            el-col(:span="2") # {{index + 1}}
+            el-col(:span="2") -
+            el-col(:span="2") {{item.size ? item.size:'-'}}
+            el-col(:span="2") {{item.style ? item.style:'-'}}
+            el-col(:span="2") {{item.color ? item.color:'-'}}
+            el-col(:span="2") {{item.con ? item.con:'-'}}
+            el-col(:span="2") {{item.ma ? item.ma:'-'}}
+            el-col(:span="2") {{item.pay? '留下':'-'}}
+            el-col(:span="2") {{item.color ? item.color:'-'}}
+            el-col(:span="2") {{item.con ? item.con:'-'}}
+            el-col(:span="2") {{item.ma ? item.ma:'-'}}
+            el-col(:span="2") {{item.pay? '留下':'-'}}
+          el-col#nimeide.bc-orange2.mt10.lh30.pl10(:span="20" v-for="item in boxDetail.payList"  v-bind:key="item.time")
             el-col
               span 付款总额: 
               span {{item.amount? item.amount : '-'}}
