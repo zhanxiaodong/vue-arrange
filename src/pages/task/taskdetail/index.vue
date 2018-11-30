@@ -10,7 +10,7 @@
           span {{form.nowTime,'YYYY/MM/DD' | timeFormat}}
         el-col.fir(:span="14") 盒子清单 - {{form.orderNo ? form.orderNo : 'M1704031221180422'}} - 迷你王国
       el-row.pt115.pb15.row-ff
-        el-col.sec-t.pl100(:span="10") To {{form.baby}}小朋友 的穿搭建议
+        el-col.sec-t.pl100(:span="10") To {{form.baby}} 的穿搭建议
         el-col.sec-c(:span="14") Selected by {{form.stylist}} | 迷你王国       订单编号：{{form.orderNo ? form.orderNo : 'M1704031221180422'}}
       el-row.pl100.pr100.pt50.advicecs
         el-col.other.h600.ft36(v-html="form.remark")
