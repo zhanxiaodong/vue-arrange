@@ -37,14 +37,13 @@
       &__btn
         position fixed
         top 130px
-        left 20px
         height 40px
         line-height 40px
-        width 150px
+        width 160px
         padding-left 20px
         padding-right 20px
         font-size 16px
-        background-color $color-blue3
+        background-color $color-green3
         color $color-white
 
   .right
