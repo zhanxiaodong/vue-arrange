@@ -2,7 +2,7 @@
 .start-appeal-index
   el-row
     el-col(:span="24")
-      tabs(@search="search")
+      tabs(@search="search" :goodsReport="goodsReport")
   el-row.header.text-center
     el-col(:span="1")
       span 性别
@@ -176,6 +176,36 @@ export default {
         minMoney: null,
         maxMoney: null,
       },
+      goodsReport:[
+        {
+          name: "0",
+          text: '所有商品'
+        },
+        {
+          name: "1",
+          text: '可使用'
+        },
+        {
+          name: "2",
+          text: '运输中'
+        },
+        {
+          name: "3",
+          text: '退货中'
+        },
+        {
+          name: "4",
+          text: '销售'
+        },
+        {
+          name: "5",
+          text: '清算'
+        },
+        {
+          name: "6",
+          text: '售完'
+        }
+      ],
       /**
        * 商品列表
        * @type {Array}
@@ -394,6 +424,7 @@ export default {
       }).then((res) => {
         if (res.code === '1') {
           this.orderList = res.data.goodsList
+          this.report(res.data.goodsReport)
           this.pagination.total = res.data.totalElements || 0
         } else {
           this.$message.error(res.message)
@@ -401,6 +432,14 @@ export default {
       }).catch((errRes) => {
         this.$message.error(errRes.message)
       })
+    },
+    report (goodsReport) {
+      this.goodsReport[0].text = '所有商品('+goodsReport.sum+')'
+      this.goodsReport[1].text = '可使用('+goodsReport.availableSum+')'
+      this.goodsReport[2].text = '运输中('+goodsReport.transportSum+')'
+      this.goodsReport[3].text = '退货中('+goodsReport.backSum+')'
+      this.goodsReport[4].text = '销售('+goodsReport.saleSum+')'
+      this.goodsReport[5].text = '清算('+goodsReport.clearSum+')'
     },
     updateStatus () {
       let status = this.$route.query.status

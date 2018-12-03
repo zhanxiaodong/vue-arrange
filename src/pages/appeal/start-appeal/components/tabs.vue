@@ -68,7 +68,7 @@
   </div>
   el-tabs(v-model="searchData.goodsStatus" @tab-click="handleClick") 
     el-tab-pane(
-      v-for="item in tabPane"
+      v-for="item in goodsReport"
       v-bind:key="item.name"
       v-bind:label="item.text"
       v-bind:name="item.name")
@@ -77,6 +77,10 @@
 <script>
 import { ORIGIN_TYPE, STYLE_TYPE, GENDER_TYPE, SEASON_TYPE, ME_TYPE, SCENE_TYPE, BRAND_TYPE, ATTR_TYPE } from '@/common/constants'
 export default {
+	props: {
+    goodsReport: {},
+    required: true
+ },
   data () {
     return {
     	searchData:{
@@ -104,11 +108,15 @@ export default {
         },
         {
           name: "4",
-          text: '售完'
+          text: '销售'
         },
         {
           name: "5",
           text: '清算'
+        },
+        {
+          name: "6",
+          text: '售完'
         }
       ],
       genderType: [{
@@ -178,9 +186,8 @@ export default {
     },
     search () {
     	var searchData = this.searchData;
-    	console.log(searchData)
       this.$emit('search', searchData)
-    }
+    },
   },
   watch: {
     '$route.query.status' () {

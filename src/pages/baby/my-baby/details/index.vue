@@ -195,22 +195,19 @@
             el-col(:span="3") {{item.dealType}}
     el-row.pt30.lh30
       el-col#account.titlecs 订单信息
-      el-col
-        el-col(v-for="(item, index) in boxRecord" v-bind:key="index")
+      el-col(v-for="(item, index) in boxRecord" v-bind:key="index")
+        el-col
           el-col(:span="2") 
             span {{item.createTime,'YYYY/MM/DD' | timeFormat}}
             span.pl10 -
           el-col.pl10(:span="4") 
             el-button.btn(type="text" @click="showDetails(item)") {{item.orderNo}}
-    el-row.pt30.lh30
-      el-col#account.titlecs 用户评价
-      el-col
-        el-col(v-for="(item, index) in boxRecord" v-bind:key="index")
+        el-col
           el-col(:span="2") 
-            span {{item.createTime,'YYYY/MM/DD' | timeFormat}}
+            span {{item.goodsEval.createTime,'YYYY/MM/DD' | timeFormat}}
             span.pl10 -
-          el-col.pl10(:span="4") 
-            span {{}}
+          el-col.pl10(:span="22").titlecs
+            span {{item.goodsEval.desc}}
     el-row.rowcs
       el-col(:span="21")
         el-col.titlecs 修正信息

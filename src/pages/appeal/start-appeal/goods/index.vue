@@ -35,10 +35,10 @@
           el-table-column(prop="size" label="尺码")
           el-table-column(prop="color" label="颜色")
           el-table-column(prop="num" label="库存")
-          //el-table-column(label="操作")
+          el-table-column(label="操作")
             template(slot-scope="scope")
               el-button(type="primary" icon="el-icon-edit" size="mini" circle @click="handleEdit(scope.$index, scope.row)")
-              el-button(type="danger" icon="el-icon-delete" size="mini" circle @click="handleDelete(scope.$index, scope.row)")
+              //el-button(type="danger" icon="el-icon-delete" size="mini" circle @click="handleDelete(scope.$index, scope.row)")
       //el-col.pt15(:span="3")
         el-button(type="warning" icon="el-icon-plus" size="mini" circle @click="handleAdd()")
     el-row
@@ -123,7 +123,7 @@
             el-form-item(label="颜色" prop="color")
               el-input(v-model="stand.color")
             el-form-item(label="数量" prop="num")
-              el-input(v-model="stand.num" type="number")
+              el-input(v-model="stand.num" type="number" disabled)
       footer(slot="footer")
         el-button(@click="stand.dialogVisible = false") 取 消
         el-button(type="success" @click="save('stand')") 确 定
@@ -627,6 +627,11 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.form.standList.length > 0) {
+          	this.form.size = this.form.standList[0].size
+          	this.form.color = this.form.standList[0].color
+          	this.form.name = this.form.standList[0].name
+          	this.form.code = this.form.standList[0].code
+          	console.log(this.form)
             this.$axios.post(this.$apis.goods.updateGoodsWeb, this.form).then((res) => {
               if (res.code === '1') {
                 this.$message.success('修改成功')
