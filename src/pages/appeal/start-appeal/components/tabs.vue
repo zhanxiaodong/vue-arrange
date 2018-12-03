@@ -39,11 +39,11 @@
 .my-order-tabs
   <div class="mabide">
   <div class="mabide-left"> 
-      <el-select v-model="searchData.goods.gender" placeholder="请选择性别">
+      <el-select v-model="searchData.goods.gender" placeholder="请选择性别" clearable>
        <el-option v-for="item in genderType" :key="item.name" :label="item.label" :value="item.name">
        </el-option>
       </el-select>
-      <el-select v-model="searchData.goods.type" placeholder="请选择类别">
+      <el-select v-model="searchData.goods.type" placeholder="请选择类别" clearable>
        <el-option v-for="item in typeList" :key="item.name" :label="item.label" :value="item.name">
        </el-option>
       </el-select>
@@ -51,11 +51,13 @@
       </el-input>
       <el-input v-model="searchData.goods.brand" placeholder="请输入品牌">
       </el-input>
+      <el-input v-model="searchData.goods.code" placeholder="请输入货号">
+      </el-input>
       <el-input v-model="searchData.minMoney" type="Number" placeholder="请输入最小金额">
       </el-input>
       <el-input v-model="searchData.maxMoney" type="Number" placeholder="请输入最大金额">
       </el-input>
-      <el-select v-model="searchData.goods.style" placeholder="请选择风格">
+      <el-select v-model="searchData.goods.style" placeholder="请选择风格" clearable>
        <el-option v-for="item in styleType" :key="item.name" :label="item.label" :value="item.name">
        </el-option>
       </el-select>

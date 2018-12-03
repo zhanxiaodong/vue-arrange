@@ -5,8 +5,8 @@ module.exports = {
       koa2: 'http://api.koa2.bananayc.com'
     },
     dev: {
-        java: 'https://interface.miniones.cn',
+        java: 'http://interface.miniones.cn',
         koa2: 'http://api.koa2.dev.bananayc.com'
     }
-  }	
+  }
 }
