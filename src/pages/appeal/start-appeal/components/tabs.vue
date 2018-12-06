@@ -117,6 +117,10 @@ export default {
         {
           name: "6",
           text: '售完'
+        },
+        {
+          name: "7",
+          text: '退回'
         }
       ],
       genderType: [{

@@ -204,6 +204,10 @@ export default {
         {
           name: "6",
           text: '售完'
+        },
+        {
+          name: "7",
+          text: '退回'
         }
       ],
       /**
@@ -440,6 +444,8 @@ export default {
       this.goodsReport[3].text = '退货中('+goodsReport.backSum+')'
       this.goodsReport[4].text = '销售('+goodsReport.saleSum+')'
       this.goodsReport[5].text = '清算('+goodsReport.clearSum+')'
+      this.goodsReport[6].text = '售完'
+      this.goodsReport[7].text = '退回('+goodsReport.hisBackSum+')'
     },
     updateStatus () {
       let status = this.$route.query.status
