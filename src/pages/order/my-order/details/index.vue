@@ -200,9 +200,9 @@
           el-col.bc-grey4(:span="4") # {{index + 1}}
           el-col.bc-grey4(:span="10") {{item.pay? '留下':'-'}}  
           el-col(:span="5") 
-            <input type="radio" name="sendException" value="121" v-model="checkedValue" @click="getValue">
+            <input type="radio" name="sendException" value="item.id" @click="getValue(item.id)">
           el-col(:span="2")
-            <input type="radio" name="sendException" value="12" v-model="checkedValue" @click="getValue">
+            <input type="radio" name="sendException" value="item.id" @click="getValue2(item.id)">
         el-col.stream-info 
           el-col(:span="2") 运单编号:
           el-col(:span="22") {{boxDetail.expressBack ? boxDetail.expressBack.expressNo : '-'}}
@@ -370,7 +370,6 @@ import { CONSUME_TYPE, LEVEL_TYPE, SHAPE_TYPE, TASTE_TYPE, ATTI_TYPE, QUAL_TYPE 
 export default {
   data () {
     return {
-      checkedValue:'',
       tempInput: '',
       qualityType: QUAL_TYPE,
       attitudeType: ATTI_TYPE,
@@ -449,7 +448,8 @@ export default {
       toExpress: false,
       backExpress: false,
       evaus: false,
-      imgurl: '/static/ava.png'
+      imgurl: '/static/ava.png',
+      returnException:{"boxId":null,"needBackGoods":[],"unNeedBackGoods":[]}
     }
   },
   methods: {
@@ -791,8 +791,20 @@ export default {
     showExpressDia () {
       this.dialogVisible = true
     },
-    getValue () {
-      console.log('item' + this.checkedValue)
+
+    getValue (id) {
+      this.returnException.needBackGoods.push(id);
+      var set = new Set(this.returnException.needBackGoods);
+      var arr = new Array(set);
+      console.log(this.returnException)
+      console.log(set)
+      console.log(Array.from(set) )
+    },
+
+    getValue2 (id) {
+      this.returnException.unNeedBackGoods.push(id);
+      var set = new Set(this.returnException.needBackGoods);
+      console.log(this.returnException)
     },
     /**
      * 查找货物
