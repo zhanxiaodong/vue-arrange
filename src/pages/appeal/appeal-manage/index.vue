@@ -43,15 +43,15 @@
         el-button(type="warning" icon="el-icon-plus" size="mini" circle @click="handleAdd()")
     el-row
       h3.mt20.bc-grey5.p10.ml-30.pl30.mb30 商品价格
-    el-form-item(label="采购折扣" prop="purDiscount")
-      el-input.w194(type="number" v-model="form.purDiscount" @change="disChange")
-        template(slot="append") 折
-      el-tooltip(content="采购折扣" placement="top")
-        a.el-icon-information.color-grey2.p-as.ml10
     el-form-item(label="吊牌价" prop="initAmount")
       el-input.w194(type="number" v-model="form.initAmount" @change="disChange")
         template(slot="append") 元
       el-tooltip(content="吊牌价" placement="top")
+        a.el-icon-information.color-grey2.p-as.ml10
+    el-form-item(label="采购折扣" prop="purDiscount")
+      el-input.w194(type="number" v-model="form.purDiscount" @change="disChange")
+        template(slot="append") 折
+      el-tooltip(content="采购折扣" placement="top")
         a.el-icon-information.color-grey2.p-as.ml10
     el-form-item(label="采购价" prop="interAmount")
       el-input.w194(type="number" v-model="form.interAmount" disabled)

@@ -1,7 +1,20 @@
 <style scoped>
- #nimeide {
+  #nimeide {
       width: 95%;
     } 
+  
+  #return-title {
+    padding-bottom: 30px;
+  }
+
+  .stream-info {
+    padding-top: 30px;
+  }
+
+  #color {
+    background: red;
+    border: red;
+  }
 </style>
 <template lang="pug">
 .my-order-details
@@ -177,8 +190,20 @@
           el-button.w100( type="info" v-else disabled ) 退件提醒
     el-row.rowcs
       el-col(:span="21")
-        el-col.titlecs 退件信息
-        el-col 
+        el-col#return-title.titlecs 退件信息
+        el-col.text-center.lh30(:span="24")
+          el-col.bc-grey2(:span="4") 序号
+          el-col.bc-grey2(:span="10") 留下
+          el-col(:span="5") 已退回
+          el-col(:span="2") 未退回
+        el-col.text-center.mt10.lh30(:span="24" v-for="(item, index) in boxDetail.evalua.evaList" v-bind:key="index")
+          el-col.bc-grey4(:span="4") # {{index + 1}}
+          el-col.bc-grey4(:span="10") {{item.pay? '留下':'-'}}  
+          el-col(:span="5") 
+            <input type="radio" name="sendException" value="121" v-model="checkedValue" @click="getValue">
+          el-col(:span="2")
+            <input type="radio" name="sendException" value="12" v-model="checkedValue" @click="getValue">
+        el-col.stream-info 
           el-col(:span="2") 运单编号:
           el-col(:span="22") {{boxDetail.expressBack ? boxDetail.expressBack.expressNo : '-'}}
         el-col 
@@ -187,10 +212,14 @@
             el-col(v-for="(item, index) in boxDetail.expressBack.expressRoute" v-bind:key="index")
               span {{item.acceptTime}}
               span   {{item.remark}}
-          el-col(:span="22" v-else) -
-      el-col(:span="2")
-        el-button.w100( type="info" v-if="boxDetail.box.status === 'END'  || boxDetail.box.status === 'COMPLETE' || boxDetail.box.status === 'CANCLE'" disabled ) 结单
-        el-button.w100( type="success" v-else  @click="endBox") 结单
+          el-col(:span="22" v-else) -      
+      el-col(:span="2") 
+        el-col     
+          el-button.w100( type="info" v-if="boxDetail.box.status === 'RETURN_EXCEPTION' || boxDetail.box.status === 'END'  || boxDetail.box.status === 'COMPLETE' || boxDetail.box.status === 'CANCLE'" disabled ) 结单
+          el-button.w100( type="success" v-else  @click="endBox") 结单
+        el-col.pt10
+          el-button#color.w100(type="success" v-if="boxDetail.box.status === 'RETURN_EXCEPTION'" @click="sendException") 异常反馈
+          el-button.w100( type="info" v-else disabled ) 异常反馈
     el-row.rowcs
       el-col(:span="21")
         el-col.titlecs 修正信息
@@ -341,6 +370,7 @@ import { CONSUME_TYPE, LEVEL_TYPE, SHAPE_TYPE, TASTE_TYPE, ATTI_TYPE, QUAL_TYPE 
 export default {
   data () {
     return {
+      checkedValue:'',
       tempInput: '',
       qualityType: QUAL_TYPE,
       attitudeType: ATTI_TYPE,
@@ -760,6 +790,9 @@ export default {
     },
     showExpressDia () {
       this.dialogVisible = true
+    },
+    getValue () {
+      console.log('item' + this.checkedValue)
     },
     /**
      * 查找货物

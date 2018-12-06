@@ -67,7 +67,21 @@ export const SIDEBAR_MENU = [
       {
         name: 'appeal-manage',
         text: '商品录入'
-      }
+      },
+    ]
+  },
+  {
+    name: 'operation',
+    text: '运营指标',
+    secondMenu: [
+      {
+        name: 'stylist',
+        text: '搭配师'
+      },
+      {
+        name: 'profit',
+        text: '盈利状态'
+      },
     ]
   }
   /*

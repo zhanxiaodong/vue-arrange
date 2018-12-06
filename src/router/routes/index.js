@@ -8,6 +8,7 @@ import msgCenter from './msg-center'
 import trash from './trash'
 import ui from './ui'
 import appeal from './appeal'
+import operation from './operation'
 
 export default [
   ...user,
@@ -20,6 +21,7 @@ export default [
   ...trash,
   ...ui,
   ...appeal,
+  ...operation,
   {
     path: '/404',
     name: '404',
