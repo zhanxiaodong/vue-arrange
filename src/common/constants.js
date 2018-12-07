@@ -83,6 +83,20 @@ export const SIDEBAR_MENU = [
         text: '盈利状态'
       },
     ]
+  },
+  {
+    name: 'sales',
+    text: '营销中心',
+    secondMenu: [
+      {
+        name: 'arrange',
+        text: '营销管理'
+      },
+      {
+        name: 'strategy',
+        text: '营销策略'
+      },
+    ]
   }
   /*
   {

@@ -9,6 +9,7 @@ import trash from './trash'
 import ui from './ui'
 import appeal from './appeal'
 import operation from './operation'
+import sales from './sales'
 
 export default [
   ...user,
@@ -22,6 +23,7 @@ export default [
   ...ui,
   ...appeal,
   ...operation,
+  ...sales,
   {
     path: '/404',
     name: '404',
