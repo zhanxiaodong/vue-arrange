@@ -59,11 +59,11 @@
               el-col.bor.pt10(:span="4")
                 span.ft42.ft-bd 折扣价
               el-col.bor.pt10(:span="12")
-                span.ft42.ft-bd 整盒全要6折
+                span.ft42.ft-bd 整盒全要7折
               el-col.pt10(:span="4")
                 //span.ft42.oprice.ft-bd ¥{{form.total|numFilter}}
               el-col.pt10(:span="4")
-                span.ft42.ft-bd ¥{{form.realTotal*0.6|numFilter}}
+                span.ft42.ft-bd ¥{{form.realTotal*0.7|numFilter}}
             el-col#some(v-if="index == 6")
               el-col.bor.pt10(:span="4")
                 span.ft42.ft-bd ......
@@ -86,11 +86,11 @@
               el-col.bor.pt10(:span="4")
                 span.ft42.ft-bd 折扣价
               el-col.bor.pt10(:span="12")
-                span.ft42.ft-bd 整盒全要6折
+                span.ft42.ft-bd 整盒全要7折
               el-col.pt10(:span="4")
                 span.ft42.oprice.ft-bd 
               el-col.pt10(:span="4")
-                span.ft42.ft-bd ¥{{form.realTotal*0.6|numFilter}}
+                span.ft42.ft-bd ¥{{form.realTotal*0.7|numFilter}}
             el-col(v-if="index == 6")
               span.ft36 更多清单请打开迷你王国小程序查看~~
         el-row.tablecs
