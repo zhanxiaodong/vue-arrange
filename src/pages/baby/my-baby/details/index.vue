@@ -202,7 +202,7 @@
             span.pl10 -
           el-col.pl10(:span="4") 
             el-button.btn(type="text" @click="showDetails(item)") {{item.orderNo}}
-        el-col
+        el-col(v-if="item.goodsEval")
           el-col(:span="2") 
             span {{item.goodsEval.createTime,'YYYY/MM/DD' | timeFormat}}
             span.pl10 -
