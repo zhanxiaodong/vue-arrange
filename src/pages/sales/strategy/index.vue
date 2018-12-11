@@ -93,6 +93,7 @@
               radio4: 4,
               radio5: 5,
               radio6: 6,
+              voucher:{discountType:"ExchangeVoucher","VipType":"50","sendNumbers":3},
               listContent:[
                  {
                   title: '服务类型',
