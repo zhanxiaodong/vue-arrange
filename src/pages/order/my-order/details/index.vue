@@ -865,8 +865,10 @@ export default {
           boxId: boxId
         }
       }).then((res) => {
+      	console.log(this.boxDetail)
+      	console.log()
         if (res.code === '1') {
-          this.boxDetail = res.data
+//        this.boxDetail = res.data
           this.boxDetail.address = res.data.address
           this.boxDetail.baby = res.data.baby
           this.boxDetail.box = res.data.box
@@ -893,6 +895,7 @@ export default {
         } else {
           this.$message.error(res.message)
         }
+        console.log(this.boxDetail)
       }).catch((errRes) => {
         this.$message.error(errRes.message)
       })

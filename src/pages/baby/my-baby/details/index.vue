@@ -212,12 +212,12 @@
       el-col(:span="21")
         el-col.titlecs 修正信息
         el-row.lh30
-          el-col 体型: {{boxDetail.babyModify.shape}}
-          el-col 审美: {{boxDetail.babyModify.taste}}
-          el-col 态度: {{boxDetail.babyModify.attitude}}
-          el-col 消费: {{boxDetail.babyModify.consume}}
-          el-col 素质: {{boxDetail.babyModify.quality}}
-          el-col 补充说明: {{boxDetail.babyModify.descs}}
+          el-col 体型: {{babyModify.shape}}
+          el-col 审美: {{babyModify.taste}}
+          el-col 态度: {{babyModify.attitude}}
+          el-col 消费: {{babyModify.consume}}
+          el-col 素质: {{babyModify.quality}}
+          el-col 补充说明: {{babyModify.descs}}
       el-col(:span="2")
         el-button(type="success" @click="talk") 修正
         //el-button(type="info" disabled v-else) 修正
@@ -268,9 +268,18 @@
 </template>
 
 <script>
+import { CONSUME_TYPE, LEVEL_TYPE, SHAPE_TYPE, TASTE_TYPE, ATTI_TYPE, QUAL_TYPE } from '@/common/constants'
 export default {
   data () {
     return {
+    	tempInput: '',
+      qualityType: QUAL_TYPE,
+      attitudeType: ATTI_TYPE,
+      tasteType: TASTE_TYPE,
+      shapeType: SHAPE_TYPE,
+      levelType: LEVEL_TYPE,
+      consumeType: CONSUME_TYPE,
+      talkVisible: false,
     	birth:'2018-11-12',
       styles: ['时尚','休闲','卡通','运动','民族','优雅'],
       colorTypes:  ['接受全色系','不喜欢灰暗色系','不喜欢鲜艳色系'],
@@ -325,14 +334,14 @@ export default {
         if (res.code === '1') {
           this.$message.success('更新成功')
           this.talkVisible = false
-          this.boxDetail.babyModify.shape = this.talkForm.shape
-          this.boxDetail.babyModify.taste = this.talkForm.taste
-          this.boxDetail.babyModify.attitude = this.talkForm.attitude
-          this.boxDetail.babyModify.consume = this.talkForm.consume
-          this.boxDetail.babyModify.quality = this.talkForm.quality
-          this.boxDetail.babyModify.level = this.talkForm.level
-          this.boxDetail.babyModify.descs = this.talkForm.descs
-          this.boxDetail.baby.level = this.talkForm.level
+          this.babyModify.shape = this.talkForm.shape
+          this.babyModify.taste = this.talkForm.taste
+          this.babyModify.attitude = this.talkForm.attitude
+          this.babyModify.consume = this.talkForm.consume
+          this.babyModify.quality = this.talkForm.quality
+          this.babyModify.level = this.talkForm.level
+          this.babyModify.descs = this.talkForm.descs
+          this.baby.level = this.talkForm.level
           this.$refs[formName].resetFields()
         } else {
           this.$message.error(res.message)
@@ -342,20 +351,19 @@ export default {
       })
     },
     talk () {
-      this.talkForm.babyId = this.boxDetail.baby.id
-      this.talkForm.boxId = this.boxDetail.box.id
-      this.talkForm.level = this.boxDetail.baby.level ? this.boxDetail.baby.level : 'b'
-      this.talkForm.descs = this.boxDetail.babyModify.descs
-      this.talkForm.shape = this.boxDetail.babyModify.shape
-      this.updateBasic('shape', this.boxDetail.babyModify.shape)
-      this.talkForm.taste = this.boxDetail.babyModify.taste
-      this.updateBasic('taste', this.boxDetail.babyModify.taste)
-      this.talkForm.attitude = this.boxDetail.babyModify.attitude
-      this.updateBasic('attitude', this.boxDetail.babyModify.attitude)
-      this.talkForm.quality = this.boxDetail.babyModify.quality
-      this.updateBasic('quality', this.boxDetail.babyModify.quality)
-      this.talkForm.consume = this.boxDetail.babyModify.consume
-      this.updateBasic('consume', this.boxDetail.babyModify.consume)
+      this.talkForm.babyId = this.baby.id
+      this.talkForm.level = this.baby.level ? this.baby.level : 'b'
+      this.talkForm.descs = this.babyModify.descs
+      this.talkForm.shape = this.babyModify.shape
+      this.updateBasic('shape', this.babyModify.shape)
+      this.talkForm.taste = this.babyModify.taste
+      this.updateBasic('taste', this.babyModify.taste)
+      this.talkForm.attitude = this.babyModify.attitude
+      this.updateBasic('attitude', this.babyModify.attitude)
+      this.talkForm.quality = this.babyModify.quality
+      this.updateBasic('quality', this.babyModify.quality)
+      this.talkForm.consume = this.babyModify.consume
+      this.updateBasic('consume', this.babyModify.consume)
       this.talkVisible = true
     },
      updateBasic (type, value) {
@@ -511,6 +519,7 @@ export default {
           this.baby = res.data.baby
           this.boxRecord = res.data.boxRecord
           this.userAccount = res.data.userAccount
+          this.babyModify = res.data.babyModify
         } else {
           this.$message.error(res.message)
         }
