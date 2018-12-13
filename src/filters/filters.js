@@ -9,6 +9,9 @@ export default {
    * @return {String} 时间
    */
   timeFormat (date, format) {
+  	if (!date) {
+  		return '-'
+  	}
     if (format) {
       return moment(date).format(format)
     } else {

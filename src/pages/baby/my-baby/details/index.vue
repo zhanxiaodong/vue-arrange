@@ -299,7 +299,16 @@ export default {
         descs: '',
         quality: '',
         attitude: '',
-        shape: ''
+        shape: '',
+        taste: ''
+      },
+      babyModify:{
+      	consume: '',
+        descs: '',
+        quality: '',
+        attitude: '',
+        shape: '',
+        taste: ''
       },
       boxDetail: {
         babyModify: {}
@@ -519,7 +528,9 @@ export default {
           this.baby = res.data.baby
           this.boxRecord = res.data.boxRecord
           this.userAccount = res.data.userAccount
-          this.babyModify = res.data.babyModify
+          if(res.data.babyModify) {
+          	this.babyModify = res.data.babyModify
+          }
         } else {
           this.$message.error(res.message)
         }
