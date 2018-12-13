@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import ElementUI from 'element-ui'
+import echarts from 'echarts'
 
 import './plugins/index'
 import './filters/index'
@@ -16,6 +17,7 @@ import store from './store'
 
 Vue.use(ElementUI)
 Vue.use(htmlToPdf)
+Vue.prototype.$echarts = echarts
 
 Vue.config.productionTip = false
 
