@@ -75,8 +75,12 @@ export const SIDEBAR_MENU = [
     text: '运营指标',
     secondMenu: [
       {
-        name: 'stylist',
-        text: '搭配师'
+        name: 'stylist-all',
+        text: '搭配师-累计'
+      },
+      {
+        name: 'stylist-other',
+        text: '搭配师-周、月、季度'
       },
       {
         name: 'profit',
