@@ -391,7 +391,8 @@ export default {
         descs: '',
         quality: '',
         attitude: '',
-        shape: ''
+        shape: '',
+        taste: ''
       },
       closeReasonList: [
         {
@@ -865,10 +866,10 @@ export default {
           boxId: boxId
         }
       }).then((res) => {
-      	console.log(this.boxDetail)
-      	console.log()
+      	console.log(1,this.boxDetail)
+      	console.log(2,res)
         if (res.code === '1') {
-//        this.boxDetail = res.data
+          this.boxDetail = res.data
           this.boxDetail.address = res.data.address
           this.boxDetail.baby = res.data.baby
           this.boxDetail.box = res.data.box
@@ -888,10 +889,13 @@ export default {
           if (res.data.evalua) {
             this.boxDetail.evalua = res.data.evalua
             this.evaus = true
+          } else {
+          	var evalua = {evaList:[]}
+          	this.boxDetail.evalua = evalua
           }
           if (res.data.payList) {
             this.boxDetail.payList = res.data.payList
-          }
+          }     
         } else {
           this.$message.error(res.message)
         }
