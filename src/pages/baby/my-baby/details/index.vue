@@ -230,36 +230,36 @@
         el-form-item(label="体型" prop="shape")
           el-col(:span="16")
             el-radio-group(v-model="talkForm.shape")
-              el-radio(v-for="item in shapeType" v-bind:key="item.name" v-bind:label="item.name") {{ item.text }}
+              el-radio(v-for="item in shapeType" @click.native.prevent="clickitemone(item.name)" v-bind:key="item.name" v-bind:label="item.name") {{ item.text }}
           el-col(:span="8")
-            el-input(placeholder="输入标签" v-model="tempInput" @blur="inputChange('shape')")
+            el-input(placeholder="输入标签" v-model="shapeInput" @blur="inputChange('shape')")
         el-form-item(label="审美")
           el-col(:span="16")
             el-radio-group(v-model="talkForm.taste")
-              el-radio(v-for="item in tasteType" v-bind:key="item.name" v-bind:label="item.name") {{ item.text }}
+              el-radio(v-for="item in tasteType" @click.native.prevent="clickitemtwo(item.name)" v-bind:key="item.name" v-bind:label="item.name") {{ item.text }}
           el-col(:span="8")
-            el-input(placeholder="输入标签" v-model="tempInput" @blur="inputChange('taste')")
+            el-input(placeholder="输入标签" v-model="tasteInput" @blur="inputChange('taste')")
         el-form-item(label="态度" prop="attitude")
           el-col(:span="16")
             el-radio-group(v-model="talkForm.attitude")
-              el-radio(v-for="item in attitudeType" v-bind:key="item.name" v-bind:label="item.name") {{ item.text }}
+              el-radio(v-for="item in attitudeType" @click.native.prevent="clickitemthree(item.name)" v-bind:key="item.name" v-bind:label="item.name") {{ item.text }}
           el-col(:span="8")
-            el-input(placeholder="输入标签" v-model="tempInput" @blur="inputChange('attitude')")
+            el-input(placeholder="输入标签" v-model="attitudeInput" @blur="inputChange('attitude')")
         el-form-item(label="消费" prop="consume")
           el-col(:span="16")
             el-radio-group(v-model="talkForm.consume")
-              el-radio(v-for="item in consumeType" v-bind:key="item.name" v-bind:label="item.name") {{ item.text }}
+              el-radio(v-for="item in consumeType" @click.native.prevent="clickitemfour(item.name)" v-bind:key="item.name" v-bind:label="item.name") {{ item.text }}
           el-col(:span="8")
-            el-input(placeholder="输入标签" v-model="tempInput" @blur="inputChange('consume')")
+            el-input(placeholder="输入标签" v-model="consumeInput" @blur="inputChange('consume')")
         el-form-item(label="素质" prop="quality")
           el-col(:span="16")
             el-radio-group(v-model="talkForm.quality")
-              el-radio(v-for="item in qualityType" v-bind:key="item.name" v-bind:label="item.name") {{ item.text }}
+              el-radio(v-for="item in qualityType" @click.native.prevent="clickitemfive(item.name)" v-bind:key="item.name" v-bind:label="item.name") {{ item.text }}
           el-col(:span="8")
-            el-input(placeholder="输入标签" v-model="tempInput" @blur="inputChange('quality')")
+            el-input(placeholder="输入标签" v-model="qualityInput" @blur="inputChange('quality')")
         el-form-item(label="评级" prop="level")
           el-radio-group(v-model="talkForm.level")
-            el-radio(v-for="item in levelType" v-bind:key="item.name" v-bind:label="item.name") {{ item.text }}
+            el-radio(v-for="item in levelType" @click.native.prevent="clickitemsix(item.name)" v-bind:key="item.name" v-bind:label="item.name") {{ item.text }}
         el-form-item(label="补充说明" prop="descs")
           el-input(type="textarea" :rows="6" placeholder="补充信息" v-model="talkForm.descs")
     span.dialog-footer(slot="footer") 
@@ -272,7 +272,11 @@ import { CONSUME_TYPE, LEVEL_TYPE, SHAPE_TYPE, TASTE_TYPE, ATTI_TYPE, QUAL_TYPE 
 export default {
   data () {
     return {
-    	tempInput: '',
+      shapeInput: '',
+      attitudeInput: '',
+      consumeInput: '',
+      tasteInput: '',
+    	qualityInput: '',
       qualityType: QUAL_TYPE,
       attitudeType: ATTI_TYPE,
       tasteType: TASTE_TYPE,
@@ -375,6 +379,7 @@ export default {
       this.updateBasic('consume', this.babyModify.consume)
       this.talkVisible = true
     },
+
      updateBasic (type, value) {
       var updateBas = false
       var temp
@@ -465,6 +470,7 @@ export default {
       }
       temp = []
     },
+
     handleClose (done) {
       this.$refs['talkForm'].resetFields()
     },
@@ -472,10 +478,34 @@ export default {
       this.$refs[formName].resetFields()
       this.talkVisible = false
     },
+    /*单击按钮取消选中*/
+    clickitemone (e) {
+     e === this.talkForm.shape ? this.talkForm.shape = '' : this.talkForm.shape = e
+    },
+    clickitemtwo (e) {
+     e === this.talkForm.taste ? this.talkForm.taste = '' : this.talkForm.taste = e
+    },
+    clickitemthree (e) {
+     e === this.talkForm.attitude ? this.talkForm.attitude = '' : this.talkForm.attitude = e 
+    },
+    clickitemfour (e) {
+     e === this.talkForm.consume ? this.talkForm.consume = '' : this.talkForm.consume = e 
+    },
+    clickitemfive (e) {
+     e === this.talkForm.quality ? this.talkForm.quality = '' : this.talkForm.quality = e 
+    },
+    clickitemsix (e) {
+     e === this.talkForm.level ? this.talkForm.level = '' : this.talkForm.level = e
+    },
+
     inputChange (type) {
-      var value = this.tempInput
+      var value = this.shapeInput || this.attitudeInput || this.consumeInput || this.tasteInput || this.qualityInput;
       this.updateBasic(type, value)
-      this.tempInput = ''
+      this.shapeInput = ''
+      this.attitudeInput = ''
+      this.consumeInput = ''
+      this.tasteInput = ''
+      this.qualityInput = ''
     },
     /*newBox () {
       this.$router.push({

@@ -1,35 +1,37 @@
 <template>
  <div class="container">
+     <div class="title">
         <el-button type="info" round>累计</el-button>
+     </div>
      <div class="guest">   
          <div class="guest-title">1.用户综合关键指标</div>
      <el-row type="flex" class="row-bg" justify="center">
-      <el-col :span="3"><div class="">总用户</div></el-col>
-      <el-col :span="4"><div class="">访问用户</div></el-col>
-      <el-col :span="4"><div class="">体验用户</div></el-col>
-      <el-col :span="4"><div class="">迷你会员</div></el-col>
-      <el-col :span="4"><div class="">会员转换率</div></el-col>
-      <el-col :span="5"><div class="">重复订阅用户</div></el-col>
+      <el-col :span="4"><div class="style">总用户</div></el-col>
+      <el-col :span="4"><div class="style">访问用户</div></el-col>
+      <el-col :span="4"><div class="style">体验用户</div></el-col>
+      <el-col :span="4"><div class="style">迷你会员</div></el-col>
+      <el-col :span="4"><div class="style">会员转换率</div></el-col>
+      <el-col :span="4"><div class="style">重复订阅用户</div></el-col>
      </el-row>
-     <el-row type="flex" class="row-bg" justify="center">
-      <el-col :span="3"><div class="">400</div></el-col>
+     <el-row type="flex" class="row-bg" >
+      <el-col :span="4"><div class="">400</div></el-col>
       <el-col :span="4"><div class="">300</div></el-col>
       <el-col :span="4"><div class="">200</div></el-col>
       <el-col :span="4"><div class="">100</div></el-col>
       <el-col :span="4"><div class="">50</div></el-col>
-      <el-col :span="5"><div class="">20</div></el-col>
+      <el-col :span="4"><div class="">20</div></el-col>
      </el-row>
      <div class="distance-line"></div>
-      <el-row type="flex" class="row-bg" justify="center">
-          <el-col :span="4"><div class="">用户尺码段</div></el-col>
-          <el-col :span="4"><div class="">66-73</div></el-col>
-          <el-col :span="4"><div class="">80-90</div></el-col>
-          <el-col :span="4"><div class="">100-110</div></el-col>
-          <el-col :span="4"><div class="">120-140</div></el-col>
-          <el-col :span="4"><div class="">90-100</div></el-col>
+      <el-row type="flex" class="row-bg" >
+          <el-col :span="4"><div class="style">用户尺码段</div></el-col>
+          <el-col :span="4"><div class="style">66-73</div></el-col>
+          <el-col :span="4"><div class="style">80-90</div></el-col>
+          <el-col :span="4"><div class="style">100-110</div></el-col>
+          <el-col :span="4"><div class="style">120-140</div></el-col>
+          <el-col :span="4"><div class="style">90-100</div></el-col>
         </el-row>
-        <el-row type="flex" class="row-bg" justify="center">
-          <el-col :span="4"><div class="">人数</div></el-col>
+        <el-row type="flex" class="row-bg" >
+          <el-col :span="4"><div class="style">人数</div></el-col>
           <el-col :span="4"><div class="">100</div></el-col>
           <el-col :span="4"><div class="">100</div></el-col>
           <el-col :span="4"><div class="">100</div></el-col>
@@ -37,8 +39,8 @@
           <el-col :span="4"><div class="">100</div></el-col>
         </el-row>
         <div class="distance-line"></div>
-        <el-row type="flex" class="row-bg" justify="center">
-          <el-col :span="3"><div class="">男女比例</div></el-col>
+        <el-row type="flex" class="row-bg" >
+          <el-col :span="3"><div class="style">男女比例</div></el-col>
           <el-col :span="4"><div class="">30%</div></el-col>
           <el-col :span="4"><div class="">30%</div></el-col>
           <el-col :span="4"><div class="">30%</div></el-col>
@@ -46,50 +48,50 @@
           <el-col :span="4"><div class="">30%</div></el-col>
         </el-row>
         <div class="distance-line"></div>
-        <el-row type="flex" class="row-bg" justify="center">
-         <el-col :span="6"><div class="">华南地区</div></el-col>
-         <el-col :span="6"><div class="">华北地区</div></el-col>
-         <el-col :span="6"><div class="">华西地区</div></el-col>
-         <el-col :span="6"><div class="">华东地区</div></el-col>
+        <el-row type="flex" class="row-bg">
+         <el-col :span="4"><div class="style">华南地区</div></el-col>
+         <el-col :span="4"><div class="style">华北地区</div></el-col>
+         <el-col :span="4"><div class="style">华西地区</div></el-col>
+         <el-col :span="4"><div class="style">华东地区</div></el-col>
         </el-row>
-        <el-row type="flex" class="row-bg" justify="center">
-         <el-col :span="6"><div class="">20</div></el-col>
-         <el-col :span="6"><div class="">30</div></el-col>
-         <el-col :span="6"><div class="">40</div></el-col>
-         <el-col :span="6"><div class="">50</div></el-col>
+        <el-row type="flex" class="row-bg" >
+         <el-col :span="4"><div class="">20</div></el-col>
+         <el-col :span="4"><div class="">30</div></el-col>
+         <el-col :span="4"><div class="">40</div></el-col>
+         <el-col :span="4"><div class="">50</div></el-col>
         </el-row>
         <div class="distance-line"></div>
-        <el-row type="flex" class="row-bg" justify="center">
-         <el-col :span="6"><div class="">每月订阅计划</div></el-col>
-         <el-col :span="6"><div class="">2月订阅计划</div></el-col>
-         <el-col :span="6"><div class="">自主订阅计划</div></el-col>
+        <el-row type="flex" class="row-bg">
+         <el-col :span="4"><div class="style">每月订阅计划</div></el-col>
+         <el-col :span="4"><div class="style">2月订阅计划</div></el-col>
+         <el-col :span="4"><div class="style">自主订阅计划</div></el-col>
         </el-row>
-        <el-row type="flex" class="row-bg" justify="center">
-         <el-col :span="6"><div class="">20</div></el-col>
-         <el-col :span="6"><div class="">30</div></el-col>
-         <el-col :span="6"><div class="">50</div></el-col>
+        <el-row type="flex" class="row-bg" >
+         <el-col :span="4"><div class="">20</div></el-col>
+         <el-col :span="4"><div class="">30</div></el-col>
+         <el-col :span="4"><div class="">50</div></el-col>
         </el-row>
      </div>
      <div class="order">
            <div class="guest-title">2.用户综合关键指标</div>
-        <el-row type="flex" class="row-bg" justify="center">
-          <el-col :span="3"><div class="">订单</div></el-col>
-          <el-col :span="4"><div class="">总订单量</div></el-col>
-          <el-col :span="4"><div class="">全买盒子</div></el-col>
-          <el-col :span="4"><div class="">半买盒子</div></el-col>
-          <el-col :span="5"><div class="">30%购买盒子</div></el-col>
-          <el-col :span="4"><div class="">全退盒子</div></el-col>
+        <el-row type="flex" class="row-bg">
+          <el-col :span="3"><div class="style">订单</div></el-col>
+          <el-col :span="4"><div class="style">总订单量</div></el-col>
+          <el-col :span="4"><div class="style">全买盒子</div></el-col>
+          <el-col :span="4"><div class="style">半买盒子</div></el-col>
+          <el-col :span="5"><div class="style">30%购买盒子</div></el-col>
+          <el-col :span="4"><div class="style">全退盒子</div></el-col>
         </el-row>
-        <el-row type="flex" class="row-bg" justify="center">
-          <el-col :span="3"><div class="">(数量)</div></el-col>
+        <el-row type="flex" class="row-bg">
+          <el-col :span="3"><div class="style">(数量)</div></el-col>
           <el-col :span="4"><div class="">100</div></el-col>
           <el-col :span="4"><div class="">100</div></el-col>
           <el-col :span="4"><div class="">100</div></el-col>
           <el-col :span="5"><div class="">300</div></el-col>
           <el-col :span="4"><div class="">100</div></el-col>
         </el-row>
-        <el-row type="flex" class="row-bg" justify="center">
-          <el-col :span="3"><div class="">(百分比)</div></el-col>
+        <el-row type="flex" class="row-bg">
+          <el-col :span="3"><div class="style">(百分比)</div></el-col>
           <el-col :span="4"><div class="">30%</div></el-col>
           <el-col :span="4"><div class="">30%</div></el-col>
           <el-col :span="4"><div class="">30%</div></el-col>
@@ -98,13 +100,13 @@
         </el-row>
         <div id="myChart" :style="{width: '500px', height: '300px'}"></div>
         <div class="distance-line"></div>
-        <el-row type="flex" class="row-bg" justify="center">
-         <el-col :span="6"><div class="">盒子平均货值</div></el-col>
-         <el-col :span="6"><div class="">盒子平均客单价</div></el-col>
-         <el-col :span="6"><div class="">盒子平均客件数</div></el-col>
-         <el-col :span="6"><div class="">盒子平均留下件数</div></el-col>
+        <el-row type="flex" class="row-bg">
+         <el-col :span="6"><div class="style">盒子平均货值</div></el-col>
+         <el-col :span="6"><div class="style">盒子平均客单价</div></el-col>
+         <el-col :span="6"><div class="style">盒子平均客件数</div></el-col>
+         <el-col :span="6"><div class="style">盒子平均留下件数</div></el-col>
         </el-row>
-        <el-row type="flex" class="row-bg" justify="center">
+        <el-row type="flex" class="row-bg">
          <el-col :span="6"><div class="">837</div></el-col>
          <el-col :span="6"><div class="">647</div></el-col>
          <el-col :span="6"><div class="">39</div></el-col>
@@ -113,27 +115,27 @@
      </div>
      <div class="shopping">
           <div class="guest-title">3.商品综合关键指标</div>
-        <el-row type="flex" class="row-bg" justify="center">
-         <el-col :span="6"><div class="">商品综合关键指标</div></el-col>
-         <el-col :span="6"><div class="">总商品</div></el-col>
-         <el-col :span="6"><div class="">总品牌方</div></el-col>
+        <el-row type="flex" class="row-bg">
+         <el-col :span="6"><div class="style">商品综合关键指标</div></el-col>
+         <el-col :span="6"><div class="style">总商品</div></el-col>
+         <el-col :span="6"><div class="style">总品牌方</div></el-col>
         </el-row>
-        <el-row type="flex" class="row-bg" justify="center">
-         <el-col :span="6"><div class="">数量</div></el-col>
+        <el-row type="flex" class="row-bg">
+         <el-col :span="6"><div class="style">数量</div></el-col>
          <el-col :span="6"><div class="">647</div></el-col>
          <el-col :span="6"><div class="">50</div></el-col>
         </el-row>
         <div class="distance-line"></div>
-        <el-row type="flex" class="row-bg" justify="center">
-         <el-col :span="6"><div class="">品牌</div></el-col>
-         <el-col :span="4"><div class="">搭配数量</div></el-col>
-         <el-col :span="4"><div class="">销售数量</div></el-col>
-         <el-col :span="2"><div class="">动销率</div></el-col>
-         <el-col :span="2"><div class="">毛利率</div></el-col>
-         <el-col :span="4"><div class="">推荐成功率</div></el-col>
-         <el-col :span="2"><div class="">退货率</div></el-col>
+        <el-row type="flex" class="row-bg">
+         <el-col :span="6"><div class="style">品牌</div></el-col>
+         <el-col :span="4"><div class="style">搭配数量</div></el-col>
+         <el-col :span="4"><div class="style">销售数量</div></el-col>
+         <el-col :span="2"><div class="style">动销率</div></el-col>
+         <el-col :span="2"><div class="style">毛利率</div></el-col>
+         <el-col :span="4"><div class="style">推荐成功率</div></el-col>
+         <el-col :span="2"><div class="style">退货率</div></el-col>
         </el-row>
-        <el-row type="flex" class="row-bg" justify="center">
+        <el-row type="flex" class="row-bg">
          <el-col :span="6"><div class="">贝贝王国</div></el-col>
          <el-col :span="4"><div class="">1002</div></el-col>
          <el-col :span="4"><div class="">293</div></el-col>
@@ -143,13 +145,13 @@
          <el-col :span="2"><div class="">57%</div></el-col>
         </el-row>
         <div class="distance-line"></div>
-        <el-row type="flex" class="row-bg" justify="center">
-         <el-col :span="6"><div class="">盒子1成功推荐率</div></el-col>
-         <el-col :span="6"><div class="">盒子2成功推荐率</div></el-col>
-         <el-col :span="6"><div class="">盒子3成功推荐率</div></el-col>
-         <el-col :span="6"><div class="">盒子4成功推荐率</div></el-col>
+        <el-row type="flex" class="row-bg">
+         <el-col :span="6"><div class="style">盒子1成功推荐率</div></el-col>
+         <el-col :span="6"><div class="style">盒子2成功推荐率</div></el-col>
+         <el-col :span="6"><div class="style">盒子3成功推荐率</div></el-col>
+         <el-col :span="6"><div class="style">盒子4成功推荐率</div></el-col>
         </el-row>
-        <el-row type="flex" class="row-bg" justify="center">
+        <el-row type="flex" class="row-bg">
          <el-col :span="6"><div class="">20%</div></el-col>
          <el-col :span="6"><div class="">30%</div></el-col>
          <el-col :span="6"><div class="">40%</div></el-col>
@@ -159,11 +161,11 @@
      </div>
      <div class="profit">
           <div class="guest-title">4.平台盈利综合指标</div>
-         <el-row type="flex" class="row-bg" justify="center">
-         <el-col :span="6"><div class="">累计销售</div></el-col>
-         <el-col :span="6"><div class="">包含优惠券销售额</div></el-col>
+         <el-row type="flex" class="row-bg">
+         <el-col :span="6"><div class="style">累计销售</div></el-col>
+         <el-col :span="6"><div class="style">包含优惠券销售额</div></el-col>
         </el-row>
-        <el-row type="flex" class="row-bg" justify="center">
+        <el-row type="flex" class="row-bg">
          <el-col :span="6"><div class="">¥20.333</div></el-col>
          <el-col :span="6"><div class="">¥50.433</div></el-col>
         </el-row>
@@ -284,16 +286,24 @@
  }
 
  .distance-line {
-     height: 30px;
+     height: 80px;
  }
 
  .guest-title {
      font-weight: 600;
      font-size: 18px;
-     margin: 50px;
+     margin: 50px 0;
  }
 
  #other,#all,#myChart {
      margin-top: 30px;
+ }
+
+ .title {
+     text-align: center;
+ }
+
+ .style {
+     font-weight: 600;
  }
 </style>
