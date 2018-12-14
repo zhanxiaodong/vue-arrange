@@ -6,6 +6,14 @@
   padding: 10px 0;
 }
 
+.repair-distance {
+  margin-top: 10px;
+}
+
+#repair-distance {
+  margin-bottom: 20px;
+}
+
 #line-distance {
   padding: 20px 0;
 }
@@ -210,14 +218,14 @@
             span {{item.goodsEval.desc}}
     el-row.rowcs
       el-col(:span="21")
-        el-col.titlecs 修正信息
+        el-col#repair-distance.titlecs 修正信息
         el-row.lh30
-          el-col 体型: {{babyModify.shape}}
-          el-col 审美: {{babyModify.taste}}
-          el-col 态度: {{babyModify.attitude}}
-          el-col 消费: {{babyModify.consume}}
-          el-col 素质: {{babyModify.quality}}
-          el-col 补充说明: {{babyModify.descs}}
+          el-col.repair-distance 体型: {{babyModify.shape}}
+          el-col.repair-distance 审美: {{babyModify.taste}}
+          el-col.repair-distance 态度: {{babyModify.attitude}}
+          el-col.repair-distance 消费: {{babyModify.consume}}
+          el-col.repair-distance 素质: {{babyModify.quality}}
+          el-col.repair-distance 补充说明: {{babyModify.descs}}
       el-col(:span="2")
         el-button(type="success" @click="talk") 修正
         //el-button(type="info" disabled v-else) 修正
@@ -497,7 +505,7 @@ export default {
     clickitemsix (e) {
      e === this.talkForm.level ? this.talkForm.level = '' : this.talkForm.level = e
     },
-
+    /*标签添加到行中*/
     inputChange (type) {
       var value = this.shapeInput || this.attitudeInput || this.consumeInput || this.tasteInput || this.qualityInput;
       this.updateBasic(type, value)
