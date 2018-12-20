@@ -232,12 +232,12 @@
       el-col(:span="21")
         el-col#repair-distance.titlecs 修正信息
         el-row.lh30
-          el-col.repair-distance 体型: {{babyModify.shape}}
-          el-col.repair-distance 审美: {{babyModify.taste}}
-          el-col.repair-distance 态度: {{babyModify.attitude}}
-          el-col.repair-distance 消费: {{babyModify.consume}}
-          el-col.repair-distance 素质: {{babyModify.quality}}
-          el-col.repair-distance 补充说明: {{babyModify.descs}}
+          el-col.repair-distance 体型: {{boxDetail.babyModify.shape}}
+          el-col.repair-distance 审美: {{boxDetail.babyModify.taste}}
+          el-col.repair-distance 态度: {{boxDetail.babyModify.attitude}}
+          el-col.repair-distance 消费: {{boxDetail.babyModify.consume}}
+          el-col.repair-distance 素质: {{boxDetail.babyModify.quality}}
+          el-col.repair-distance 补充说明: {{boxDetail.babyModify.descs}}
       el-col(:span="2")
         el-button.w100(type="success" v-if="boxDetail.box.status !== 'CREATE'" @click="talk") 修正
         el-button.w100(type="info" disabled v-else) 修正
