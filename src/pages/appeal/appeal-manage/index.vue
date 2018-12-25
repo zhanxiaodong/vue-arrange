@@ -68,11 +68,12 @@
         template(slot="append") 元
     el-row
       h3.mt20.bc-grey5.p10.ml-30.pl30.mb30 商品属性
-    el-form-item(label="风格标签" required)
+      el-button.distance(type="warning" icon="el-icon-plus" size="mini" circle  @click="talk")
+    el-form-item(label="风格标签" required) 
       el-select(v-model="form.style")
         el-option(v-for="item in styleType" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
     el-form-item(label="材质" required)
-      el-select(v-model="form.textureMaterial")
+      el-select(v-model="form.me")
         el-option(v-for="item in meType" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
     el-form-item(label="场景" required)
       el-select(v-model="form.scene")
@@ -127,6 +128,30 @@
       footer(slot="footer")
         el-button(@click="stand.dialogVisible = false") 取 消
         el-button(type="success" @click="save('stand')") 确 定
+  el-dialog.model(title="添加信息" v-bind:visible.sync="talkVisible" width="45%")
+    el-row
+      el-form(label-position="left" ref="talkForm"
+        v-bind:model="talkForm"
+        :before-close="handleClose"
+        label-width="80px")
+        el-form-item(label="体型" prop="style")
+          el-col(:span="8")
+            el-input(placeholder="输入标签" v-model="styleInput" @blur="inputChange('style')")
+        el-form-item(label="材质" prop="me")
+          el-col(:span="8")
+            el-input(placeholder="输入标签" v-model="meInput" @blur="inputChange('me')")
+        el-form-item(label="场景" prop="scene")
+          el-col(:span="8")
+            el-input(placeholder="输入标签" v-model="sceneInput" @blur="inputChange('scene')")
+        el-form-item(label="季节" prop="season")
+          el-col(:span="8")
+            el-input(placeholder="输入标签" v-model="seasonInput" @blur="inputChange('season')")
+        el-form-item(label="属性" prop="attr")
+          el-col(:span="8")
+            el-input(placeholder="输入标签" v-model="attrInput" @blur="inputChange('attr')")
+    span.dialog-footer(slot="footer") 
+      el-button(@click="closeTalk('talkForm')") 取 消
+      el-button(type="primary" @click="confirmTalk('talkForm')") 确 定
 </template>
 
 <script>
@@ -135,6 +160,7 @@ import { ORIGIN_TYPE, STYLE_TYPE, GENDER_TYPE, SEASON_TYPE, ME_TYPE, SCENE_TYPE,
 export default {
   data () {
     return {
+      talkVisible: false,
       address: {},
       dialogVisible: false,
       dialogImageUrl: null,
@@ -223,6 +249,11 @@ export default {
           text: '毛衣/针织衫'
         }
       ],
+      attrType: '',
+      styleType: '',
+      sceneType: '',
+      seasonType: '',
+      meType: '',
       attrType: ATTR_TYPE,
       styleType: STYLE_TYPE,
       originType: ORIGIN_TYPE,
@@ -281,6 +312,153 @@ export default {
   methods: {
     showA () {
       console.log(this.address)
+    },
+    /*添加规格*/
+    inputChange (type) {
+      var value = this.seasonInput || this.styleInput || this.sceneInput || this.meInput || this.attrInput;
+      this.updateBasic(type, value)
+      this.styleInput = ''
+      this.meInput = ''
+      this.sceneInput = ''
+      this.seasonInput = ''
+      this.attrInput = ''
+    },
+
+    confirmTalk (formName) {
+      var item = this.talkForm
+      this.$axios.post(this.$apis.task.updateBoxModify, item).then((res) => {
+        if (res.code === '1') {
+          this.$message.success('更新成功')
+          this.talkVisible = false
+          this.babyModify.style = this.talkForm.style
+          this.babyModify.me = this.talkForm.me
+          this.babyModify.scene = this.talkForm.scene
+          this.babyModify.season = this.talkForm.season
+          this.babyModify.attr = this.talkForm.attr 
+          // this.babyModify.level = this.talkForm.level
+          // this.babyModify.descs = this.talkForm.descs
+          // this.baby.level = this.talkForm.level
+          this.$refs[formName].resetFields()
+        } else {
+          this.$message.error(res.message)
+        }
+      }).catch((errRes) => {
+        this.$message.error(errRes.message)
+      })
+    },
+
+    talk () {
+      this.talkForm.style = this.babyModify.style
+      this.updateBasic('style', this.babyModify.style)
+      this.talkForm.me = this.babyModify.me
+      this.updateBasic('me', this.babyModify.me)
+      this.talkForm.scene = this.babyModify.scene
+      this.updateBasic('scene', this.babyModify.scene)
+      this.talkForm.season= this.babyModify.season
+      this.updateBasic('season', this.babyModify.season)
+      this.talkForm.attr = this.babyModify.attr
+      this.updateBasic('attr', this.babyModify.attr)
+      this.talkVisible = true
+    },
+
+     updateBasic (type, value) {
+      var updateBas = false
+      var temp
+      var newO = {}
+      switch (type) {
+        case 'style':
+          temp = STYLE_TYPE
+          for (var a = 0; a < temp.length; a++) {
+            if (value === temp[a].name) {
+              updateBas = true
+              break
+            }
+          }
+          // if (!updateBas && value) {
+          //   newO.text = value
+          //   newO.name = value
+          //   temp.splice(3, 1, newO)
+          //   this.styleType = temp
+          // }
+          //this.talkForm.style = value
+          break
+        case 'me':
+          this.talkForm.me = value
+          temp = ME_TYPE
+          for (var b = 0; b < temp.length; b++) {
+            if (value === temp[b].name) {
+              updateBas = true
+              break
+            }
+          }
+          // if (!updateBas && value) {
+          //   newO.text = value
+          //   newO.name = value
+          //   temp.push(newO)
+          //   this.tasteType = temp
+          // }
+          break
+        case 'scene':
+          this.talkForm.scene = value
+          temp = SCENE_TYPE
+          for (var c = 0; c < temp.length; c++) {
+            if (value === temp[c].name) {
+              updateBas = true
+              break
+            }
+          }
+          // if (!updateBas && value) {
+          //   newO.text = value
+          //   newO.name = value
+          //   temp.push(newO)
+          //   this.attitudeType = temp
+          // }
+          break
+        case 'season':
+          this.talkForm.season = value
+          temp = SEASON_TYPE
+          for (var d = 0; d < temp.length; d++) {
+            if (value === temp[d].name) {
+              updateBas = true
+              break
+            }
+          }
+          // if (!updateBas && value) {
+          //   newO.text = value
+          //   newO.name = value
+          //   temp.push(newO)
+          //   this.qualityType = temp
+          // }
+          break
+        case 'attr':
+          this.talkForm.attr = value
+          temp = ATTR_TYPE
+          for (var i = 0; i < temp.length; i++) {
+            if (value === temp[i].name) {
+              updateBas = true
+              break
+            }
+          }
+          // if (!updateBas && value) {
+          //   newO.text = value
+          //   newO.name = value
+          //   temp.push(newO)
+          //   this.consumeType = temp
+          // }
+          break
+        default:
+          break
+      }
+      temp = []
+    },
+
+    handleClose (done) {
+      this.$refs['talkForm'].resetFields()
+    },
+
+    closeTalk (formName) {
+      this.$refs[formName].resetFields()
+      this.talkVisible = false
     },
     /**
      * 图片移除

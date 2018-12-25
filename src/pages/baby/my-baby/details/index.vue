@@ -301,7 +301,6 @@ export default {
       dialogFormVisible2: false,
       dialogFormVisible: false,
       dialogVisible: false,
-      talkVisible: false,
       showImg: false,
       talkForm: {
         boxId: '',
@@ -348,7 +347,7 @@ export default {
     clickImg (e) {
       this.showImg = true
     },
-    /*修改信息*/
+    /*添加标签信息*/
     confirmTalk (formName) {
       var item = this.talkForm
       this.$axios.post(this.$apis.task.updateBoxModify, item).then((res) => {
@@ -372,19 +371,16 @@ export default {
       })
     },
     talk () {
-      this.talkForm.babyId = this.baby.id
-      this.talkForm.level = this.baby.level ? this.baby.level : 'b'
-      this.talkForm.descs = this.babyModify.descs
-      this.talkForm.shape = this.babyModify.shape
-      this.updateBasic('shape', this.babyModify.shape)
-      this.talkForm.taste = this.babyModify.taste
-      this.updateBasic('taste', this.babyModify.taste)
-      this.talkForm.attitude = this.babyModify.attitude
-      this.updateBasic('attitude', this.babyModify.attitude)
-      this.talkForm.quality = this.babyModify.quality
-      this.updateBasic('quality', this.babyModify.quality)
+      this.updateBasic('style', this.babyModify.style)
+      this.talkForm.style = this.babyModify.style
+      this.updateBasic('me', this.babyModify.me)
+      this.talkForm.me = this.babyModify.me
+      this.updateBasic('scene', this.babyModify.scene)
+      this.talkForm.scene = this.babyModify.scene
+      this.updateBasic('season', this.babyModify.season)
       this.talkForm.consume = this.babyModify.consume
-      this.updateBasic('consume', this.babyModify.consume)
+      this.updateBasic('attr', this.babyModify.attr)
+      this.talkForm.attr = this.babyModify.attr
       this.talkVisible = true
     },
 
