@@ -206,5 +206,12 @@ export default {
   // 爬取数据
   search: {
     grab: `${api.java}/merchant/search/grab`
+  },
+  //推送
+  push: {
+  	findPushMsgByType: `${api.java}/merchant/user/findPushMsgByType`,
+  	pushMsg: `${api.java}/merchant/user/pushMsg`,
+  	giveDiscount: `${api.java}/merchant/user/giveDiscount`,
   }
+  
 }
