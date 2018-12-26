@@ -54,7 +54,7 @@
         el-col 风格: {{boxDetail.user.style | listToStr}}
         el-col 预算: {{boxDetail.user.consumExp}}
       el-col(:span="1")
-        span >
+        span 
       el-col(:span="6")
         el-col 
           span 身高: 
