@@ -3,7 +3,7 @@ el-card.box-card(v-bind:body-style="{display: [open ? 'block' : 'none']}")
   .box-card__header(slot="header")
     el-row.ft14
       el-col.text-center(:span="4")
-        span {{item.box.orderNo}}
+        span {{item.box.orderNo}}{{item.box.status=='PRE_CREATE' ? '(*)':''}}
       el-col.text-center(:span="2") {{item.baby.call}} 
       el-col.text-center(:span="2") {{item.stylist}} 
       el-col.text-center(:span="4")
@@ -23,7 +23,7 @@ el-card.box-card(v-bind:body-style="{display: [open ? 'block' : 'none']}")
       el-col.text-center(:span="5")
         span.color-green3(@click="comuFail(item)") 沟通失败
         span.pl15.color-green3(@click="confirm(item)") 沟通确认
-        span.pl15.color-green3(v-if="item.box.status == 'CREATE' || item.box.status == 'LINK_UP'" @click="showClose(item)") 关闭订单
+        span.pl15.color-green3(v-if="item.box.status == 'CREATE' || item.box.status == 'PRE_CREATE' || item.box.status == 'LINK_UP'" @click="showClose(item)") 关闭订单
       el-col.text-center(:span="1")
         span.right-btn(type="text" @click="open = !open")
           i.el-icon-caret-bottom(v-if="!open")
@@ -139,7 +139,7 @@ export default {
       var status = item.box.status
       var str
       var updateStatus
-      if (status === 'CREATE') {
+      if (status === 'CREATE' || status === 'PRE_CREATE') {
         str = '是否确认已完成有效沟通,货值顾客需求?'
         updateStatus = 'LINK_UP'
         this.talk(item)

@@ -322,7 +322,7 @@ export default {
     getTaskList () {
       // let status = this.$route.query.status
       // var inStatus = ['CREATE', 'LINK_UP', 'RETURN_EXPRESS', 'DISPATCHING', 'NOTIFY_EXPRESS']
-      var inStatus = ['CREATE']
+      var inStatus = ['CREATE','PRE_CREATE']
       this.$axios.post(this.$apis.task.getTaskList, {
         // 当前页数
         pageNo: this.pagination.currentPage - 1,

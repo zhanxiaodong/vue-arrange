@@ -190,6 +190,13 @@
         //img(:src="baby.bodyPic ? baby.bodyPic:bodyde")
         <img :src="baby.bodyPic ? baby.bodyPic:bodyde" style="width: 300px;height: 240px;">
     el-row.pt30.lh30
+      el-col#babyimg.titlecs 宝贝照片补充
+      el-upload(:http-request="Upload" ref="upload" :file-list="babyPhotos" :multiple="true" list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" action="")
+        i.el-icon-plus
+      el-dialog(:visible.sync="dialogVisible")
+        img(width="100%" :src="dialogImageUrl" alt="")
+    
+    el-row.pt30.lh30
       el-col#account.titlecs 账户
       el-col.account-money
         el-col(:span="2") 余额: 
@@ -212,10 +219,18 @@
             el-button.btn(type="text" @click="showDetails(item)") {{item.orderNo}}
         el-col(v-if="item.goodsEval")
           el-col(:span="2") 
-            span {{item.goodsEval.createTime,'YYYY/MM/DD' | timeFormat}}
-            span.pl10 -
+            span {{item.createTime,'MM/DD' | timeFormat}}评价：
           el-col.pl10(:span="22").titlecs
             span {{item.goodsEval.desc}}
+        el-col(v-if="item.goodsEval")
+          el-col(:span="2") 
+            span 评价标签：
+          el-col.pl10(:span="8").titlecs
+            span {{item.goodsEval.evalLabel | listToStr}}
+          el-col(:span="2") 
+            span 反馈：
+          el-col.pl10(:span="10").titlecs
+            span {{item.goodsEval.feedback}}
     el-row.rowcs
       el-col(:span="21")
         el-col#repair-distance.titlecs 修正信息
@@ -276,6 +291,7 @@
 </template>
 
 <script>
+import { client } from '@/utils/alioss'
 import { CONSUME_TYPE, LEVEL_TYPE, SHAPE_TYPE, TASTE_TYPE, ATTI_TYPE, QUAL_TYPE } from '@/common/constants'
 export default {
   data () {
@@ -293,15 +309,17 @@ export default {
       consumeType: CONSUME_TYPE,
       talkVisible: false,
     	birth:'2018-11-12',
-      styles: ['时尚','休闲','卡通','运动','民族','优雅'],
-      colorTypes:  ['接受全色系','不喜欢灰暗色系','不喜欢鲜艳色系'],
+      styles: ['时尚','休闲','卡通','运动','文艺','绅士'],
+      colorTypes:  ['接受全色系','不喜欢灰暗色系','不喜欢鲜艳色系','素雅灰色系','活跃亮色系'],
       attitudes: ['安全','品牌','舒适','个性','实惠','好看'],
-      consumes: ['节制 50-100/套','正常 100-300/套','小资 300-500/套','轻奢 500+/套'],
+      consumes: ['节制 99-199','正常 199-399','小资 299-499','轻奢 800+'],
       formLabelWidth: '120px',
       dialogFormVisible2: false,
       dialogFormVisible: false,
       dialogVisible: false,
       showImg: false,
+      dialogImageUrl: null,
+      babyPhotos:[],
       talkForm: {
         boxId: '',
         babyId: '',
@@ -341,6 +359,64 @@ export default {
     }
   },
   methods: {
+  	
+  	/**
+     * 图片移除
+     * @function [Upload]
+     * @param {Object} file - 图片内容
+     */
+    handleRemove (file, fileList) {
+      var item = file.url
+      var index = this.baby.babyPhotos.indexOf(item)
+      this.baby.babyPhotos.splice(index, 1)
+      var baby = {}
+      baby.id = this.baby.id
+      baby.babyPhotos = this.baby.babyPhotos
+      this.$axios.post(this.$apis.baby.modifyBaby, baby).then((res) => {
+        if (res.code === '1') {
+//		        	this.getBabyDetail(this.$route.query.id)
+        } else {
+          this.$message.error(res.message)
+        }
+      }).catch((errRes) => {
+        this.$message.error(errRes.message)
+      })
+    },
+    /**
+     * 图片预览
+     * @function [Upload]
+     * @param {Object} file - 图片内容
+     */
+    handlePictureCardPreview (file) {
+      this.dialogImageUrl = file.url
+      this.dialogVisible = true
+    },
+    /**
+     * 图片上传
+     * @function [Upload]
+     * @param {Object} file - 图片内容
+     */
+    Upload (file) {
+      var fileName = file.file.uid + '.' + file.file.name.split('.')[1]
+      client().put(fileName, file.file).then(
+        result => {
+          this.baby.babyPhotos.push(result.url)
+          var baby = {}
+		      baby.id = this.baby.id
+		      baby.babyPhotos = this.baby.babyPhotos
+		      this.$axios.post(this.$apis.baby.modifyBaby, baby).then((res) => {
+		        if (res.code === '1') {
+//		        	this.getBabyDetail(this.$route.query.id)
+		        } else {
+		          this.$message.error(res.message)
+		        }
+		      }).catch((errRes) => {
+		        this.$message.error(errRes.message)
+		      })
+        }).catch(err => {
+          console.log(err)
+        })
+    },
     bigImg () {
       this.showImg = false
     },
@@ -362,7 +438,7 @@ export default {
           this.babyModify.level = this.talkForm.level
           this.babyModify.descs = this.talkForm.descs
           this.baby.level = this.talkForm.level
-          this.$refs[formName].resetFields()
+//        this.$refs[formName].resetFields()
         } else {
           this.$message.error(res.message)
         }
@@ -370,17 +446,21 @@ export default {
         this.$message.error(errRes.message)
       })
     },
-    talk () {
-      this.updateBasic('style', this.babyModify.style)
-      this.talkForm.style = this.babyModify.style
-      this.updateBasic('me', this.babyModify.me)
-      this.talkForm.me = this.babyModify.me
-      this.updateBasic('scene', this.babyModify.scene)
-      this.talkForm.scene = this.babyModify.scene
-      this.updateBasic('season', this.babyModify.season)
+    talk () {      
+      this.talkForm.babyId = this.babyModify.babyId
+      this.talkForm.level = this.babyModify.level ? this.babyModify.level : 'b'
+      this.talkForm.descs = this.babyModify.descs
+      this.talkForm.shape = this.babyModify.shape
+      this.updateBasic('shape', this.babyModify.shape)
+      this.talkForm.taste = this.babyModify.taste
+      this.updateBasic('taste', this.babyModify.taste)
+      this.talkForm.attitude = this.babyModify.attitude
+      this.updateBasic('attitude', this.babyModify.attitude)
+      this.talkForm.quality = this.babyModify.quality
+      this.updateBasic('quality', this.babyModify.quality)
       this.talkForm.consume = this.babyModify.consume
-      this.updateBasic('attr', this.babyModify.attr)
-      this.talkForm.attr = this.babyModify.attr
+      this.updateBasic('consume', this.babyModify.consume)
+      
       this.talkVisible = true
     },
 
@@ -560,6 +640,14 @@ export default {
         if (res.code === '1') {
         	this.birth = res.data.baby.birth
           this.baby = res.data.baby
+          var babyPhotos = res.data.baby.babyPhotos
+          if(babyPhotos) {
+          	for(var i=0; i<babyPhotos.length; i++) {
+		          this.babyPhotos.push({url:babyPhotos[i]})
+		        }
+          }
+          
+          this.talkForm.babyId = res.data.baby.id
           this.boxRecord = res.data.boxRecord
           this.userAccount = res.data.userAccount
           if(res.data.babyModify) {
@@ -598,6 +686,7 @@ export default {
     modifyUser () {
       this.dialogFormVisible2 = false
       var user = {}
+      user.id = this.baby.id
       user.wechatOpenId = this.baby.openId
       user.style = this.baby.style
       user.colorType = this.baby.colorType
@@ -605,7 +694,7 @@ export default {
       var consumDesc = {}
       consumDesc.except = this.baby.consume
       user.consumDesc = consumDesc
-      this.$axios.post(this.$apis.baby.modifyUser, user).then((res) => {
+      this.$axios.post(this.$apis.baby.modifyBaby, user).then((res) => {
         if (res.code === '1') {
         	this.$message.success("更新成功")
         	this.getBabyDetail(this.$route.query.id)

@@ -138,18 +138,21 @@
         el-col.titlecs 评价支付
         el-col(v-if="evaus")
           el-col.pt10.pb10
-            el-col(:span="5")
-              span 推荐评价: 
+            el-col(:span="2")
+              span 评价: 
               span {{boxDetail.evalua.rec ? boxDetail.evalua.rec + '星' : '-'}}
+            el-col(:span="9")
+              span 评价标签: 
+              span {{boxDetail.evalua.evalLabel | listToStr}}
             el-col(:span="5")
-              span 服务评价: 
-              span {{boxDetail.evalua.ser ? boxDetail.evalua.ser + '星' : '-'}}
-            el-col(:span="5")
+              span 反馈: 
+              span {{boxDetail.evalua.feedback}}
+            el-col(:span="4")
               span 推荐成功率: 
-              span {{boxDetail.evalua.ser ? boxDetail.evalua.ser + '星' : '-'}}
-            el-col(:span="5")
+              span 
+            el-col(:span="4")
               span 支付率: 
-              span {{boxDetail.evalua.ser ? boxDetail.evalua.ser + '星' : '-'}}
+              span 
           el-col#nimeide.bc-grey2.text-center.lh30(:span="20")
             el-col(:span="2") 序号
             el-col(:span="2") 点赞
