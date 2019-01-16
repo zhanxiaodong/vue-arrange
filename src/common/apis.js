@@ -9,9 +9,9 @@ export default {
   // 公共接口
   common: {
     // 发送验证码
-    sendCode: `${api.java}/merchant_new/sms/sendCode`,
+    sendCode: `${api.java}/merchant_new_new/sms/sendCode`,
     // 校验验证码
-    checkCode: `${api.java}/merchant_new/sms/checkCode`
+    checkCode: `${api.java}/merchant_new_new/sms/checkCode`
   },
   // koa2公共服务接口
   koa2: {

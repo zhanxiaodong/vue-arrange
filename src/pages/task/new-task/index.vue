@@ -157,6 +157,10 @@ export default {
         {
           name: '140',
           text: '140'
+        },
+        {
+          name: '150',
+          text: '150'
         }
       ],
       createTypeList: [
