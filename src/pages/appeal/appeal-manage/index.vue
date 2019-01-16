@@ -16,15 +16,15 @@
     el-row
       h3.mt20.bc-grey5.p10.ml-30.pl30.mb30 商品基本信息
     el-form-item(label="商品性别" required)
-      el-select(v-model="form.gender")
+      el-select(v-model="form.gender" filterable allow-create clearable)
         el-option(v-for="item in genderType" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
     el-form-item(label="商品类别" required)
-      el-select(v-model="form.type" @change="changeType")
+      el-select(v-model="form.type" @change="changeType" filterable allow-create clearable)
         el-option(v-for="item in typeList" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
-      el-select.pl20(v-model="form.childType")
+      el-select.pl20(v-model="form.childType" filterable allow-create clearable)
         el-option(v-for="item in childTypeList" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
     el-form-item(label="品牌" required)
-      el-select(v-model="form.brand" allow-create filterable)
+      el-select(v-model="form.brand" filterable allow-create clearable)
         el-option(v-for="item in brandType" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
     el-form-item(label="规格" required)
       el-col(:span="16")
@@ -85,7 +85,7 @@
         el-option(v-for="item in attrType" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
     //el-form-item(label="款号" prop="code" required)
       el-input.w194(v-model="form.code")
-    el-form-item(label="图片备份")
+    el-form-item(label="图片备份") 
       el-upload(:http-request="Upload" ref="upload" :multiple="true" list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" action="")
         i.el-icon-plus
       el-dialog(:visible.sync="dialogVisible")
