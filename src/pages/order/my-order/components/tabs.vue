@@ -71,6 +71,10 @@ export default {
           text: '退件中'
         },
         {
+          name: 'RETURN_EXCEPTION',
+          text: '异常单'
+        },
+        {
           name: 'END',
           text: '已结单'
         }

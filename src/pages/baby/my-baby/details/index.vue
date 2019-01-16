@@ -426,6 +426,7 @@ export default {
     /*添加标签信息*/
     confirmTalk (formName) {
       var item = this.talkForm
+      console.log(item)
       this.$axios.post(this.$apis.task.updateBoxModify, item).then((res) => {
         if (res.code === '1') {
           this.$message.success('更新成功')
@@ -447,7 +448,7 @@ export default {
       })
     },
     talk () {      
-      this.talkForm.babyId = this.babyModify.babyId
+      this.talkForm.babyId = this.baby.id
       this.talkForm.level = this.babyModify.level ? this.babyModify.level : 'b'
       this.talkForm.descs = this.babyModify.descs
       this.talkForm.shape = this.babyModify.shape
@@ -641,13 +642,14 @@ export default {
         	this.birth = res.data.baby.birth
           this.baby = res.data.baby
           var babyPhotos = res.data.baby.babyPhotos
+          this.baby.babyPhotos = []
           if(babyPhotos) {
+          	this.baby.babyPhotos = babyPhotos;
           	for(var i=0; i<babyPhotos.length; i++) {
 		          this.babyPhotos.push({url:babyPhotos[i]})
 		        }
           }
           
-          this.talkForm.babyId = res.data.baby.id
           this.boxRecord = res.data.boxRecord
           this.userAccount = res.data.userAccount
           if(res.data.babyModify) {
