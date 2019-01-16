@@ -141,10 +141,10 @@
             el-col(:span="2")
               span 评价: 
               span {{boxDetail.evalua.rec ? boxDetail.evalua.rec + '星' : '-'}}
-            el-col(:span="9")
+            el-col(:span="5")
               span 评价标签: 
               span {{boxDetail.evalua.evalLabel | listToStr}}
-            el-col(:span="5")
+            el-col(:span="9")
               span 反馈: 
               span {{boxDetail.evalua.feedback}}
             el-col(:span="4")
@@ -205,15 +205,19 @@
         el-col.text-center.lh30(:span="24")
           el-col.bc-grey2(:span="4") 序号
           el-col.bc-grey2(:span="10") 留下
-          el-col(:span="5") 已退回
-          el-col(:span="2") 未退回
+          el-col(:span="5") 
         el-col.text-center.mt10.lh30(:span="24" v-for="(item, index) in boxDetail.evalua.evaList" v-bind:key="index")
           el-col.bc-grey4(:span="4") # {{index + 1}}
           el-col.bc-grey4(:span="10") {{item.pay? '留下':'-'}}  
-          el-col(:span="5") 
-            <input type="radio" name="sendException" value="item.id" @click="getValue(item.id)">
-          el-col(:span="2")
-            <input type="radio" name="sendException" value="item.id" @click="getValue2(item.id)">
+          el-col(:span="5")
+            <el-switch v-model="item.pays" active-text="已支付" inactive-text="未支付" @change="getValue(item)"></el-switch>
+        el-col.stream-info(v-if="boxDetail.box.status === 'RETURN_EXCEPTION'") 
+          el-col(:span="10") 
+            span 商品价格差异: 
+            span {{boxDetail.box.returnException.difPrice}}	
+          el-col(:span="10")
+            span 优惠结算差异: 
+            span {{boxDetail.box.returnException.needBackPayAmount}}
         el-col.stream-info 
           el-col(:span="2") 运单编号:
           el-col(:span="22") {{boxDetail.expressBack ? boxDetail.expressBack.expressNo : '-'}}
@@ -226,11 +230,11 @@
           el-col(:span="22" v-else) -      
       el-col(:span="2") 
         el-col     
-          el-button.w100( type="info" v-if="boxDetail.box.status === 'RETURN_EXCEPTION' || boxDetail.box.status === 'END'  || boxDetail.box.status === 'COMPLETE' || boxDetail.box.status === 'CANCLE'" disabled ) 结单
-          el-button.w100( type="success" v-else  @click="endBox") 结单
+          el-button.w100( type="info" v-if=" boxDetail.box.status === 'END' || boxDetail.box.status === 'COMPLETE' || boxDetail.box.status === 'CANCLE'" disabled ) 结单
+          el-button.w100( type="success" v-else  @click="endBox" :disabled = "!exception && boxDetail.box.status === 'RETURN_EXCEPTION'") 结单
         el-col.pt10
-          el-button#color.w100(type="success" v-if="boxDetail.box.status === 'RETURN_EXCEPTION'" @click="sendException") 异常反馈
-          el-button.w100( type="info" v-else disabled ) 异常反馈
+          el-button#color.w100(type="success" disabled v-if="boxDetail.box.status === 'RETURN_EXCEPTION' || boxDetail.box.status === 'END'  || boxDetail.box.status === 'COMPLETE' || boxDetail.box.status === 'CANCLE'") 异常反馈
+          el-button.w100( type="info" v-else :disabled = "exception" @click="sendExceptions") 异常反馈
     el-row.rowcs
       el-col(:span="21")
         el-col#repair-distance.titlecs 修正信息
@@ -397,6 +401,7 @@ export default {
       dialogVisible: false,
       editAddressVisible: false,
       confirmSend: false,
+      exception:true,
       addressForm: {},
       talkForm: {
         boxId: '',
@@ -834,19 +839,62 @@ export default {
       this.dialogVisible = true
     },
 
-    getValue (id) {
-      this.returnException.needBackGoods.push(id);
-      var set = new Set(this.returnException.needBackGoods);
-      var arr = new Array(set);
-      console.log(this.returnException)
-      console.log(set)
-      console.log(Array.from(set) )
+    getValue (item) {
+      if(!item.pay) {
+	      if(item.pays != item.pay){
+	        this.returnException.needBackGoods.push(item.goodId)
+		      var set = new Set(this.returnException.needBackGoods)
+		      this.returnException.needBackGoods = Array.from(set)
+	      } else {
+	        var index = this.returnException.needBackGoods.indexOf(item.goodId)
+		      if(index > -1){
+		        this.returnException.needBackGoods.splice(index, 1);
+		      }
+	      }
+      } else {
+	      if(item.pays != item.pay){
+	      	this.returnException.unNeedBackGoods.push(item.goodId)
+		      var set = new Set(this.returnException.unNeedBackGoods)
+		      this.returnException.unNeedBackGoods = Array.from(set)
+	      } else {
+	      	var index = this.returnException.unNeedBackGoods.indexOf(item.goodId)
+		      if(index > -1){
+		        this.returnException.unNeedBackGoods.splice(index, 1);
+		      }
+	      }
+	    }
+      this.checkException()
     },
-
-    getValue2 (id) {
-      this.returnException.unNeedBackGoods.push(id);
-      var set = new Set(this.returnException.needBackGoods);
+    
+    checkException(){
+      var evaList = this.boxDetail.evalua.evaList	
+      this.exception = false
+      for (var i = 0; i < evaList.length; i++) {
+      	if(evaList[i].pay != evaList[i].pays) {
+          this.exception = true
+          break
+        }
+      }
+      this.exception = this.exception ? false : true
       console.log(this.returnException)
+    },
+    
+    sendExceptions() {
+    	console.log(this.returnException)
+      this.returnException.boxId = this.$route.query.id
+      this.$axios.post(this.$apis.task.returnException, this.returnException).then((res) => {
+        console.log(res)
+        if (res.code === '1') {
+          var result = res.data
+          if (result) {
+            this.$message.success(result)
+          }
+        } else {
+          this.$message.error(res.message)
+        }
+      }).catch((errRes) => {
+        this.$message.error(errRes.message)
+      })
     },
     /**
      * 查找货物

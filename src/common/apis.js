@@ -131,7 +131,9 @@ export default {
     // 通过系统下单
     boxSendWeb: `${api.java}/merchant_new/box/boxSendWeb`,
     // 通过系统发起盒子
-    sysSendBox: `${api.java}/merchant_new/box/sysSendBox`
+    sysSendBox: `${api.java}/merchant_new/box/sysSendBox`,
+    //退件异常
+    returnException: `${api.java}/merchant_new/box/returnException`
   },
   // 订单
   order: {
@@ -215,3 +217,4 @@ export default {
   }
   
 }
+s

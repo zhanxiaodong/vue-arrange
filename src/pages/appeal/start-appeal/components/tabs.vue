@@ -43,8 +43,12 @@
        <el-option v-for="item in genderType" :key="item.name" :label="item.label" :value="item.name">
        </el-option>
       </el-select>
-      <el-select v-model="searchData.goods.type" placeholder="请选择类别" clearable>
+      <el-select v-model="searchData.goods.type" placeholder="请选择类别" @change="changeType" clearable>
        <el-option v-for="item in typeList" :key="item.name" :label="item.label" :value="item.name">
+       </el-option>
+      </el-select>
+      <el-select v-model="searchData.goods.childType" placeholder="请选择类别" clearable>
+       <el-option v-for="item in childTypeList" :key="item.name" :label="item.label" :value="item.name">
        </el-option>
       </el-select>
       <el-input v-model="searchData.goods.size" placeholder="请输入尺码">
@@ -134,7 +138,7 @@ export default {
           label: '通用'
         }
         ],
-        typeList: [
+      typeList: [
         {
           name: '上装',
           text: '上装'
@@ -160,10 +164,244 @@ export default {
           text: '玩具/益智'
         }
       ],
+      childTypeList: [
+        {
+          name: 'T恤',
+          text: 'T恤'
+        },
+        {
+          name: '外套/夹克/大衣',
+          text: '外套/夹克/大衣'
+        },
+        {
+          name: '羽绒',
+          text: '羽绒'
+        },
+        {
+          name: '衬衫',
+          text: '衬衫'
+        },
+        {
+          name: '卫衣/绒衫',
+          text: '卫衣/绒衫'
+        },
+        {
+          name: '棉服',
+          text: '棉服'
+        },
+        {
+          name: '防晒衣',
+          text: '防晒衣'
+        },
+        {
+          name: '毛衣/针织衫',
+          text: '毛衣/针织衫'
+        }
+      ],
       styleType: STYLE_TYPE,
     }
   },
   methods: {
+  	/**
+     * 商品品类二级联动
+     * @function [changeType]
+     */
+    changeType () {
+      var prov = this.searchData.goods.type
+      let tempCity = []
+      var tempCh
+      let allCity = [
+        {
+          prov: '上装',
+          label: 'T恤/衬衫/背心'
+        },
+        {
+          prov: '上装',
+          label: '外套/夹克/大衣'
+        },
+        {
+          prov: '上装',
+          label: '羽绒服'
+        },
+        {
+          prov: '上装',
+          label: '衬衫'
+        },
+        {
+          prov: '上装',
+          label: '卫衣/绒衫'
+        },
+        {
+          prov: '上装',
+          label: '棉服'
+        },
+        {
+          prov: '上装',
+          label: '防晒衣/风衣'
+        },
+        {
+          prov: '上装',
+          label: '毛衣/针织开衫'
+        },
+        {
+          prov: '下装',
+          label: '休闲裤'
+        },
+        {
+          prov: '下装',
+          label: '牛仔裤'
+        },
+        {
+          prov: '下装',
+          label: '阔腿裤'
+        },
+        {
+          prov: '下装',
+          label: '背带裤'
+        },
+        {
+          prov: '下装',
+          label: '连衣袜'
+        },
+        {
+          prov: '一体',
+          label: '套装'
+        },
+        {
+          prov: '一体',
+          label: '背带'
+        },
+        {
+          prov: '一体',
+          label: '家居服'
+        },
+        {
+          prov: '一体',
+          label: '泳装'
+        },
+        {
+          prov: '一体',
+          label: '连体衣/爬装'
+        },
+        {
+          prov: '裙装',
+          label: '连衣裙'
+        },
+        {
+          prov: '裙装',
+          label: '背心裙'
+        },
+        {
+          prov: '裙装',
+          label: '短裙'
+        },
+        {
+          prov: '裙装',
+          label: '半身裙'
+        },
+        {
+          prov: '配件',
+          label: '头饰'
+        },
+        {
+          prov: '配件',
+          label: '领结'
+        },
+        {
+          prov: '配件',
+          label: '包包'
+        },
+        {
+          prov: '配件',
+          label: '项链'
+        },
+        {
+          prov: '配件',
+          label: '手链'
+        },
+        {
+          prov: '配件',
+          label: '太阳镜'
+        },
+        {
+          prov: '配件',
+          label: '领带'
+        },
+        {
+          prov: '配件',
+          label: '鞋子'
+        },
+        {
+          prov: '配件',
+          label: '帽子'
+        },
+        {
+          prov: '配件',
+          label: '袜子'
+        },
+        {
+          prov: '配件',
+          label: '围巾'
+        },
+        {
+          prov: '配件',
+          label: '手套'
+        },
+        {
+          prov: '配件',
+          label: '内衣裤'
+        },
+        {
+          prov: '玩具/益智',
+          label: '学习/实验/文具'
+        },
+        {
+          prov: '玩具/益智',
+          label: '玩偶/毛绒/机器人'
+        },
+        {
+          prov: '玩具/益智',
+          label: '早教玩具'
+        },
+        {
+          prov: '玩具/益智',
+          label: '仿真玩具/过家家'
+        },
+        {
+          prov: '玩具/益智',
+          label: '音乐玩具'
+        },
+        {
+          prov: '玩具/益智',
+          label: '拼图/拆装/积木'
+        },
+        {
+          prov: '玩具/益智',
+          label: '手工/剪纸'
+        },
+        {
+          prov: '玩具/益智',
+          label: '彩泥/粘土'
+        },
+        {
+          prov: '玩具/益智',
+          label: '创意玩具/网红玩具'
+        }
+      ]
+      for (var val of allCity) {
+        if (prov === val.prov) {
+          if (!tempCh) {
+            tempCh = val.label
+          }
+          if (prov === '下装' && this.form.gender === '男童' && (val.label === '裙子' || val.label === '连衣裙')) {
+            continue
+          }
+          tempCity.push({ name: val.label, text: val.label })
+        }
+      }
+      this.childTypeList = tempCity
+      this.form.childType = tempCh
+    },
     /**
      * 跳转路由
      * @function [handleClick]
