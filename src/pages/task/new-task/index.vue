@@ -17,11 +17,7 @@
       el-autocomplete(v-model="form.baby" :disabled="editIn" :fetch-suggestions="querySearch" placeholder="请输入内容" :trigger-on-focus="true" @select="handleSelect")
     el-row
       h3.mt20.bc-grey5.p10.ml-30.pl30.mb30 盒子信息
-<<<<<<< HEAD
-    el-form-item(label="盒子规格"  required)
-=======
     el-form-item(label="盒子规格" required)
->>>>>>> d0aa1ee337901c40c8fef10cdea6ed13afae9b48
       el-select(v-model="form.stand" filterable allow-create clearable)
         el-option(v-for="item in standType" v-bind:key="item.name" v-bind:label="item.text" v-bind:value="item.name")
     el-form-item(label="商品性别" required)
