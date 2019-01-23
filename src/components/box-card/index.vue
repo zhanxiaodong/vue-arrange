@@ -4,7 +4,8 @@ el-card.box-card(v-bind:body-style="{display: [open ? 'block' : 'none']}")
     el-row.ft14
       el-col.text-center(:span="4")
         span {{item.box.orderNo}}{{item.box.status=='PRE_CREATE' ? '(*)':''}}
-      el-col.text-center(:span="2") {{item.baby.call}} 
+      el-col.text-center(:span="2")  
+        span(@click="showDetails(item)") {{item.baby.call}}
       el-col.text-center(:span="2") {{item.stylist}} 
       el-col.text-center(:span="4")
         span {{item.box.createTime,'YYYY-MM-DD HH:mm' | timeFormat}}
@@ -112,6 +113,16 @@ export default {
     }
   },
   methods: {
+    /*用户详情路由*/ 
+    showDetails (item) {
+      const {href} = this.$router.resolve({
+        name: 'baby-details',
+        query: {
+          id: item.baby.id
+        }
+      })
+      window.open(href, '_blank')
+    },
     /**
      * 删除
      * @function [del]

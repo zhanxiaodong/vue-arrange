@@ -31,7 +31,9 @@ export default {
     // 更新孩子信息
     modifyBaby: `${api.java}/merchant_new/baby/updateBaby`,
     // 更新用户信息
-    modifyUser: `${api.java}/merchant_new/user/updateUser`
+    modifyUser: `${api.java}/merchant_new/user/updateUser`,
+    //更新用户档案信息
+    modifyInfo: `${api.java}/merchant_new/info/updateInfo`
   },
   // 账号
   account: {

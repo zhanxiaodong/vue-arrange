@@ -40,7 +40,7 @@
     el-row
       el-col
         el-radio-group(v-model="closeReason")
-          el-radio(v-for="item in closeReasonList" v-bind:key="item.name" v-bind:label="item.name") {{ item.text }}
+          el-radio.radiostyle(v-for="item in closeReasonList" v-bind:key="item.name" v-bind:label="item.name") {{ item.text }}
     span.dialog-footer(slot="footer") 
       el-button(@click="closeVisible = false") 取 消
       el-button(type="primary" @click="closeBox") 确 定
@@ -172,6 +172,10 @@ export default {
         {
           name: '非目标客户取消',
           text: '非目标客户取消'
+        },
+        {
+          name: '错过本季度购买需求时间',
+          text: '错过本季度购买需求时间'
         },
         {
           name: '违规操作取消',

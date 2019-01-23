@@ -43,7 +43,8 @@
         el-col(:span="3")
           span {{item.stylistName? item.stylistName : 'Summer'}}
         el-col(:span="2")
-            el-button.btn-list__item-text(type="text" @click="showDetails(item)") 用户详情
+            //- el-button.btn-list__item-text(type="text" @click="showDetails(item)") 用户详情
+            span(@click="showDetails(item)") 用户详情
   el-pagination.pagination(
     @size-change="handleSizeChange"
     @current-change="handleCurrentChange"

@@ -2,7 +2,12 @@
 .content {
   padding: 10px 0;
 }
-.babyinfo-one,.babyinfo-two,.like-one,.like-two,.parentinfo,.account-money {
+.babyinfo-one,
+.babyinfo-two,
+.like-one,
+.like-two,
+.parentinfo,
+.account-money {
   padding: 10px 0;
 }
 
@@ -30,8 +35,8 @@
   padding-bottom: 10px;
 }
 .w100 {
-    width:100px;
-    height:100px;
+  width: 100px;
+  height: 100px;
 }
 
 /*.el-button--success {
@@ -71,12 +76,10 @@
   el-col(:span="20")
     el-row#header.rowcsf.lh30
       el-col.titlecs
-        span 注册档案 ( {{baby.id}} )
+        <span>注册档案  {{baby.id}} </span> <span @click="dialogFormVisible3 = true" style="color: #04B8A0; padding-left: 20px;">修改</span>
       el-col.content
         el-col(:span="5")
           span 注册日期: {{baby.createTime,'YYYY/MM/DD' | timeFormat}}
-        //el-col(:span="3")
-          span 芝麻认证: {{baby.aliCredit}}
         el-col(:span="5")
           span 手机号:  {{baby.tel}}
         el-col(:span="7")
@@ -87,7 +90,7 @@
         el-col(:span="5")
           span 用户评级: {{baby.level}}
         el-col(:span="7")
-          span 订阅计划: {{baby.planDesc}} {{baby.plan  | listToStr}}
+          span 订阅计划: {{baby.planDesc}} 
     el-row.pt30.lh30
       <div id="distance-bottom" class="titlecs el-col el-col-24">宝贝信息 <span @click="dialogFormVisible = true" style="color: #04B8A0; padding-left: 20px;">修改</span></div>
     <el-dialog title="宝贝信息" :visible.sync="dialogFormVisible" style="margin-top: -10vh;">
@@ -127,6 +130,33 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
         <el-button type="primary" @click="modifyBaby">确 定</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog title="修改档案信息" :visible.sync="dialogFormVisible3" style="margin-top: -10vh;">
+     <el-form>
+      <el-form-item label="手机号码" :label-width="formLabelWidth">
+        <el-input style="width:50%" v-model="baby.tel" placeholder="请更换手机号码" autocomplete="off"></el-input>
+      </el-form-item>
+      //- <el-form-item label="用户等级" :label-width="formLabelWidth">
+      //-   <el-radio-group v-model="baby.level">
+      //-      <el-radio label="S">S</el-radio>
+      //-      <el-radio label="A">A</el-radio>
+      //-      <el-radio label="B">B</el-radio>
+      //-      <el-radio label="C">C</el-radio>
+      //-      <el-radio label="D">D</el-radio>
+      //-   </el-radio-group>
+      //- </el-form-item>
+      <el-form-item label="订阅计划" :label-width="formLabelWidth">
+        <el-radio-group v-model="baby.planAuto ">
+           <el-radio :label="1">一月一次</el-radio>
+           <el-radio :label="3">两月一次</el-radio>
+           <el-radio :label="4">一季度一次</el-radio>
+        </el-radio-group>
+      </el-form-item>
+     </el-form> 
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible3 = false">取 消</el-button>
+        <el-button type="primary" @click="modifyInfo">确 定</el-button>
       </div>
     </el-dialog>
       el-col.babyinfo-one
@@ -291,16 +321,23 @@
 </template>
 
 <script>
-import { client } from '@/utils/alioss'
-import { CONSUME_TYPE, LEVEL_TYPE, SHAPE_TYPE, TASTE_TYPE, ATTI_TYPE, QUAL_TYPE } from '@/common/constants'
+import { client } from "@/utils/alioss";
+import {
+  CONSUME_TYPE,
+  LEVEL_TYPE,
+  SHAPE_TYPE,
+  TASTE_TYPE,
+  ATTI_TYPE,
+  QUAL_TYPE
+} from "@/common/constants";
 export default {
-  data () {
+  data() {
     return {
-      shapeInput: '',
-      attitudeInput: '',
-      consumeInput: '',
-      tasteInput: '',
-    	qualityInput: '',
+      shapeInput: "",
+      attitudeInput: "",
+      consumeInput: "",
+      tasteInput: "",
+      qualityInput: "",
       qualityType: QUAL_TYPE,
       attitudeType: ATTI_TYPE,
       tasteType: TASTE_TYPE,
@@ -308,36 +345,47 @@ export default {
       levelType: LEVEL_TYPE,
       consumeType: CONSUME_TYPE,
       talkVisible: false,
-    	birth:'2018-11-12',
-      styles: ['时尚','休闲','卡通','运动','文艺','绅士'],
-      colorTypes:  ['接受全色系','不喜欢灰暗色系','不喜欢鲜艳色系','素雅灰色系','活跃亮色系'],
-      attitudes: ['安全','品牌','舒适','个性','实惠','好看'],
-      consumes: ['节制 99-199','正常 199-399','小资 299-499','轻奢 800+'],
-      formLabelWidth: '120px',
+      birth: "2018-11-12",
+      styles: ["时尚", "休闲", "卡通", "运动", "文艺", "绅士"],
+      colorTypes: [
+        "接受全色系",
+        "不喜欢灰暗色系",
+        "不喜欢鲜艳色系",
+        "素雅灰色系",
+        "活跃亮色系"
+      ],
+      attitudes: ["安全", "品牌", "舒适", "个性", "实惠", "好看"],
+      consumes: ["节制 99-199", "正常 199-399", "小资 299-499", "轻奢 800+"],
+      formLabelWidth: "120px",
       dialogFormVisible2: false,
       dialogFormVisible: false,
+      dialogFormVisible3: false,
       dialogVisible: false,
       showImg: false,
       dialogImageUrl: null,
-      babyPhotos:[],
+      babyPhotos: [],
       talkForm: {
-        boxId: '',
-        babyId: '',
-        consume: '',
-        level: '',
-        descs: '',
-        quality: '',
-        attitude: '',
-        shape: '',
-        taste: ''
+        boxId: "",
+        babyId: "",
+        consume: "",
+        level: "",
+        descs: "",
+        quality: "",
+        attitude: "",
+        shape: "",
+        taste: "",
+        tel: "",
+        plan: ""
       },
-      babyModify:{
-      	consume: '',
-        descs: '',
-        quality: '',
-        attitude: '',
-        shape: '',
-        taste: ''
+      babyModify: {
+        consume: "",
+        descs: "",
+        quality: "",
+        attitude: "",
+        shape: "",
+        taste: "",
+        tel: "",
+        plan: ""
       },
       boxDetail: {
         babyModify: {}
@@ -348,249 +396,276 @@ export default {
       },
       boxRecord: [
         {
-          orderNo: ''
+          orderNo: ""
         }
       ],
       baby: {
-        call: ''
+        call: ""
       },
-      imgurl: '/static/ava.png',
-      bodyde: '/static/def.png'
-    }
+      imgurl: "/static/ava.png",
+      bodyde: "/static/def.png"
+    };
   },
   methods: {
-  	
-  	/**
+    /**
      * 图片移除
      * @function [Upload]
      * @param {Object} file - 图片内容
      */
-    handleRemove (file, fileList) {
-      var item = file.url
-      var index = this.baby.babyPhotos.indexOf(item)
-      this.baby.babyPhotos.splice(index, 1)
-      var baby = {}
-      baby.id = this.baby.id
-      baby.babyPhotos = this.baby.babyPhotos
-      this.$axios.post(this.$apis.baby.modifyBaby, baby).then((res) => {
-        if (res.code === '1') {
-//		        	this.getBabyDetail(this.$route.query.id)
-        } else {
-          this.$message.error(res.message)
-        }
-      }).catch((errRes) => {
-        this.$message.error(errRes.message)
-      })
+    handleRemove(file, fileList) {
+      var item = file.url;
+      var index = this.baby.babyPhotos.indexOf(item);
+      this.baby.babyPhotos.splice(index, 1);
+      var baby = {};
+      baby.id = this.baby.id;
+      baby.babyPhotos = this.baby.babyPhotos;
+      this.$axios
+        .post(this.$apis.baby.modifyBaby, baby)
+        .then(res => {
+          if (res.code === "1") {
+            //		        	this.getBabyDetail(this.$route.query.id)
+          } else {
+            this.$message.error(res.message);
+          }
+        })
+        .catch(errRes => {
+          this.$message.error(errRes.message);
+        });
     },
     /**
      * 图片预览
      * @function [Upload]
      * @param {Object} file - 图片内容
      */
-    handlePictureCardPreview (file) {
-      this.dialogImageUrl = file.url
-      this.dialogVisible = true
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
     },
     /**
      * 图片上传
      * @function [Upload]
      * @param {Object} file - 图片内容
      */
-    Upload (file) {
-      var fileName = file.file.uid + '.' + file.file.name.split('.')[1]
-      client().put(fileName, file.file).then(
-        result => {
-          this.baby.babyPhotos.push(result.url)
-          var baby = {}
-		      baby.id = this.baby.id
-		      baby.babyPhotos = this.baby.babyPhotos
-		      this.$axios.post(this.$apis.baby.modifyBaby, baby).then((res) => {
-		        if (res.code === '1') {
-//		        	this.getBabyDetail(this.$route.query.id)
-		        } else {
-		          this.$message.error(res.message)
-		        }
-		      }).catch((errRes) => {
-		        this.$message.error(errRes.message)
-		      })
-        }).catch(err => {
-          console.log(err)
+    Upload(file) {
+      var fileName = file.file.uid + "." + file.file.name.split(".")[1];
+      client()
+        .put(fileName, file.file)
+        .then(result => {
+          this.baby.babyPhotos.push(result.url);
+          var baby = {};
+          baby.id = this.baby.id;
+          baby.babyPhotos = this.baby.babyPhotos;
+          this.$axios
+            .post(this.$apis.baby.modifyBaby, baby)
+            .then(res => {
+              if (res.code === "1") {
+                //		        	this.getBabyDetail(this.$route.query.id)
+              } else {
+                this.$message.error(res.message);
+              }
+            })
+            .catch(errRes => {
+              this.$message.error(errRes.message);
+            });
         })
+        .catch(err => {
+          console.log(err);
+        });
     },
-    bigImg () {
-      this.showImg = false
+    bigImg() {
+      this.showImg = false;
     },
-    clickImg (e) {
-      this.showImg = true
+    clickImg(e) {
+      this.showImg = true;
     },
     /*添加标签信息*/
-    confirmTalk (formName) {
-      var item = this.talkForm
-      console.log(item)
-      this.$axios.post(this.$apis.task.updateBoxModify, item).then((res) => {
-        if (res.code === '1') {
-          this.$message.success('更新成功')
-          this.talkVisible = false
-          this.babyModify.shape = this.talkForm.shape
-          this.babyModify.taste = this.talkForm.taste
-          this.babyModify.attitude = this.talkForm.attitude
-          this.babyModify.consume = this.talkForm.consume
-          this.babyModify.quality = this.talkForm.quality
-          this.babyModify.level = this.talkForm.level
-          this.babyModify.descs = this.talkForm.descs
-          this.baby.level = this.talkForm.level
-//        this.$refs[formName].resetFields()
-        } else {
-          this.$message.error(res.message)
-        }
-      }).catch((errRes) => {
-        this.$message.error(errRes.message)
-      })
+    confirmTalk(formName) {
+      var item = this.talkForm;
+      console.log(item);
+      this.$axios
+        .post(this.$apis.task.updateBoxModify, item)
+        .then(res => {
+          if (res.code === "1") {
+            this.$message.success("更新成功");
+            this.talkVisible = false;
+            this.babyModify.shape = this.talkForm.shape;
+            this.babyModify.taste = this.talkForm.taste;
+            this.babyModify.attitude = this.talkForm.attitude;
+            this.babyModify.consume = this.talkForm.consume;
+            this.babyModify.quality = this.talkForm.quality;
+            this.babyModify.level = this.talkForm.level;
+            this.babyModify.descs = this.talkForm.descs;
+            this.baby.level = this.talkForm.level;
+            //        this.$refs[formName].resetFields()
+          } else {
+            this.$message.error(res.message);
+          }
+        })
+        .catch(errRes => {
+          this.$message.error(errRes.message);
+        });
     },
-    talk () {      
-      this.talkForm.babyId = this.baby.id
-      this.talkForm.level = this.babyModify.level ? this.babyModify.level : 'b'
-      this.talkForm.descs = this.babyModify.descs
-      this.talkForm.shape = this.babyModify.shape
-      this.updateBasic('shape', this.babyModify.shape)
-      this.talkForm.taste = this.babyModify.taste
-      this.updateBasic('taste', this.babyModify.taste)
-      this.talkForm.attitude = this.babyModify.attitude
-      this.updateBasic('attitude', this.babyModify.attitude)
-      this.talkForm.quality = this.babyModify.quality
-      this.updateBasic('quality', this.babyModify.quality)
-      this.talkForm.consume = this.babyModify.consume
-      this.updateBasic('consume', this.babyModify.consume)
-      
-      this.talkVisible = true
+    talk() {
+      this.talkForm.babyId = this.baby.id;
+      this.talkForm.level = this.babyModify.level ? this.babyModify.level : "b";
+      this.talkForm.descs = this.babyModify.descs;
+      this.talkForm.shape = this.babyModify.shape;
+      this.updateBasic("shape", this.babyModify.shape);
+      this.talkForm.taste = this.babyModify.taste;
+      this.updateBasic("taste", this.babyModify.taste);
+      this.talkForm.attitude = this.babyModify.attitude;
+      this.updateBasic("attitude", this.babyModify.attitude);
+      this.talkForm.quality = this.babyModify.quality;
+      this.updateBasic("quality", this.babyModify.quality);
+      this.talkForm.consume = this.babyModify.consume;
+      this.updateBasic("consume", this.babyModify.consume);
+
+      this.talkVisible = true;
     },
 
-     updateBasic (type, value) {
-      var updateBas = false
-      var temp
-      var newO = {}
+    updateBasic(type, value) {
+      var updateBas = false;
+      var temp;
+      var newO = {};
       switch (type) {
-        case 'shape':
-          temp = SHAPE_TYPE
+        case "shape":
+          temp = SHAPE_TYPE;
           for (var a = 0; a < temp.length; a++) {
             if (value === temp[a].name) {
-              updateBas = true
-              break
+              updateBas = true;
+              break;
             }
           }
           if (!updateBas && value) {
-            newO.text = value
-            newO.name = value
-            temp.splice(3, 1, newO)
-            this.shapeType = temp
+            newO.text = value;
+            newO.name = value;
+            temp.splice(3, 1, newO);
+            this.shapeType = temp;
           }
-          this.talkForm.shape = value
-          break
-        case 'taste':
-          this.talkForm.taste = value
-          temp = TASTE_TYPE
+          this.talkForm.shape = value;
+          break;
+        case "taste":
+          this.talkForm.taste = value;
+          temp = TASTE_TYPE;
           for (var b = 0; b < temp.length; b++) {
             if (value === temp[b].name) {
-              updateBas = true
-              break
+              updateBas = true;
+              break;
             }
           }
           if (!updateBas && value) {
-            newO.text = value
-            newO.name = value
-            temp.push(newO)
-            this.tasteType = temp
+            newO.text = value;
+            newO.name = value;
+            temp.push(newO);
+            this.tasteType = temp;
           }
-          break
-        case 'attitude':
-          this.talkForm.attitude = value
-          temp = ATTI_TYPE
+          break;
+        case "attitude":
+          this.talkForm.attitude = value;
+          temp = ATTI_TYPE;
           for (var c = 0; c < temp.length; c++) {
             if (value === temp[c].name) {
-              updateBas = true
-              break
+              updateBas = true;
+              break;
             }
           }
           if (!updateBas && value) {
-            newO.text = value
-            newO.name = value
-            temp.push(newO)
-            this.attitudeType = temp
+            newO.text = value;
+            newO.name = value;
+            temp.push(newO);
+            this.attitudeType = temp;
           }
-          break
-        case 'quality':
-          this.talkForm.quality = value
-          temp = QUAL_TYPE
+          break;
+        case "quality":
+          this.talkForm.quality = value;
+          temp = QUAL_TYPE;
           for (var d = 0; d < temp.length; d++) {
             if (value === temp[d].name) {
-              updateBas = true
-              break
+              updateBas = true;
+              break;
             }
           }
           if (!updateBas && value) {
-            newO.text = value
-            newO.name = value
-            temp.push(newO)
-            this.qualityType = temp
+            newO.text = value;
+            newO.name = value;
+            temp.push(newO);
+            this.qualityType = temp;
           }
-          break
-        case 'consume':
-          this.talkForm.consume = value
-          temp = CONSUME_TYPE
+          break;
+        case "consume":
+          this.talkForm.consume = value;
+          temp = CONSUME_TYPE;
           for (var i = 0; i < temp.length; i++) {
             if (value === temp[i].name) {
-              updateBas = true
-              break
+              updateBas = true;
+              break;
             }
           }
           if (!updateBas && value) {
-            newO.text = value
-            newO.name = value
-            temp.push(newO)
-            this.consumeType = temp
+            newO.text = value;
+            newO.name = value;
+            temp.push(newO);
+            this.consumeType = temp;
           }
-          break
+          break;
         default:
-          break
+          break;
       }
-      temp = []
+      temp = [];
     },
 
-    handleClose (done) {
-      this.$refs['talkForm'].resetFields()
+    handleClose(done) {
+      this.$refs["talkForm"].resetFields();
     },
-    closeTalk (formName) {
-      this.$refs[formName].resetFields()
-      this.talkVisible = false
+    closeTalk(formName) {
+      this.$refs[formName].resetFields();
+      this.talkVisible = false;
     },
     /*单击按钮取消选中*/
-    clickitemone (e) {
-     e === this.talkForm.shape ? this.talkForm.shape = '' : this.talkForm.shape = e
+    clickitemone(e) {
+      e === this.talkForm.shape
+        ? (this.talkForm.shape = "")
+        : (this.talkForm.shape = e);
     },
-    clickitemtwo (e) {
-     e === this.talkForm.taste ? this.talkForm.taste = '' : this.talkForm.taste = e
+    clickitemtwo(e) {
+      e === this.talkForm.taste
+        ? (this.talkForm.taste = "")
+        : (this.talkForm.taste = e);
     },
-    clickitemthree (e) {
-     e === this.talkForm.attitude ? this.talkForm.attitude = '' : this.talkForm.attitude = e 
+    clickitemthree(e) {
+      e === this.talkForm.attitude
+        ? (this.talkForm.attitude = "")
+        : (this.talkForm.attitude = e);
     },
-    clickitemfour (e) {
-     e === this.talkForm.consume ? this.talkForm.consume = '' : this.talkForm.consume = e 
+    clickitemfour(e) {
+      e === this.talkForm.consume
+        ? (this.talkForm.consume = "")
+        : (this.talkForm.consume = e);
     },
-    clickitemfive (e) {
-     e === this.talkForm.quality ? this.talkForm.quality = '' : this.talkForm.quality = e 
+    clickitemfive(e) {
+      e === this.talkForm.quality
+        ? (this.talkForm.quality = "")
+        : (this.talkForm.quality = e);
     },
-    clickitemsix (e) {
-     e === this.talkForm.level ? this.talkForm.level = '' : this.talkForm.level = e
+    clickitemsix(e) {
+      e === this.talkForm.level
+        ? (this.talkForm.level = "")
+        : (this.talkForm.level = e);
     },
     /*标签添加到行中*/
-    inputChange (type) {
-      var value = this.shapeInput || this.attitudeInput || this.consumeInput || this.tasteInput || this.qualityInput;
-      this.updateBasic(type, value)
-      this.shapeInput = ''
-      this.attitudeInput = ''
-      this.consumeInput = ''
-      this.tasteInput = ''
-      this.qualityInput = ''
+    inputChange(type) {
+      var value =
+        this.shapeInput ||
+        this.attitudeInput ||
+        this.consumeInput ||
+        this.tasteInput ||
+        this.qualityInput;
+      this.updateBasic(type, value);
+      this.shapeInput = "";
+      this.attitudeInput = "";
+      this.consumeInput = "";
+      this.tasteInput = "";
+      this.qualityInput = "";
     },
     /*newBox () {
       this.$router.push({
@@ -613,107 +688,139 @@ export default {
         })
       }
     },*/
-    
+
     /**
      * 查看订单详情
      * @function [showDetails]
      * @param {Strig} item -订单
      */
-    showDetails (item) {
+    showDetails(item) {
       this.$router.push({
-        name: 'my-order-details',
+        name: "my-order-details",
         query: {
           id: item.id
         }
-      })
+      });
     },
     /**
      * 获取孩子详情
      * @function [getBabyDetail]
      * @param {String} id 盒子id
      */
-    getBabyDetail (id) {
-      this.$axios.get(this.$apis.baby.findBabyDetailById, {
-        params: {
-          id: id
-        }
-      }).then((res) => {
-        if (res.code === '1') {
-        	this.birth = res.data.baby.birth
-          this.baby = res.data.baby
-          var babyPhotos = res.data.baby.babyPhotos
-          this.baby.babyPhotos = []
-          if(babyPhotos) {
-          	this.baby.babyPhotos = babyPhotos;
-          	for(var i=0; i<babyPhotos.length; i++) {
-		          this.babyPhotos.push({url:babyPhotos[i]})
-		        }
+    getBabyDetail(id) {
+      this.$axios
+        .get(this.$apis.baby.findBabyDetailById, {
+          params: {
+            id: id
           }
-          
-          this.boxRecord = res.data.boxRecord
-          this.userAccount = res.data.userAccount
-          if(res.data.babyModify) {
-          	this.babyModify = res.data.babyModify
+        })
+        .then(res => {
+          if (res.code === "1") {
+            this.birth = res.data.baby.birth;
+            this.baby = res.data.baby;
+            var babyPhotos = res.data.baby.babyPhotos;
+            this.baby.babyPhotos = [];
+            this.babyPhotos = [];
+            if (babyPhotos) {
+              this.baby.babyPhotos = babyPhotos;
+              for (var i = 0; i < babyPhotos.length; i++) {
+                this.babyPhotos.push({ url: babyPhotos[i] });
+              }
+            }
+
+            this.boxRecord = res.data.boxRecord;
+            this.userAccount = res.data.userAccount;
+            if (res.data.babyModify) {
+              this.babyModify = res.data.babyModify;
+            }
+          } else {
+            this.$message.error(res.message);
           }
-        } else {
-          this.$message.error(res.message)
-        }
-      }).catch((errRes) => {
-        this.$message.error(errRes.message)
-      })
+        })
+        .catch(errRes => {
+          this.$message.error(errRes.message);
+        });
     },
-    modifyBaby () {
-      this.dialogFormVisible = false
-      var baby = {}
-      baby.id = this.baby.id
-      baby.call = this.baby.call
-      baby.gender = this.baby.gender
-      baby.birth = this.birth
-      baby.height = this.baby.height
-      baby.weight = this.baby.weight
-      baby.size = this.baby.size
-      baby.skinColor = this.baby.skinColor
-      console.log(baby)
-      this.$axios.post(this.$apis.baby.modifyBaby, baby).then((res) => {
-        if (res.code === '1') {
-        	this.$message.success("更新成功")
-        	this.getBabyDetail(this.$route.query.id)
-        } else {
-          this.$message.error(res.message)
-        }
-      }).catch((errRes) => {
-        this.$message.error(errRes.message)
-      })
+    modifyBaby() {
+      this.dialogFormVisible = false;
+      var baby = {};
+      baby.id = this.baby.id;
+      baby.call = this.baby.call;
+      baby.gender = this.baby.gender;
+      baby.birth = this.birth;
+      baby.height = this.baby.height;
+      baby.weight = this.baby.weight;
+      baby.size = this.baby.size;
+      baby.skinColor = this.baby.skinColor;
+      console.log(baby);
+      this.$axios
+        .post(this.$apis.baby.modifyBaby, baby)
+        .then(res => {
+          if (res.code === "1") {
+            this.$message.success("更新成功");
+            this.getBabyDetail(this.$route.query.id);
+          } else {
+            this.$message.error(res.message);
+          }
+        })
+        .catch(errRes => {
+          this.$message.error(errRes.message);
+        });
     },
-    modifyUser () {
-      this.dialogFormVisible2 = false
-      var user = {}
-      user.id = this.baby.id
-      user.wechatOpenId = this.baby.openId
-      user.style = this.baby.style
-      user.colorType = this.baby.colorType
-      user.attitude = this.baby.attitude
-      var consumDesc = {}
-      consumDesc.except = this.baby.consume
-      user.consumDesc = consumDesc
-      this.$axios.post(this.$apis.baby.modifyBaby, user).then((res) => {
-        if (res.code === '1') {
-        	this.$message.success("更新成功")
-        	this.getBabyDetail(this.$route.query.id)
-        } else {
-          this.$message.error(res.message)
-        }
-      }).catch((errRes) => {
-        this.$message.error(errRes.message)
-      })
+    modifyUser() {
+      this.dialogFormVisible2 = false;
+      var user = {};
+      user.id = this.baby.id;
+      user.wechatOpenId = this.baby.openId;
+      user.style = this.baby.style;
+      user.colorType = this.baby.colorType;
+      user.attitude = this.baby.attitude;
+      var consumDesc = {};
+      consumDesc.except = this.baby.consume;
+      user.consumDesc = consumDesc;
+      this.$axios
+        .post(this.$apis.baby.modifyBaby, user)
+        .then(res => {
+          if (res.code === "1") {
+            this.$message.success("更新成功");
+            this.getBabyDetail(this.$route.query.id);
+          } else {
+            this.$message.error(res.message);
+          }
+        })
+        .catch(errRes => {
+          this.$message.error(errRes.message);
+        });
+    },
+    modifyInfo() {
+      this.dialogFormVisible3 = false;
+      var info = {};
+      info.wechatOpenId = this.baby.openId;
+      info.tel = this.baby.tel;
+      // info.level = this.baby.level
+       info.planAuto = this.baby.planAuto
+      this.$axios
+        .post(this.$apis.baby.modifyUser, info)
+        .then(res => {
+          if (res.code === "1") {
+            this.$message.success("更新成功");
+            this.getBabyDetail(this.$route.query.id);
+          } else {
+            this.$message.error(res.message);
+          }
+        })
+        .catch(errRes => {
+          this.$message.error(errRes.message);
+        });
     }
   },
-  mounted () {
-    let routerParams = this.$route.params.dataobj
+
+  mounted() {
+    let routerParams = this.$route.params.dataobj;
     if (routerParams) {
-      this.routerParams = routerParams
+      this.routerParams = routerParams;
     }
-    this.getBabyDetail(this.$route.query.id)
-  },
-}
+    this.getBabyDetail(this.$route.query.id);
+  }
+};
 </script>
