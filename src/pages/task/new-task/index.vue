@@ -97,7 +97,7 @@
           el-table-column(type="selection" width="55")
           el-table-column(label="颜色" prop="color")
           el-table-column(label="尺码" prop="size")
-          el-table-column(label="库存" prop="num")
+          el-table-column(label="库存" prop="availableNum")
       el-row.pt20.text-center
         el-button(type="info" disabled v-if="goodsList.length === 0") 录入
         el-button(type="success" @click="interGoods" v-else) 录入
